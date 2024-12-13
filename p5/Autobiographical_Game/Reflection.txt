@@ -1,0 +1,11 @@
+Z
+
+
+I made a pixel art music game in p5.js where you can play three levels while shooting and it is all about quite literally my love for mixing music and shooting games. In the first level, players shoot bullets at a nearby piano to generate music, shooting bullets different notes. In the second level, you play a guitar via fire, and follow the beat of the music to interact with the game. The third level is about watching a screen catch beat as you pop bubbles in time with the music.
+
+Why did I make this game? As long as I can remember, I’ve loved to sing and listen to music (well). I tried a ton of music classes since I was a kid and had to just face the fact that I haven't got the natural talent to get to where I wanted to be. The problem is that I could not reach that level and then I gave up. Yet I will always feel regret about it. I would often dream about making music in a way that felt more like "me"—a way that used something I was actually good at.
+
+That's when it hit me: and why not music with shooting games? Shooting games are what I can do and I love them. This game became a way of me being able to tell my story and blending two things I’m really passionate about. This project allows me to explore what my dream would be for a career making music, that is to say doing it in my own style, the way it feels right to me and genuinely reflecting what I love. My goal was to make music something other than just a traditional thing you play, instead something fun and unconventional in a way that combined shooting game excitement with creative music making.
+
+Making this game very much taught me how to code in an artistic way while also making me face some of my past failures. It turned those regrets into something fun and engaging: a game that really does represent who I am and how I connect with music and gaming. When I was reflecting on this assignment I was able to realize that putting together different parts of myself can create something personal and meaningful, which is something I’m extremely proud of on this project.
+
