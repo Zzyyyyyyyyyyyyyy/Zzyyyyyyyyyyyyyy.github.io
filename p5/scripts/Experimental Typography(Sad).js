@@ -7,10 +7,10 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(600, 400);
+  createCanvas(600, 600);
   // 利用 textToPoints 将 "SAD" 转换为点阵
   // 此处字体大小设为200，起始位置 (50, 250)
-  let pointsData = myFont.textToPoints("SAD", 120, 250, 200, {
+  let pointsData = myFont.textToPoints("SAD", 120, 350, 200, {
     sampleFactor: 0.1,
     simplifyThreshold: 0
   });

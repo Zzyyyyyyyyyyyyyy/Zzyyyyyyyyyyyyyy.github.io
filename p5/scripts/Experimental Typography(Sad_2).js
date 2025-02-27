@@ -8,9 +8,9 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(600, 400);
+  createCanvas(600, 600);
   // 使用 textToPoints 将 "SAD" 转换为点阵，设置合适的起始坐标和大小
-  points = myFont.textToPoints("SAD", 100, 250, 200, {
+  points = myFont.textToPoints("SAD", 120, 350, 200, {
     sampleFactor: 0.1
   });
   noFill();

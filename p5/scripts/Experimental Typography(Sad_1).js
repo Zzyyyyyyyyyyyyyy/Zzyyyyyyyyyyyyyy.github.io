@@ -9,12 +9,12 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(600, 600);
   colorMode(HSB, 360, 100, 100); // 使用 HSB 模式，做颜色变化更方便
   
   // 将 "SAD" 转为点阵
   // 可以通过 sampleFactor 调整点的密度
-  points = myFont.textToPoints("SAD", 80, 200, 128, {
+  points = myFont.textToPoints("SAD", 150, 300, 180, {
     sampleFactor: 0.2,
     simplifyThreshold: 0
   });
