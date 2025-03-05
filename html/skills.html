@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Skills Section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 5rem 0;
+            background-color: #1a1a1a;
+            text-align: center;
+        }
+        
+        .skills-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #ff3e7f, #ffb56b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .skills-section p {
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        /* 2 列布局：每列纵向排列 5 个技能，共 10 个技能 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px; /* 可根据需要调整宽度 */
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 62, 127, 0.3);
+        }
+
+        .skill-info {
+            flex: 1;
+        }
+
+        .skill-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .skill-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, #ff3e7f, #ffb56b);
+            border-radius: 5px;
+            position: relative;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .skill-percent {
+            position: absolute;
+            top: -25px;
+            right: 0;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 62, 127, 0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .skill-icon {
+            margin-left: 1.5rem;
+            font-size: 2.5rem;
+            color: #ff3e7f;
+            text-align: center;
+            min-width: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            height: 60px;
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover .skill-icon {
+            transform: rotate(360deg);
+            color: #ffb56b;
+        }
+    </style>
+</head>
+<body>
+    <section class="skills-section">
+        <h2>My Skills</h2>
+        <div class="skills-grid">
+            <!-- Skill 1 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>JavaScript</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 90%;">
+                            <span class="skill-percent">90%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-js"></i>
+                </div>
+            </div>
+
+            <!-- Skill 2 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>HTML5/CSS3</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 95%;">
+                            <span class="skill-percent">95%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-html5"></i>
+                </div>
+            </div>
+
+            <!-- Skill 3 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>React</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 85%;">
+                            <span class="skill-percent">85%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-react"></i>
+                </div>
+            </div>
+
+            <!-- Skill 4 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Node.js</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 80%;">
+                            <span class="skill-percent">80%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+            </div>
+
+            <!-- Skill 5 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Python</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 75%;">
+                            <span class="skill-percent">75%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-python"></i>
+                </div>
+            </div>
+
+            <!-- Skill 6 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>UI/UX Design</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 88%;">
+                            <span class="skill-percent">88%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+            </div>
+
+            <!-- Skill 7 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Database</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 82%;">
+                            <span class="skill-percent">82%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+            </div>
+
+            <!-- Skill 8 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>DevOps</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 70%;">
+                            <span class="skill-percent">70%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+            </div>
+
+            <!-- Skill 9 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Cloud Services</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 78%;">
+                            <span class="skill-percent">78%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+            </div>
+
+            <!-- Skill 10 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Mobile App Dev</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 85%;">
+                            <span class="skill-percent">85%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

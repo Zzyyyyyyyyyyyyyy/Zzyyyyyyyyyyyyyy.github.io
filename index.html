@@ -3,61 +3,3481 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z's Space</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Modern Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <style>
+        :root {
+            font-size: 16px;
+            --primary-color: #ff3e7f;
+            --secondary-color: #ffb56b;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --section-padding: 0 2.5rem; /* 增加section的左右内边距从1rem到2.5rem */
+            --content-max-width: 1600px; /* 减小内容的最大宽度 */
+            --grid-side-margin: 2rem; /* 增加grid的左右外边距从0.5rem到2rem */
+        }
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Clash Display', sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #f5f5f5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: default; /* 将默认光标从auto改为default */
+        }
+        
+        /* Custom cursor styles */
+        .cursor-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .cursor-dot {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 62, 127, 0.25);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            filter: blur(10px);
+            will-change: transform;
+        }
+        
+        .cursor-outline {
+            display: none;
+        }
+        
+        .cursor-trail {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 62, 127, 0.85) 0%, rgba(255, 181, 107, 0) 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0.8;
+            z-index: 1;
+            pointer-events: none;
+            will-change: transform;
+        }
+        
+        /* Interactive elements cursor style */
+        a, button, .nav-btn, .slider-btn, .slider-dot, .scroll-indicator {
+            cursor: pointer; /* Changed from 'auto' to 'pointer' to show hand cursor */
+            position: relative;
+            z-index: 100; /* Ensure interactive elements are above the cursor layer */
+            overflow: visible;
+        }
+        
+        /* Add background for text links */
+        a:not(.logo), .nav-btn {
+            position: relative;
+            z-index: 2;
+        }
+        
+        a:not(.logo)::before, .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 62, 127, 0.05);
+            border-radius: 8px;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 8px 12px;
+        }
+        
+        a:not(.logo):hover::before, .nav-btn:hover::before {
+            opacity: 1;
+        }
+        
+        /* Logo specific styles */
+        .logo {
+            text-decoration: none;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 4px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo img {
+            width: 45px; /* 缩小为原来的一半 */
+            height:45px; /* 缩小为原来的一半 */
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(255, 62, 127, 0.3));
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover img {
+            filter: drop-shadow(0 0 12px rgba(255, 62, 127, 0.5));
+            transform: scale(1.15);
+        }
+        
+        /* Remove the dot before logo */
+        .logo::before {
+            display: none;
+        }
+        
+        /* Remove the colored span style */
+        .logo span {
+            display: none;
+        }
+        
+        /* Update the glow effect for logo */
+        .logo::after {
+            display: none;
+        }
+        
+        /* Remove the hover styles that were trying to modify the outline */
+        a:hover ~ .cursor-container .cursor-outline,
+        button:hover ~ .cursor-container .cursor-outline,
+        .nav-btn:hover ~ .cursor-container .cursor-outline,
+        .slider-btn:hover ~ .cursor-container .cursor-outline,
+        .slider-dot:hover ~ .cursor-container .cursor-outline,
+        .scroll-indicator:hover ~ .cursor-container .cursor-outline {
+            display: none;
+        }
+        
+        /* Navigation styles */
+        .navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding-top: 25px; /* 增加顶部间距 */
+            overflow: visible; /* 确保内容溢出时可见 */
+        }
+        
+        .navbar {
+            width: 100%;
+            max-width: 3440px; /* 设置导航栏最大宽度为3440px */
+            padding: 0.5rem 3%; /* 从10%减少到3%，大幅缩小与页面边缘的距离 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            overflow: visible; /* 确保内容溢出时可见 */
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff3e7f;
+            border-radius: 50%;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .logo span {
+            color: #ff3e7f;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            margin-left: auto;
+            overflow: visible; /* 确保内容溢出时可见 */
+            white-space: nowrap; /* 防止文本折行 */
+        }
+        
+        .nav-links a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-size: 1.3rem; /* 从1.1rem增加到1.3rem，使字体更大更醒目 */
+            font-weight: 600; /* 从500增加到600，使字体更粗更醒目 */
+            position: relative;
+            transition: all 0.3s ease;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            font-family: 'Clash Display', sans-serif;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2.5px;
+            background: #ff3e7f;
+            left: 0;
+            bottom: -6px;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #ff3e7f;
+            transform: translateY(-1px);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #f5f5f5;
+        }
+        
+        /* 添加导航栏响应式设计 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem 5%; /* 增加小屏幕上的左右间距 */
+                overflow-x: auto; /* 允许在小屏幕上横向滚动 */
+                -webkit-overflow-scrolling: touch; /* 提供流畅的滚动体验 */
+                scrollbar-width: none; /* 隐藏默认滚动条 */
+            }
+            
+            .navbar::-webkit-scrollbar {
+                display: none; /* 隐藏WebKit浏览器中的滚动条 */
+            }
+            
+            .nav-links {
+                gap: 1.8rem; /* 减少链接间距 */
+                padding-right: 1rem; /* 确保最后一个链接有足够的右侧空间 */
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem; /* 在小屏幕上减小字体大小 */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 1.2rem; /* 在非常小的屏幕上进一步减少间距 */
+            }
+            
+            .nav-links a {
+                font-size: 1rem; /* 进一步减小字体大小 */
+                letter-spacing: 0.2px; /* 减少字母间距 */
+            }
+        }
+        
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--section-padding); /* 使用变量替换固定值 */
+            position: relative; /* 确保为absolute定位提供参考 */
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            pointer-events: all;
+            max-width: 2560px; /* 特别为hero section设置更大的宽度 */
+            width: 100%;
+            padding: 0 3rem; /* 添加左右内边距以增加空白区域 */
+            overflow: visible;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: default;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr); /* 保持12列但调整元素跨度 */
+            gap: 1.5rem; /* 减少列间距从2rem到1.5rem */
+            margin: 2.5rem var(--grid-side-margin) 1rem;
+            padding-top: 2rem;
+            position: relative;
+            width: calc(100% - 2 * var(--grid-side-margin));
+        }
+        
+        .title-highlight {
+            grid-column: 1 / span 3; /* 保持原有跨度 */
+            grid-row: 1;
+            font-size: 1.75rem;
+            color: #ff3e7f;
+            line-height: 1.4;
+            transform: none;
+            padding: 0;
+            text-align: left;
+            cursor: default;
+        }
+        
+        .location {
+            grid-column: 1 / span 3; /* 保持原有跨度 */
+            grid-row: 2;
+            transform: none;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            text-align: left;
+            cursor: default;
+        }
+        
+        .roles {
+            grid-column: 4 / span 5; /* 减少跨度从6到5 */
+            grid-row: 1 / span 2;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .roles span {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .education {
+            grid-column: 9 / span 4; /* 调整位置从10到9，增加跨度从3到4 */
+            grid-row: 1 / span 2;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .education .degree {
+            display: block;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.3rem;
+        }
+        
+        .education .school {
+            display: block;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .bio {
+            grid-column: 2 / span 10;
+            grid-row: 3;
+            font-size: 1.1rem;
+            width: 100%;
+            margin: 1rem auto 0.5rem; /* 减少上下margin */
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            text-align: center;
+            position: relative;
+            padding: 0;
+            background: none;
+            border-radius: 0;
+        }
+        
+        .social-links {
+            position: absolute; /* 从fixed改为absolute */
+            left: 1rem; /* 更靠近左边缘 */
+            top: 40%; /* 从50%改为40%，向上移动 */
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 100;
+        }
+        
+        @media (max-width: 992px) {
+            .social-links {
+                position: static;
+                transform: none;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 2rem;
+                gap: 2rem;
+            }
+        }
+        
+        .social-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff3e7f, #ffb56b);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .social-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .social-btn i {
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            z-index: 1001;
+            pointer-events: all;
+            background: transparent;
+            width: 120px;
+            height: 80px;
+            padding: 10px;
+        }
+        
+        .scroll-indicator span {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            user-select: none;
+            position: relative;
+            z-index: 1002;
+        }
+        
+        .scroll-indicator i {
+            color: #ff3e7f;
+            font-size: 1.5rem;
+            pointer-events: none;
+            user-select: none;
+            position: relative;
+            z-index: 1002;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translate(-50%, 0);
+            }
+            40% {
+                transform: translate(-50%, -10px);
+            }
+            60% {
+                transform: translate(-50%, -5px);
+            }
+        }
+        
+        /* Slider section */
+        .slider-section {
+            padding: 5rem var(--grid-side-margin); /* 使用变量替换固定值 */
+            background-color: #1a1a1a;
+            display: none; /* 隐藏 Slider Section 但保留在 DOM 中，不影响相关功能 */
+        }
+        
+        .slider-container {
+            position: relative;
+            max-width: var(--content-max-width); /* 使用变量替换固定值 */
+            margin: 0 auto;
+        }
+        
+        .slider-heading {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .slider-heading h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #ff3e7f, #ffb56b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .slider-heading p {
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .slide {
+            min-width: 100%;
+            padding: 0 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 62, 127, 0.1), rgba(255, 181, 107, 0.1));
+            z-index: -1;
+        }
+        
+        .slide-content img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .slide-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        
+        .slide-content p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+        
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .slider-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slider-btn:hover {
+            background: #ff3e7f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 62, 127, 0.3);
+        }
+        
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background: #ff3e7f;
+            transform: scale(1.2);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 1.5rem 5%;
+            }
+            
+            .slider-heading h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin: 0 auto;
+                padding: 0 1rem;
+                order: 2;
+            }
+            
+            .title-highlight,
+            .location,
+            .bio {
+                grid-column: 1;
+                text-align: center;
+                margin-bottom: 0.5rem;
+                padding: 0;
+                background: none;
+            }
+            
+            .title-highlight {
+                grid-row: 1;
+                font-size: 1.4rem;
+                margin-top: 0;
+            }
+            
+            .location {
+                grid-row: 2;
+                margin-bottom: 0.5rem;
+            }
+            
+            .bio {
+                grid-row: 3;
+                font-size: 0.95rem;
+                margin: 1rem 0;
+            }
+            
+            .name-container .world {
+                font-size: 2.2rem;
+                transform: none;
+                padding: 0;
+                margin: 0;
+                cursor: default !important;
+            }
+            
+            .name-container .world:hover {
+                transform: scale(1.2);
+                cursor: default !important;
+            }
+            
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 7rem 0 2rem;
+                justify-content: flex-start;
+                overflow: visible;
+            }
+            
+            .hero-content {
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                overflow: visible;
+            }
+            
+            .social-links {
+                order: 3;
+                margin-top: 1rem;
+            }
+            
+            .social-btn {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .social-btn i {
+                font-size: 1.3rem;
+            }
+            
+            .scroll-indicator {
+                bottom: 1rem;
+                width: 100px;
+                height: 60px;
+            }
+            
+            .scroll-indicator span {
+                font-size: 0.8rem;
+            }
+            
+            .scroll-indicator i {
+                font-size: 1.2rem;
+            }
+            
+            body {
+                cursor: default;
+                overflow-x: hidden;
+                width: 100%;
+            }
+            
+            a, button, .nav-btn, .slider-btn, .slider-dot, .scroll-indicator {
+                cursor: pointer !important;
+            }
+            
+            /* 确保所有文本在移动设备上也不显示文本选择光标 */
+            .hero *, .slider-section *, .navbar * {
+                cursor: default !important;
+            }
+            
+            /* 保留交互元素的指针光标 */
+            a, button, .nav-btn, .slider-btn, .slider-dot, .scroll-indicator, .social-btn {
+                cursor: pointer !important;
+            }
+            
+            .cursor-container {
+                display: none;
+            }
+        }
+
+        /* Add new styles for scroll indicator hover effect */
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 62, 127, 0.05);
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1001;
+        }
+
+        .scroll-indicator:hover::before {
+            opacity: 1;
+        }
+
+        .scroll-indicator:hover i {
+            color: #ff5e93;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+
+        @font-face {
+            font-family: 'Million Smiles';
+            src: url('Sources/Million Smiles.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; /* 确保尽快渲染 */
+        }
+
+        /* 为.world类添加更强的字体声明 */
+        .name-container .world, 
+        .name-container .world span, 
+        .name-container .world .char {
+            font-family: 'Million Smiles', sans-serif !important;
+        }
+
+        /* 移除轻微闪烁动画 */
+        @keyframes subtleGlow {
+            0%, 100% {
+                text-shadow: 0 0 8px rgba(255, 62, 127, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 12px rgba(255, 62, 127, 0.4), 0 0 20px rgba(255, 181, 107, 0.3);
+            }
+        }
+
+        /* 确保Z's WORLD标题不显示文本选择光标，但保留悬停效果 */
+        .name-container .world {
+            cursor: default !important;
+            pointer-events: auto;
+        }
+
+        /* 确保hero-content区域内的所有元素都不显示文本选择光标 */
+        .hero-content * {
+            cursor: default !important;
+        }
+
+        /* 只有特定的交互元素显示指针光标 */
+        .hero-content a, 
+        .hero-content button, 
+        .hero-content .social-btn, 
+        .hero-content .scroll-indicator {
+            cursor: pointer !important;
+        }
+
+        /* 添加特定的样式来防止文本选择 */
+        .name-container, .info-grid, .slider-heading, .slide-content {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* 全局光标样式 */
+        .hero *, .slider-section *, .navbar * {
+            cursor: default;
+        }
+
+        /* 保留交互元素的指针光标 */
+        a, button, .nav-btn, .slider-btn, .slider-dot, .scroll-indicator, .social-btn {
+            cursor: pointer !important;
+        }
+
+        /* 添加悬浮交互提示图标 */
+        .interaction-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .interaction-hint::before {
+            display: none;
+        }
+
+        .interaction-hint::after {
+            content: 'SEE THROUGH MY EYES';
+            position: static;
+            transform: none;
+            font-size: 1rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 5px rgba(255, 62, 127, 0.5);
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        /* Add specific styles for the cover version of the interaction hint */
+        .cover-name-container .world .interaction-hint::after {
+            content: 'CLICK TO SEE THE WORLD THROUGH MY EYES';
+            position: static;
+            transform: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 8px rgba(255, 62, 127, 0.7);
+            letter-spacing: 2px;
+            white-space: nowrap;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        .interaction-hint i {
+            display: none;
+        }
+
+        /* 移动设备适配 */
+        @media (max-width: 768px) {
+            .interaction-hint::after {
+                content: 'SEE THROUGH MY EYES';
+                font-size: 0.7rem;
+            }
+            
+            .cover-name-container .world .interaction-hint::after {
+                content: 'CLICK TO SEE THROUGH MY EYES';
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ===== Cover页面Z's WORLD样式开始 ===== */
+        /* 重新设计覆盖层样式 */
+        .page-cover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cover-half {
+            width: 100%;
+            height: 50%;
+            background-color: #000;
+            position: absolute;
+            left: 0;
+        }
+        
+        .cover-top {
+            top: 0;
+        }
+        
+        .cover-bottom {
+            bottom: 0;
+        }
+        
+        .cover-message {
+            display: none; /* Hide the original message */
+        }
+
+        /* Cover页面中Z's WORLD的容器样式 */
+        .cover-name-container {
+            position: relative;
+            z-index: 10001;
+            transform: scale(1.2) rotate(-3deg) translate(-5%, -20%); /* 减小缩放比例以适应更多屏幕尺寸 */
+            display: grid;
+            grid-template-areas: 
+                "this this"
+                "is world";
+            gap: 2rem;
+            overflow: visible;
+            padding: 2rem;
+            cursor: pointer !important;
+            /* Add a larger clickable area */
+            min-width: 300px;
+            min-height: 200px;
+            max-width: 90vw; /* 添加最大宽度以确保不会超出视口 */
+            max-height: 80vh; /* 添加最大高度以确保不会超出视口 */
+        }
+        
+        .cover-name-container .this-is,
+        .cover-name-container .is,
+        .cover-name-container .world {
+            cursor: pointer !important;
+            pointer-events: auto;
+        }
+        
+        .cover-name-container .world .char {
+            cursor: pointer !important;
+            pointer-events: auto;
+        }
+        
+        /* Cover页面中"THIS"文本样式 */
+        .cover-name-container .this-is {
+            grid-area: this;
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.2em;
+            transform: translateX(-5%); /* 从-10%改为-5% */
+            cursor: pointer !important;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        /* Cover页面中"IS"文本样式 */
+        .cover-name-container .is {
+            grid-area: is;
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.2em;
+            transform: translateX(10%); /* 从20%改为10% */
+            cursor: pointer !important;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        /* Cover页面中Z's WORLD文本样式 */
+        .cover-name-container .world {
+            grid-area: world;
+            font-family: 'Million Smiles', sans-serif;
+            font-size: min(8rem, 15vw); /* 使用min函数和vw单位，使字体大小响应式 */
+            line-height: 1;
+            background: linear-gradient(45deg, #ff3e7f, #ffb56b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            padding: 2rem;
+            margin: -2rem;
+            white-space: nowrap;
+            transition: all 0.5s ease;
+            cursor: pointer !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            transform: translateX(5%) rotate(2deg);
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            pointer-events: auto;
+            perspective: 1000px;
+            /* 增强默认文字可见性 */
+            text-shadow: 0 0 8px rgba(255, 62, 127, 0.4),
+                        0 0 12px rgba(255, 181, 107, 0.3); 
+            /* 增强描边和阴影效果 */
+            -webkit-text-stroke: 1px rgba(255, 62, 127, 0.4);
+            filter: drop-shadow(0 0 5px rgba(255, 62, 127, 0.5));
+        }
+        
+        /* Cover页面Z's WORLD悬停效果 */
+        .cover-name-container .world:hover {
+            transform: translateX(5%) rotate(2deg) scale(1.1);
+            letter-spacing: 4px;
+            /* 减少悬停时的阴影强度 */
+            text-shadow: 0 0 8px rgba(255, 62, 127, 0.5),
+                        0 0 15px rgba(255, 181, 107, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .cover-name-container {
+                transform: scale(1.2) rotate(-5deg); /* Reduced from 1.5 to 1.2 */
+                gap: 1rem;
+            }
+            
+            .cover-name-container .world {
+                font-size: 4rem;
+                padding: 1rem;
+                margin: -1rem;
+            }
+            
+            .cover-name-container .this-is,
+            .cover-name-container .is {
+                font-size: 1.2rem;
+            }
+            
+            .cover-name-container .world .char {
+                display: inline-block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cover-name-container {
+                transform: scale(1.2) rotate(-5deg);
+                gap: 0.8rem;
+            }
+            
+            .cover-name-container .world {
+                font-size: 3rem;
+            }
+            
+            .cover-name-container .this-is,
+            .cover-name-container .is {
+                font-size: 1rem;
+            }
+        }
+
+        /* Ensure the characters inside the cover world title also have pointer cursor */
+        .cover-name-container .world .char {
+            cursor: pointer !important;
+        }
+
+        /* Add highlight effect for the cover world title */
+        .cover-name-container:hover .world {
+            filter: drop-shadow(0 0 15px rgba(255, 62, 127, 0.7));
+        }
+
+        /* Add a separate click indicator */
+        .click-indicator {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff3e7f, #ffb56b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 11;
+            cursor: pointer !important;
+            box-shadow: 0 0 15px rgba(255, 62, 127, 0.5);
+            animation: clickPulse 1.5s infinite;
+        }
+
+        .click-indicator::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .click-indicator::after {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            animation: clickRipple 1.5s infinite;
+        }
+
+        @keyframes clickRipple {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes clickPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(255, 62, 127, 0.5);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 20px rgba(255, 62, 127, 0.7);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .interaction-hint::after {
+                content: 'SEE THROUGH MY EYES';
+                font-size: 0.7rem;
+            }
+            
+            .cover-name-container .world .interaction-hint::after {
+                content: 'CLICK TO SEE THROUGH MY EYES';
+                font-size: 0.9rem;
+            }
+            
+            .click-indicator {
+                width: 40px;
+                height: 40px;
+                top: -15px;
+                right: -15px;
+            }
+            
+            .click-indicator::before {
+                width: 10px;
+                height: 10px;
+            }
+            
+            .click-indicator::after {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        /* Add a transparent overlay to ensure the entire area is clickable */
+        .clickable-overlay {
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            right: -30px;
+            bottom: -30px;
+            background-color: transparent;
+            cursor: pointer !important;
+            z-index: 10002;
+        }
+
+        /* Make sure the overlay doesn't interfere with the hover effects */
+        .cover-name-container:hover .clickable-overlay {
+            pointer-events: none;
+        }
+
+        /* 主页面Z's WORLD样式 */
+        .main-title {
+            margin-bottom: 1.5rem; /* 减少底部margin */
+            text-align: center;
+            width: 100%;
+        }
+        
+        .world-title {
+            font-family: 'Million Smiles', sans-serif;
+            font-size: 10rem; /* 从8rem放大到14.4rem (8 × 1.8) */
+            line-height: 1;
+            background: linear-gradient(45deg, #ff3e7f, #ffb56b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            padding: 2rem;
+            margin: -1rem auto 2rem;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            /* 增强默认文字可见性 */
+            text-shadow: 0 0 8px rgba(255, 62, 127, 0.4),
+                        0 0 12px rgba(255, 181, 107, 0.3); 
+            /* 增强描边和阴影效果 */
+            -webkit-text-stroke: 1px rgba(255, 62, 127, 0.4);
+            filter: drop-shadow(0 0 5px rgba(255, 62, 127, 0.5));
+            transition: all 0.5s ease;
+            perspective: 1000px;
+            transform: scale(1); /* 确保默认缩放为1，以便互动效果正常工作 */
+            /* 添加必要的CSS以确保元素能够在更大尺寸下正确显示 */
+            max-width: 100%;
+            overflow: visible;
+        }
+        
+        /* 添加悬停放大效果 */
+        .world-title:hover {
+            transform: scale(1.1); /* 悬停时放大到1.1倍 */
+            transition: transform 0.5s ease; /* 平滑过渡 */
+        }
+        
+        /* 删除悬停样式
+        .world-title:hover {
+            transform: scale(1.05);
+            letter-spacing: 4px;
+            text-shadow: 0 0 12px rgba(255, 62, 127, 0.6),
+                         0 0 20px rgba(255, 181, 107, 0.4);
+            filter: drop-shadow(0 0 8px rgba(255, 62, 127, 0.6));
+        }
+        */
+        
+        .world-title .char {
+            display: inline-block;
+            position: relative;
+            transition: transform 0.3s ease, color 0.3s ease;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        
+        /* 删除悬停动画
+        .world-title:hover .char {
+            animation: float 2s ease-in-out infinite;
+            animation-delay: calc(0.1s * var(--char-index));
+        }
+        */
+        
+        /* 保留.animate类的动画，因为我们可能会在JavaScript中使用它 */
+        .world-title.animate .char {
+            animation: float 2s ease-in-out infinite;
+            animation-delay: calc(0.1s * var(--char-index));
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotateX(0) rotateY(0);
+            }
+            25% {
+                transform: translateY(-10px) rotateX(10deg) rotateY(5deg);
+            }
+            50% {
+                transform: translateY(0) rotateX(0) rotateY(0);
+            }
+            75% {
+                transform: translateY(10px) rotateX(-10deg) rotateY(-5deg);
+            }
+        }
+        
+        /* 媒体查询，用于响应式设计 */
+        @media (max-width: 768px) {
+            .world-title {
+                font-size: 9rem; /* 从5rem放大到9rem (5 × 1.8) */
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .world-title {
+                font-size: 6.3rem; /* 从3.5rem放大到6.3rem (3.5 × 1.8) */
+                padding: 0.5rem;
+            }
+        }
+
+        /* 添加一个媒体查询以确保在超小屏幕上也能正常显示 */
+        @media (max-width: 360px) {
+            .world-title {
+                font-size: 5rem; /* 在非常小的屏幕上使用更小的字体 */
+                padding: 0.3rem;
+            }
+        }
+
+        /* 添加主界面元素的初始隐藏状态 */
+        .hero-content .main-title,
+        .hero-content .info-grid,
+        .hero .social-links,
+        .hero .scroll-indicator,
+        .skills-section {
+            opacity: 0;
+            transform: translateY(20px);
+            visibility: hidden;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 3rem var(--grid-side-margin); /* 使用变量替换固定值 */
+            background-color: #1a1a1a;
+            text-align: center;
+        }
+        
+        .skills-section h2 {
+            font-size: 2.2rem; /* 略微减小标题 */
+            margin-bottom: 0.5rem; /* 减少标题下方间距 */
+            background: linear-gradient(90deg, #ff3e7f, #ffb56b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .skills-section p {
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto 2rem; /* 从3rem减少到2rem */
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.3rem; /* 从2rem减少到1.3rem */
+            max-width: var(--content-max-width); /* 使用变量替换固定值 */
+            margin: 0 auto;
+            padding: 0 var(--grid-side-margin); /* 使用变量替换固定值 */
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px; /* 略微减小圆角 */
+            padding: 1rem; /* 从1.5rem减少到1rem */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* 减小阴影 */
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 62, 127, 0.3);
+        }
+
+        .skill-info {
+            flex: 1;
+        }
+
+        .skill-info h3 {
+            font-size: 1.1rem; /* 从1.25rem减小到1.1rem */
+            margin-bottom: 0.5rem; /* 从0.75rem减小到0.5rem */
+            color: #fff;
+        }
+
+        .skill-bar {
+            height: 8px; /* 从10px减小到8px */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px; /* 从5px减小到4px */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, #ff3e7f, #ffb56b);
+            border-radius: 5px;
+            position: relative;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .skill-percent {
+            display: none; /* 隐藏百分比数字 */
+        }
+
+        .skill-icon {
+            margin-left: 1rem; /* 从1.5rem减小到1rem */
+            font-size: 2rem; /* 从2.5rem减小到2rem */
+            color: #ff3e7f; /* 图标颜色 */
+            text-align: center;
+            min-width: 50px; /* 从60px减小到50px */
+            background: rgba(255, 255, 255, 0.05);
+            height: 50px; /* 从60px减小到50px */
+            width: 50px; /* 从60px减小到50px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* 减小阴影 */
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover .skill-icon {
+            transform: rotate(360deg);
+            color: #ffb56b;
+        }
+
+        /* Z's WORLD响应式设计 - 大屏幕样式调整（≤1200px） */
+        @media (max-width: 1200px) {
+            .cover-name-container {
+                transform: scale(1.1) rotate(-3deg) translate(-8%, -15%);
+                gap: 1.5rem;
+            }
+            
+            .cover-name-container .this-is,
+            .cover-name-container .is {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Z's WORLD响应式设计 - 平板设备样式调整（≤768px） */
+        @media (max-width: 768px) {
+            .cover-name-container {
+                transform: scale(1) rotate(-3deg) translate(-5%, -10%);
+                gap: 1rem;
+            }
+            
+            .cover-name-container .world {
+                font-size: min(4rem, 15vw);
+                padding: 1rem;
+                margin: -1rem;
+            }
+            
+            .cover-name-container .this-is,
+            .cover-name-container .is {
+                font-size: 1.2rem;
+            }
+            
+            .cover-name-container .world .char {
+                display: inline-block;
+            }
+        }
+
+        /* Z's WORLD响应式设计 - 移动设备样式调整（≤480px） */
+        @media (max-width: 480px) {
+            .cover-name-container {
+                transform: scale(0.9) rotate(-3deg) translate(-5%, -5%);
+                gap: 0.8rem;
+            }
+            
+            .cover-name-container .world {
+                font-size: min(3rem, 15vw);
+            }
+            
+            .cover-name-container .this-is,
+            .cover-name-container .is {
+                font-size: 1rem;
+            }
+        }
+
+        /* Hero section响应式调整 */
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 0 1.5rem; /* 平板设备上的左右内边距 */
+                --grid-side-margin: 1.2rem; /* 平板设备上的左右外边距 */
+            }
+            
+            .hero-content {
+                padding: 0 1.5rem; /* 平板设备上减少左右内边距 */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            :root {
+                --section-padding: 0 1rem; /* 移动设备上的左右内边距 */
+                --grid-side-margin: 0.8rem; /* 移动设备上的左右外边距 */
+            }
+            
+            .hero-content {
+                padding: 0 1rem; /* 移动设备上进一步减少左右内边距 */
+            }
+        }
+        
+        /* Selected Works Section */
+        .selected-works-section {
+            padding: 5rem 1.5rem; /* 比hero section少一点左右内边距 */
+            max-width: 2560px; /* 与hero section保持相同的最大宽度 */
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        .selected-works-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--text-color);
+            position: relative;
+        }
+        
+        .selected-works-section h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+        
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 两列布局 */
+            gap: 8px; /* 极小的间距，符合要求 */
+            width: 100%;
+        }
+        
+        .work-item {
+            position: relative;
+            border-radius: 16px; /* 圆角矩形 */
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-origin: center;
+            height: 100%;
+        }
+        
+        /* 添加特殊边框效果 */
+        .work-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            padding: 2px; /* 控制边框厚度 */
+            background: linear-gradient(45deg, transparent, transparent);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 3;
+            pointer-events: none;
+        }
+        
+        .work-item:hover::before {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+            background-size: 200% 200%;
+            animation: border-glow 3s ease infinite;
+            opacity: 1;
+        }
+        
+        @keyframes border-glow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .work-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 62, 127, 0.15);
+            z-index: 2; /* 确保悬停的项目在上层 */
+        }
+        
+        .work-image {
+            position: relative;
+            width: 100%;
+            padding-top: 60%; /* 宽高比 */
+            overflow: hidden;
+        }
+        
+        .image-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 62, 127, 0.1), rgba(255, 181, 107, 0.1));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+        
+        .image-placeholder i {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+            transition: all 0.5s ease;
+        }
+        
+        .image-placeholder span {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+            transition: all 0.5s ease;
+        }
+        
+        .work-item:hover .image-placeholder {
+            background: linear-gradient(135deg, rgba(255, 62, 127, 0.2), rgba(255, 181, 107, 0.2));
+        }
+        
+        .work-item:hover .image-placeholder i {
+            transform: scale(1.2) rotate(10deg);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .work-item:hover .image-placeholder span {
+            transform: translateY(5px);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* 添加特殊效果：图片区域发光效果 */
+        .work-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 50%, rgba(18, 18, 18, 0.8) 100%);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .work-item:hover .work-image::after {
+            opacity: 0.7;
+        }
+        
+        .work-info {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+            background: rgba(18, 18, 18, 0.95);
+            transition: all 0.3s ease;
+        }
+        
+        .work-item:hover .work-info {
+            background: rgba(25, 25, 25, 0.95);
+        }
+        
+        .work-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .work-item:hover .work-info h3 {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .work-info p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+        }
+        
+        .work-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+        }
+        
+        .work-tags span {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .work-item:hover .work-tags span {
+            background: rgba(255, 62, 127, 0.15);
+            color: var(--secondary-color);
+        }
+        
+        .view-project {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .view-project::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            transition: all 0.3s ease;
+        }
+        
+        .view-project i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .work-item:hover .view-project {
+            opacity: 1;
+        }
+        
+        .work-item:hover .view-project::after {
+            width: 100%;
+        }
+        
+        .work-item:hover .view-project i {
+            transform: translateX(5px);
+        }
+        
+        /* Selected Works Section Responsive Design */
+        @media (max-width: 768px) {
+            .works-grid {
+                grid-template-columns: 1fr; /* 小屏幕上变为单列 */
+                gap: 16px; /* 增加间距提高可读性 */
+            }
+            
+            .selected-works-section {
+                padding: 4rem 1rem;
+            }
+            
+            .selected-works-section h2 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .work-info h3 {
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* 添加主界面元素的初始隐藏状态 */
+        .selected-works-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .selected-works-section.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .work-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease, all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .selected-works-section.in-view .work-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .selected-works-section.in-view .work-item:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+        
+        .selected-works-section.in-view .work-item:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+        
+        .selected-works-section.in-view .work-item:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+        
+        .selected-works-section.in-view .work-item:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Z's Space 🚀</h1>
-        <nav>
-            <a href="index.html"><i class="fas fa-home"></i> Home</a>
-            <a href="projects.html"><i class="fas fa-paint-brush"></i> P5.js Works</a>
-        </nav>
-    </header>
-
-    <main>
-        <!-- 简介部分 -->
-        <section class="intro card">
-            <h2><i class="fas fa-user-astronaut section-icon"></i> About Me</h2>
-            <p>Hi! I'm <strong>Z</strong>. I'm currently pursuing my degree in <strong>Design and Technology</strong> at <strong>Parsons School of Design</strong>, where I explore the intersection of art, design, and emerging technologies. My work often aims to bridge the gap between playful creativity and critical engagement with the digital world.</p>
+    <!-- 添加覆盖层 -->
+    <div class="page-cover" id="pageCover">
+        <div class="cover-half cover-top" id="coverTop"></div>
+        <div class="cover-half cover-bottom" id="coverBottom"></div>
+        <div class="cover-message" id="coverMessage">See through my eyes</div>
+        <!-- Cover页面中的"Z's WORLD"文本部分 - 主要的品牌标识和交互元素 -->
+        <div class="cover-name-container" id="coverNameContainer">
+            <!-- 添加透明覆盖层以确保整个区域可点击 -->
+            <div class="clickable-overlay"></div>
+            <!-- "THIS"文本元素 -->
+            <div class="this-is">THIS</div>
+            <!-- "IS"文本元素 -->
+            <div class="is">IS</div>
+            <!-- "Z's WORLD"文本元素 - 网站主标题 -->
+            <div class="world">
+                <span class="char" style="--char-index: 0; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">Z</span>
+                <span class="char" style="--char-index: 1; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">'</span>
+                <span class="char" style="--char-index: 2; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">s</span>
+                <span class="char" style="--char-index: 3; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);"> </span>
+                <span class="char" style="--char-index: 4; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">W</span>
+                <span class="char" style="--char-index: 5; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">O</span>
+                <span class="char" style="--char-index: 6; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">R</span>
+                <span class="char" style="--char-index: 7; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">L</span>
+                <span class="char" style="--char-index: 8; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">D</span>
+                <div class="interaction-hint"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom Cursor -->
+    <div class="cursor-container">
+        <div class="cursor-dot" id="cursor-dot"></div>
+        <div class="cursor-outline" id="cursor-outline" style="display: none;"></div>
+    </div>
+    
+    <!-- Navigation Bar -->
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <img src="Z_s_icon.png" alt="Logo">
+            </a>
             
-            <p>Beyond my coursework, I'm passionate about immersive and interactive media, and I enjoy crafting unique experiences that blend aesthetic storytelling with cutting-edge tech.</p>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About Me</a>
+                <a href="#">Works</a>
+                <a href="#">Contact</a>
+            </div>
+        </nav>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="social-links">
+            <a href="#" class="social-btn" id="instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-btn" id="linkedin">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+        
+        <div class="hero-content">
+            <!-- Z's WORLD元素 -->
+            <div class="main-title">
+                <div class="world-title">
+                    <span class="char" style="--char-index: 0; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">Z</span>
+                    <span class="char" style="--char-index: 1; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">'</span>
+                    <span class="char" style="--char-index: 2; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">s</span>
+                    <span class="char" style="--char-index: 3; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);"> </span>
+                    <span class="char" style="--char-index: 4; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">W</span>
+                    <span class="char" style="--char-index: 5; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">O</span>
+                    <span class="char" style="--char-index: 6; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">R</span>
+                    <span class="char" style="--char-index: 7; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">L</span>
+                    <span class="char" style="--char-index: 8; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">D</span>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="title-highlight">
+                    Interaction Designer<br>
+                    AI-Driven Designer
+                </div>
+                <div class="location">
+                    Interactive Designer<br>
+                    Product Manager<br>
+                    <span style="font-size: 0.9rem;">Based in <strong>NYC</strong></span>
+                </div>
+                <div class="roles">
+                    <!-- 删除Bridging human文本 -->
+                </div>
+                <div class="education">
+                    <span class="degree">BFA Design & Technology</span>
+                    <span class="school">Parsons School of Design</span>
+                </div>
+                <p class="bio">Crafting immersive digital experiences that push the boundaries of interactive design, combining technical expertise with artistic vision to create meaningful connections.</p>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator" id="scrollIndicator">
+            <span>Scroll Down</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section class="skills-section">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <!-- Skill 1 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>JavaScript</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 80%;">
+                            <span class="skill-percent">80%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-js"></i>
+                </div>
+            </div>
 
-            <h3><i class="fas fa-heart section-icon"></i> Interests & Hobbies</h3>
-            <p>When I'm not coding or experimenting in the studio, you can find me:</p>
-            <ul class="icon-list">
-                <li><i class="fas fa-basketball-ball list-icon"></i> Playing Basketball 🏀</li>
-                <li><i class="fas fa-futbol list-icon"></i> Watching Football Matches ⚽️</li>
-                <li><i class="fas fa-gamepad list-icon"></i> Playing Football Video Games 🎮</li>
-                <li><i class="fas fa-music list-icon"></i> Listening to Music 🎵</li>
-            </ul>
-        </section>
+            <!-- Skill 2 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>HTML5/CSS3</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 73%;">
+                            <span class="skill-percent">73%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-html5"></i>
+                </div>
+            </div>
 
-        <!-- 学术背景 -->
-        <section class="academic-background card">
-            <h2><i class="fas fa-graduation-cap section-icon"></i> Academic Background</h2>
-            <p>As a current student in the Design and Technology program at Parsons, I immerse myself in both theoretical frameworks and hands-on practice. The curriculum encourages us to push creative boundaries, foster interdisciplinary collaborations, and reimagine the role of technology in contemporary life. This environment has equipped me with a strong foundation in design thinking, user experience, and interaction design.</p>
-        </section>
+            <!-- Skill 3 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>React</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 65%;">
+                            <span class="skill-percent">65%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-react"></i>
+                </div>
+            </div>
 
-        <!-- 技能与专长 -->
-        <section class="skills card">
-            <h2><i class="fas fa-tools section-icon"></i> Skills & Expertise</h2>
-            <p>I love experimenting with various tools and platforms to create interactive installations, generative art pieces, and dynamic visual experiences. Here are a few areas I’m particularly drawn to:</p>
-            <ul class="icon-list">
-                <li><i class="fas fa-robot list-icon"></i> <strong>Generative AI</strong>: Crafting interactive and evolving artworks using cutting-edge AI models.</li>
-                <li><i class="fas fa-tv list-icon"></i> <strong>TouchDesigner</strong>: Designing real-time visual environments and audio-responsive graphics for live performances and installations.</li>
-                <li><i class="fas fa-code-branch list-icon"></i> <strong>ComfyUI</strong>: Developing modular and customizable AI-driven workflows to refine generative outputs.</li>
-                <li><i class="fas fa-microchip list-icon"></i> <strong>Arduino</strong>: Creating tangible interfaces and sensor-based systems that integrate physical computing with digital expression.</li>
-            </ul>
-            <p>In addition to these specialized tools, I’m proficient in creative coding platforms like p5.js, and have a growing interest in extending these explorations into VR/AR experiences and data-driven visualizations.</p>
-        </section>
+            <!-- Skill 4 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>ComfyUI & MidJourney</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 90%;">
+                            <span class="skill-percent">90%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
 
-        <!-- 创作理念 -->
-        <section class="philosophy card">
-            <h2><i class="fas fa-lightbulb section-icon"></i> Creative Philosophy</h2>
-            <p>My creative philosophy centers around the idea that technology should enable us to tell more impactful stories, not just simplify or automate. By blending logic with emotion, form with function, and code with creativity, I strive to design experiences that both captivate and provoke thought. In my journey, I seek collaborations that challenge my perspective, as well as opportunities to learn from different disciplines, communities, and cultures.</p>
-        </section>
-    </main>
+            <!-- Skill 5 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Python</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 55%;">
+                            <span class="skill-percent">55%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fab fa-python"></i>
+                </div>
+            </div>
+
+            <!-- Skill 6 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>UI/UX Design</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 88%;">
+                            <span class="skill-percent">88%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+            </div>
+
+            <!-- Skill 7 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>TouchDesigner</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 85%;">
+                            <span class="skill-percent">85%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+            </div>
+
+            <!-- Skill 8 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Blender</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 50%;">
+                            <span class="skill-percent">50%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+            </div>
+
+            <!-- Skill 9 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Premiere Pro</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 50%;">
+                            <span class="skill-percent">50%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+            </div>
+
+            <!-- Skill 10 -->
+            <div class="skill-item">
+                <div class="skill-info">
+                    <h3>Unity</h3>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 55%;">
+                            <span class="skill-percent">55%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Selected Works Section -->
+    <section class="selected-works-section">
+        <h2>Selected Works</h2>
+        <div class="works-grid">
+            <!-- Work Item 1 -->
+            <div class="work-item">
+                <div class="work-image">
+                    <!-- Placeholder for image -->
+                    <div class="image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>Image 1</span>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Project Title 1</h3>
+                    <p>Short description of the project showcasing your skills and creativity.</p>
+                    <div class="work-tags">
+                        <span>Design</span>
+                        <span>Development</span>
+                    </div>
+                    <a href="#" class="view-project">View Project <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Work Item 2 -->
+            <div class="work-item">
+                <div class="work-image">
+                    <!-- Placeholder for image -->
+                    <div class="image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>Image 2</span>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Project Title 2</h3>
+                    <p>Short description of the project showcasing your skills and creativity.</p>
+                    <div class="work-tags">
+                        <span>UI/UX</span>
+                        <span>Branding</span>
+                    </div>
+                    <a href="#" class="view-project">View Project <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Work Item 3 -->
+            <div class="work-item">
+                <div class="work-image">
+                    <!-- Placeholder for image -->
+                    <div class="image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>Image 3</span>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Project Title 3</h3>
+                    <p>Short description of the project showcasing your skills and creativity.</p>
+                    <div class="work-tags">
+                        <span>Animation</span>
+                        <span>3D</span>
+                    </div>
+                    <a href="#" class="view-project">View Project <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Work Item 4 -->
+            <div class="work-item">
+                <div class="work-image">
+                    <!-- Placeholder for image -->
+                    <div class="image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>Image 4</span>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <h3>Project Title 4</h3>
+                    <p>Short description of the project showcasing your skills and creativity.</p>
+                    <div class="work-tags">
+                        <span>Interactive</span>
+                        <span>Experiential</span>
+                    </div>
+                    <a href="#" class="view-project">View Project <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Slider Section -->
+    <section class="slider-section">
+        <div class="slider-container">
+            <div class="slider-heading">
+                <h2>Our Featured Projects</h2>
+                <p>Swipe through our latest work and discover how we bring ideas to life</p>
+            </div>
+            
+            <div class="slider-wrapper">
+                <div class="slider" id="slider">
+                    <div class="slide">
+                        <div class="slide-content">
+                            <img src="https://source.unsplash.com/random/600x400/?website,design" alt="Project 1">
+                            <h3>Modern Web Design</h3>
+                            <p>A sleek and responsive website design for a tech startup, featuring intuitive navigation and stunning visuals.</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <img src="https://source.unsplash.com/random/600x400/?app,mobile" alt="Project 2">
+                            <h3>Mobile App Interface</h3>
+                            <p>An elegant mobile application with seamless user experience and beautiful UI components.</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <img src="https://source.unsplash.com/random/600x400/?branding,logo" alt="Project 3">
+                            <h3>Brand Identity</h3>
+                            <p>Complete brand identity package including logo design, color palette, and marketing materials.</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <img src="https://source.unsplash.com/random/600x400/?ecommerce,shop" alt="Project 4">
+                            <h3>E-commerce Platform</h3>
+                            <p>A fully functional online store with secure payment processing and inventory management.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-controls">
+                    <button class="slider-btn" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="slider-btn" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="slider-dots" id="sliderDots">
+                    <div class="slider-dot active"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript for mobile menu, slider and cursor effects -->
+    <script>
+        // For future mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        
+        // 确保Million Smiles字体正确加载
+        document.fonts.ready.then(function() {
+            console.log("所有字体已加载");
+            // 检查Million Smiles字体是否加载
+            if (!document.fonts.check("1em 'Million Smiles'")) {
+                console.warn("Million Smiles字体未能加载，使用备用字体");
+                // 如果Million Smiles字体未加载，使用备用字体
+                const worldTitle = document.querySelector('.name-container .world');
+                if (worldTitle) {
+                    worldTitle.style.fontFamily = "'Poppins', sans-serif";
+                    worldTitle.style.fontWeight = "700";
+                }
+            }
+        });
+        
+        // 确保所有文本元素不显示文本选择光标
+        document.addEventListener('DOMContentLoaded', function() {
+            // 防止文本选择
+            document.body.style.cursor = 'default';
+            
+            // 设置所有文本元素的光标样式
+            const textElements = document.querySelectorAll('.hero *, .slider-section *, .navbar *');
+            textElements.forEach(el => {
+                el.style.cursor = 'default';
+            });
+            
+            // 恢复交互元素的指针光标
+            const interactiveElements = document.querySelectorAll('a, button, .nav-btn, .slider-btn, .slider-dot, .scroll-indicator, .social-btn');
+            interactiveElements.forEach(el => {
+                el.style.cursor = 'pointer';
+            });
+            
+            // 特别处理Z's WORLD标题
+            const worldTitle = document.querySelector('.name-container .world');
+            if (worldTitle) {
+                worldTitle.style.cursor = 'default';
+                worldTitle.style.userSelect = 'none';
+                worldTitle.style.webkitUserSelect = 'none';
+                worldTitle.style.mozUserSelect = 'none';
+                worldTitle.style.msUserSelect = 'none';
+                
+                // 确保文字可见
+                worldTitle.style.display = 'block';
+                worldTitle.style.visibility = 'visible';
+                worldTitle.style.opacity = '1';
+            }
+        });
+        
+        // Z's WORLD 标题动画效果 - 增强版
+        document.addEventListener('DOMContentLoaded', function() {
+            const worldTitle = document.querySelector('.name-container .world');
+            if (!worldTitle) return;
+            
+            // 先隐藏原始文本，避免闪烁
+            worldTitle.style.opacity = "0";
+            
+            // 添加交互提示图标
+            const interactionHint = document.createElement('div');
+            interactionHint.className = 'interaction-hint';
+            interactionHint.innerHTML = ''; // 移除图标
+            worldTitle.appendChild(interactionHint);
+            
+            // 储存原始文本，以备需要恢复
+            const originalText = worldTitle.textContent || "Z's WORLD";
+            
+            try {
+                // 检查Million Smiles字体是否加载
+                document.fonts.ready.then(function() {
+                    console.log("检查Million Smiles字体加载情况");
+                    const isFontLoaded = document.fonts.check("1em 'Million Smiles'");
+                    console.log("Million Smiles字体加载状态:", isFontLoaded);
+                    
+                    // 将文本分割成单个字符，以便单独为每个字符添加动画
+                    // 确保每个字符都保持Million Smiles字体
+                    worldTitle.innerHTML = originalText.split('').map((char, index) => {
+                        return `<span class="char" style="--char-index: ${index}; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">${char}</span>`;
+                    }).join('');
+                    
+                    // 重新添加交互提示图标（因为innerHTML会覆盖之前添加的元素）
+                    worldTitle.appendChild(interactionHint);
+                    
+                    // 初始化动画：字符默认已经可见
+                    const chars = worldTitle.querySelectorAll('.char');
+                    
+                    // 平滑显示处理后的文本（只有当name-section可见时才显示）
+                    if (worldTitle.closest('.name-section').style.display !== 'none') {
+                        gsap.to(worldTitle, {
+                            opacity: 1,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        });
+                    }
+                    
+                    // 添加轻微的初始动画效果（呼吸效果）
+                    startBreathingAnimation(chars, worldTitle);
+                    
+                    function startBreathingAnimation(chars, title) {
+                        // 初始动画：轻微呼吸效果，降低幅度
+                        gsap.to(chars, {
+                            duration: 2.5, // 减缓速度
+                            scale: 1.01, // 降低缩放幅度
+                            y: -1, // 减小垂直移动
+                            stagger: {
+                                each: 0.1,
+                                repeat: -1,
+                                yoyo: true,
+                                from: "center"
+                            },
+                            ease: "sine.inOut"
+                        });
+                        
+                        // 确保初始背景渐变效果可见
+                        gsap.to(title, {
+                            duration: 6, // 放慢动画
+                            backgroundImage: "linear-gradient(45deg, #ff3e7f, #ffb56b)",
+                            backgroundSize: "200% 200%",
+                            backgroundPosition: "0% 0%",
+                            repeat: -1,
+                            yoyo: true,
+                            ease: "sine.inOut"
+                        });
+                    }
+                    
+                    // 立即显示提示文字，不使用延迟
+                    interactionHint.style.opacity = '1';
+                    
+                    // 设置一个变量来跟踪是否已经交互过
+                    let hasInteracted = false;
+                    
+                    // 添加鼠标悬停事件
+                    worldTitle.addEventListener('mouseenter', function() {
+                        if (hasInteracted) return; // 如果已经交互过，不做任何操作
+                        
+                        // 标记为已交互
+                        hasInteracted = true;
+                        
+                        // 添加动画类
+                        this.classList.add('animate');
+                        
+                        // 隐藏交互提示图标
+                        if (interactionHint) {
+                            gsap.to(interactionHint, {
+                                duration: 0.3,
+                                opacity: 0,
+                                ease: "power2.in",
+                                onComplete: function() {
+                                    interactionHint.style.display = 'none';
+                                }
+                            });
+                        }
+                        
+                        // 停止初始动画
+                        gsap.killTweensOf(chars);
+                        
+                        // 创建波浪效果动画
+                        gsap.to(chars, {
+                            duration: 0.5,
+                            stagger: 0.05,
+                            ease: "elastic.out(1, 0.3)",
+                            rotationX: "random(-15, 15)", // 减少旋转角度
+                            rotationY: "random(-20, 20)", // 减少旋转角度
+                            y: "random(-10, 10)", // 减少移动距离
+                            z: "random(0, 30)", // 减少z轴距离
+                            scale: 1.05, // 减少放大效果
+                            color: function() {
+                                // 减少颜色饱和度
+                                const hue = Math.random() * 60 + 330; // 330-390 (红到紫色范围)
+                                return `hsl(${hue}, 80%, 65%)`; // 降低饱和度和亮度
+                            },
+                            textShadow: "0 0 8px rgba(255, 62, 127, 0.5), 0 0 15px rgba(255, 181, 107, 0.3)" // 减弱文字阴影
+                        });
+                        
+                        // 为整个文本添加背景动画
+                        gsap.to(this, {
+                            duration: 2, // 放慢动画
+                            backgroundImage: "linear-gradient(45deg, #ff3e7f, #ffb56b, #ff8e53, #ff3e7f)",
+                            backgroundSize: "300% 300%",
+                            ease: "none",
+                            repeat: -1,
+                            yoyo: true
+                        });
+                    });
+                    
+                    // 完全移除鼠标离开事件处理，不再恢复初始状态
+                    // worldTitle.addEventListener('mouseleave', function() {...} );
+                    
+                    // 添加触摸事件处理（针对移动设备）
+                    let isTouching = false;
+                    
+                    worldTitle.addEventListener('touchstart', function(e) {
+                        if (hasInteracted) return; // 如果已经交互过，不做任何操作
+                        
+                        e.preventDefault(); // 防止默认行为
+                        isTouching = true;
+                        hasInteracted = true; // 标记为已交互
+                        
+                        // 模拟鼠标进入事件
+                        const mouseenterEvent = new Event('mouseenter');
+                        this.dispatchEvent(mouseenterEvent);
+                    });
+                    
+                    // 添加触摸结束事件，但不再恢复初始状态
+                    document.addEventListener('touchend', function(e) {
+                        if (isTouching) {
+                            isTouching = false;
+                            // 不再触发鼠标离开事件
+                        }
+                    });
+                });
+                
+            } catch (error) {
+                console.error('动画初始化失败:', error);
+                // 如果动画初始化失败，恢复原始文本
+                worldTitle.innerHTML = originalText;
+            }
+            
+            // 确保文字可见
+            worldTitle.style.display = 'block';
+            worldTitle.style.visibility = 'visible';
+            worldTitle.style.opacity = '1';
+        });
+        
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            const navbarContainer = document.querySelector('.navbar-container');
+            
+            if (window.scrollY > 50) {
+                navbar.style.padding = '1rem 3%'; /* 从10%减少到3% */
+                navbarContainer.style.background = 'transparent'; /* 100%透明，不使用黑色背景 */
+                navbarContainer.style.backdropFilter = 'none'; /* 移除模糊效果 */
+                navbarContainer.style.paddingTop = '8px'; /* 滚动后减少顶部间距 */
+            } else {
+                navbar.style.padding = '1.5rem 3%'; /* 从10%减少到3% */
+                navbarContainer.style.background = 'transparent';
+                navbarContainer.style.backdropFilter = 'none';
+                navbarContainer.style.paddingTop = '15px'; /* 初始状态的顶部间距 */
+            }
+        });
+        
+        // Scroll indicator functionality
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        const homeLink = document.querySelector('.nav-links a[href="#"]');
+        const logo = document.querySelector('.logo');
+
+        // Variable to track if auto-scrolling is in progress
+        let isAutoScrolling = false;
+
+        // Function to prevent scroll
+        function preventScroll(e) {
+            if (isAutoScrolling) {
+                e.preventDefault();
+            }
+        }
+
+        // Function to handle scroll to top
+        function scrollToTop() {
+            if (isAutoScrolling) return; // Prevent multiple scrolls
+
+            isAutoScrolling = true;
+            
+            // Add event listeners to prevent scroll
+            window.addEventListener('wheel', preventScroll, { passive: false });
+            window.addEventListener('touchmove', preventScroll, { passive: false });
+
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: 0,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    // Remove scroll prevention and show scroll indicator
+                    isAutoScrolling = false;
+                    window.removeEventListener('wheel', preventScroll);
+                    window.removeEventListener('touchmove', preventScroll);
+
+                    // Show scroll indicator with fade in effect
+                    gsap.fromTo(scrollIndicator, 
+                        { opacity: 0, y: 20 },
+                        { 
+                            duration: 0.8,
+                            opacity: 1,
+                            y: 0,
+                            ease: "power2.out",
+                            display: "flex"
+                        }
+                    );
+                }
+            });
+        }
+
+        // Handle scroll indicator click
+        scrollIndicator.addEventListener('click', () => {
+            if (isAutoScrolling) return; // Prevent multiple scrolls
+
+            isAutoScrolling = true;
+            
+            // Add event listeners to prevent scroll
+            window.addEventListener('wheel', preventScroll, { passive: false });
+            window.addEventListener('touchmove', preventScroll, { passive: false });
+
+            // Scroll down with animation
+            gsap.to(window, {
+                duration: 1,
+                scrollTo: window.innerHeight,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    // Remove scroll prevention
+                    isAutoScrolling = false;
+                    window.removeEventListener('wheel', preventScroll);
+                    window.removeEventListener('touchmove', preventScroll);
+                }
+            });
+            
+            // Hide scroll indicator with fade out effect
+            gsap.to(scrollIndicator, {
+                duration: 0.5,
+                opacity: 0,
+                y: 20,
+                ease: "power2.in",
+                onComplete: () => {
+                    scrollIndicator.style.display = "none";
+                }
+            });
+        });
+
+        // Add scroll to top functionality for home link and logo
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToTop();
+        });
+
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToTop();
+        });
+
+        // Show/hide scroll indicator based on scroll position
+        window.addEventListener('scroll', () => {
+            if (!isAutoScrolling) { // Only handle manual scrolls
+                if (window.scrollY < 50) {
+                    if (scrollIndicator.style.display === "none") {
+                        gsap.fromTo(scrollIndicator,
+                            { opacity: 0, y: 20 },
+                            { 
+                                duration: 0.8,
+                                opacity: 1,
+                                y: 0,
+                                ease: "power2.out",
+                                display: "flex"
+                            }
+                        );
+                    }
+                } else {
+                    if (scrollIndicator.style.display !== "none") {
+                        gsap.to(scrollIndicator, {
+                            duration: 0.5,
+                            opacity: 0,
+                            y: 20,
+                            ease: "power2.in",
+                            onComplete: () => {
+                                scrollIndicator.style.display = "none";
+                            }
+                        });
+                    }
+                }
+            }
+        });
+        
+        // Slider functionality
+        const slider = document.getElementById('slider');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('.slider-dot');
+        
+        let slideIndex = 0;
+        const slideCount = document.querySelectorAll('.slide').length;
+        
+        // Initialize slider
+        updateSlider();
+        
+        // Event listeners for buttons
+        prevBtn.addEventListener('click', () => {
+            slideIndex = (slideIndex - 1 + slideCount) % slideCount;
+            updateSlider();
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            slideIndex = (slideIndex + 1) % slideCount;
+            updateSlider();
+        });
+        
+        // Event listeners for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                slideIndex = index;
+                updateSlider();
+            });
+        });
+        
+        // Update slider position and active dot
+        function updateSlider() {
+            slider.style.transform = `translateX(-${slideIndex * 100}%)`;
+            
+            // Update active dot
+            dots.forEach((dot, index) => {
+                if (index === slideIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        // Auto slide functionality
+        let autoSlideInterval = setInterval(() => {
+            slideIndex = (slideIndex + 1) % slideCount;
+            updateSlider();
+        }, 5000);
+        
+        // Pause auto slide on hover
+        slider.addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval);
+        });
+        
+        slider.addEventListener('mouseleave', () => {
+            autoSlideInterval = setInterval(() => {
+                slideIndex = (slideIndex + 1) % slideCount;
+                updateSlider();
+            }, 5000);
+        });
+        
+        // Touch swipe functionality
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        slider.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swipe left
+                slideIndex = (slideIndex + 1) % slideCount;
+                updateSlider();
+            } else if (touchEndX > touchStartX + swipeThreshold) {
+                // Swipe right
+                slideIndex = (slideIndex - 1 + slideCount) % slideCount;
+                updateSlider();
+            }
+        }
+        
+        // Custom cursor functionality
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        const cursorContainer = document.querySelector('.cursor-container');
+        
+        // Check if we're on a device with touch support
+        if (!('ontouchstart' in window)) {
+            let mouseX = 0;
+            let mouseY = 0;
+            let cursorX = 0;
+            let cursorY = 0;
+            
+            // GSAP smooth cursor movement with subtle breathing effect
+            gsap.to(cursorDot, {
+                scale: 1.2,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut"
+            });
+            
+            gsap.to({}, 0.016, {
+                repeat: -1,
+                onRepeat: function() {
+                    const deltaX = mouseX - cursorX;
+                    const deltaY = mouseY - cursorY;
+                    
+                    cursorX += deltaX * 0.15;
+                    cursorY += deltaY * 0.15;
+                    
+                    gsap.set(cursorDot, {
+                        left: cursorX,
+                        top: cursorY,
+                        force3D: true
+                    });
+                }
+            });
+            
+            // Enhanced hover effects with GSAP
+            const interactiveElements = document.querySelectorAll('a, button, .nav-btn, .slider-btn, .slider-dot');
+            
+            // Variable to track if mouse is over an interactive element
+            let isOverInteractive = false;
+            let activeInteractiveElement = null;
+            
+            // Add hover effect for interactive elements
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    // Ensure cursor is pointer when hovering over interactive elements
+                    el.style.cursor = 'pointer';
+                    
+                    // Add pulsing glow effect to the element
+                    const afterEl = document.createElement('div');
+                    afterEl.className = 'element-glow';
+                    afterEl.style.position = 'absolute';
+                    afterEl.style.top = '50%';
+                    afterEl.style.left = '50%';
+                    afterEl.style.transform = 'translate(-50%, -50%)';
+                    
+                    // Adjust size based on element type
+                    if (el.tagName.toLowerCase() === 'a' && !el.classList.contains('logo')) {
+                        // For text links, make the glow area larger than the text
+                        afterEl.style.width = `calc(100% + 20px)`;
+                        afterEl.style.height = `calc(100% + 16px)`;
+                        afterEl.style.borderRadius = '8px';
+                    } else if (el.classList.contains('logo')) {
+                        // For logo - remove the glow background
+                        return;
+                    } else if (el.classList.contains('slider-dot')) {
+                        // For slider dots
+                        afterEl.style.width = '30px';
+                        afterEl.style.height = '30px';
+                        afterEl.style.borderRadius = '50%';
+                    } else if (el.classList.contains('nav-btn') || el.classList.contains('slider-btn')) {
+                        // For buttons
+                        afterEl.style.width = `calc(100% + 10px)`;
+                        afterEl.style.height = `calc(100% + 10px)`;
+                        afterEl.style.borderRadius = el.classList.contains('slider-btn') ? '50%' : '50px';
+                    } else {
+                        // Default
+                        afterEl.style.width = '100%';
+                        afterEl.style.height = '100%';
+                        afterEl.style.borderRadius = '4px';
+                    }
+                    
+                    afterEl.style.boxShadow = '0 0 15px 5px rgba(255, 62, 127, 0.3)';
+                    afterEl.style.zIndex = '-1';
+                    afterEl.style.pointerEvents = 'none';
+                    
+                    // Only add if it doesn't already have one
+                    if (!el.querySelector('.element-glow')) {
+                        el.style.position = 'relative';
+                        el.style.overflow = 'visible';
+                        el.appendChild(afterEl);
+                        
+                        // Animate the glow
+                        gsap.to(afterEl, {
+                            boxShadow: '0 0 20px 8px rgba(255, 62, 127, 0.5)',
+                            duration: 0.8,
+                            repeat: -1,
+                            yoyo: true,
+                            ease: "sine.inOut"
+                        });
+                    }
+                    
+                    // For text links, show the background
+                    if ((el.tagName.toLowerCase() === 'a' && !el.classList.contains('logo')) || 
+                        el.classList.contains('nav-btn')) {
+                        el.style.setProperty('--link-bg-opacity', '1');
+                    }
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    // Maintain pointer cursor even when leaving
+                    el.style.cursor = 'pointer';
+                    
+                    // Remove the glow effect
+                    const glow = el.querySelector('.element-glow');
+                    if (glow) {
+                        gsap.to(glow, {
+                            boxShadow: '0 0 0 0 rgba(255, 62, 127, 0)',
+                            duration: 0.3,
+                            onComplete: () => {
+                                glow.remove();
+                            }
+                        });
+                    }
+                    
+                    // For text links, hide the background
+                    if ((el.tagName.toLowerCase() === 'a' && !el.classList.contains('logo')) || 
+                        el.classList.contains('nav-btn')) {
+                        el.style.setProperty('--link-bg-opacity', '0');
+                    }
+                });
+            });
+            
+            // Click animation with GSAP
+            document.addEventListener('mousedown', () => {
+                if (!isOverInteractive) {
+                    gsap.to(cursorDot, {
+                        duration: 0.15,
+                        scale: 0.8,
+                        ease: "power2.out"
+                    });
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (!isOverInteractive) {
+                    gsap.to(cursorDot, {
+                        duration: 0.15,
+                        scale: 1,
+                        ease: "power2.out"
+                    });
+                }
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Check if mouse is over any interactive element
+                const elementUnderMouse = document.elementFromPoint(e.clientX, e.clientY);
+                if (elementUnderMouse) {
+                    // Check if the element or any of its parents is an interactive element
+                    let currentElement = elementUnderMouse;
+                    let isOverInteractiveNow = false;
+                    let interactiveElement = null;
+                    
+                    while (currentElement && !isOverInteractiveNow) {
+                        // 以下是水波纹吸收效果的关键代码，当鼠标悬停在这些元素上时会停止产生水波纹
+                        if (currentElement.matches('a, button, .nav-btn, .slider-btn, .slider-dot, .skill-item')) {
+                            isOverInteractiveNow = true;
+                            interactiveElement = currentElement;
+                            if (!isOverInteractive) {
+                                isOverInteractive = true;
+                                
+                                // Get the center position of the interactive element
+                                const rect = interactiveElement.getBoundingClientRect();
+                                let elementCenterX = rect.left + rect.width / 2;
+                                let elementCenterY = rect.top + rect.height / 2;
+                                
+                                // For text links, create a larger target area
+                                let targetWidth = rect.width;
+                                let targetHeight = rect.height;
+                                
+                                if ((interactiveElement.tagName.toLowerCase() === 'a' && !interactiveElement.classList.contains('logo')) || 
+                                    interactiveElement.classList.contains('nav-btn')) {
+                                    // Make the target area larger for text links
+                                    targetWidth += 20;
+                                    targetHeight += 16;
+                                }
+                                
+                                // Create a "sucking in" effect towards the center of the element
+                                gsap.to(cursorDot, {
+                                    duration: 0.4,
+                                    left: elementCenterX,
+                                    top: elementCenterY,
+                                    width: 0,
+                                    height: 0,
+                                    opacity: 0,
+                                    scale: 0.2,
+                                    ease: "power3.in",
+                                    onComplete: () => {
+                                        // Hide the cursor dot completely after animation
+                                        gsap.set(cursorDot, {
+                                            opacity: 0,
+                                            scale: 0
+                                        });
+                                    }
+                                });
+                                
+                                // Remove any existing ripples with a sucking effect
+                                const existingRipples = document.querySelectorAll('.cursor-trail');
+                                existingRipples.forEach(ripple => {
+                                    const rippleRect = ripple.getBoundingClientRect();
+                                    const rippleX = rippleRect.left + rippleRect.width / 2;
+                                    const rippleY = rippleRect.top + rippleRect.height / 2;
+                                    
+                                    // Animate ripple towards the element center
+                                    gsap.to(ripple, {
+                                        duration: 0.3,
+                                        left: elementCenterX,
+                                        top: elementCenterY,
+                                        scale: 0,
+                                        opacity: 0,
+                                        ease: "power2.in",
+                                        onComplete: () => ripple.remove()
+                                    });
+                                });
+                            }
+                        }
+                        currentElement = currentElement.parentElement;
+                    }
+                    
+                    // If we're not over an interactive element now but we were before - 水波纹吸收效果结束后的恢复动画
+                    if (!isOverInteractiveNow && isOverInteractive) {
+                        isOverInteractive = false;
+                        
+                        // Show cursor dot again with a "pop" effect
+                        gsap.fromTo(cursorDot, 
+                            {
+                                opacity: 0,
+                                scale: 0.2,
+                                width: 0,
+                                height: 0
+                            },
+                            {
+                                duration: 0.4,
+                                opacity: 1,
+                                scale: 1,
+                                width: 60,
+                                height: 60,
+                                backgroundColor: 'rgba(255, 62, 127, 0.25)',
+                                filter: 'blur(10px)',
+                                ease: "back.out(1.7)"
+                            }
+                        );
+                    }
+                }
+                
+                // 水波纹效果生成区域 - Only create ripples if not over interactive elements
+                if (!isOverInteractive) {
+                    // Create ripple based on speed
+                    const speed = Math.sqrt(
+                        Math.pow(e.movementX, 2) + 
+                        Math.pow(e.movementY, 2)
+                    );
+                    
+                    if (speed > 2) {
+                        createRipple(cursorX, cursorY);
+                        
+                        if (speed > 15) {
+                            const points = Math.min(5, Math.floor(speed / 10));
+                            for (let i = 1; i <= points; i++) {
+                                const ratio = i / (points + 1);
+                                const x = cursorX + (mouseX - cursorX) * ratio;
+                                const y = cursorY + (mouseY - cursorY) * ratio;
+                                
+                                setTimeout(() => {
+                                    if (!isOverInteractive) {
+                                        createRipple(x, y);
+                                    }
+                                }, i * 30);
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 创建水波纹动画效果的函数
+            function createRipple(x, y) {
+                // Only create ripples if not over interactive elements
+                if (isOverInteractive) return;
+                
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                cursorContainer.appendChild(trail);
+                
+                const size = gsap.utils.random(60, 80);
+                const duration = gsap.utils.random(0.8, 1.2);
+                const hue = gsap.utils.random(330, 350);
+                const opacity = gsap.utils.random(0.4, 0.6);
+                
+                gsap.set(trail, {
+                    left: x,
+                    top: y,
+                    width: size,
+                    height: size,
+                    background: `radial-gradient(circle, hsla(${hue}, 90%, 60%, ${opacity}) 0%, hsla(${hue}, 90%, 60%, 0) 70%)`
+                });
+                
+                gsap.to(trail, {
+                    duration: duration,
+                    scale: 2.5,
+                    opacity: 0,
+                    ease: "power2.out",
+                    onComplete: () => trail.remove()
+                });
+            }
+        } else {
+            cursorContainer.style.display = 'none';
+        }
+
+        // 添加覆盖层交互
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageCover = document.getElementById('pageCover');
+            const coverTop = document.getElementById('coverTop');
+            const coverBottom = document.getElementById('coverBottom');
+            const coverMessage = document.getElementById('coverMessage');
+            const worldTitle = document.querySelector('.name-container .world');
+            const coverNameContainer = document.getElementById('coverNameContainer');
+            const coverWorldTitle = document.querySelector('.cover-name-container .world');
+            const coverThisIs = document.querySelector('.cover-name-container .this-is');
+            const coverIs = document.querySelector('.cover-name-container .is');
+            const clickableOverlay = document.querySelector('.clickable-overlay');
+            
+            // 确保页面完全加载
+            window.addEventListener('load', function() {
+                // 为透明覆盖层添加点击事件
+                if (clickableOverlay) {
+                    clickableOverlay.addEventListener('click', function() {
+                        openCurtain();
+                    });
+                }
+                
+                // 为整个覆盖层命名容器添加点击事件
+                coverNameContainer.addEventListener('click', function() {
+                    openCurtain();
+                });
+                
+                // 为每个子元素单独添加点击事件，确保所有部分都可点击
+                if (coverWorldTitle) {
+                    coverWorldTitle.addEventListener('click', function(e) {
+                        e.stopPropagation(); // 防止事件冒泡
+                        openCurtain();
+                    });
+                }
+                
+                if (coverThisIs) {
+                    coverThisIs.addEventListener('click', function(e) {
+                        e.stopPropagation(); // 防止事件冒泡
+                        openCurtain();
+                    });
+                }
+                
+                if (coverIs) {
+                    coverIs.addEventListener('click', function(e) {
+                        e.stopPropagation(); // 防止事件冒泡
+                        openCurtain();
+                    });
+                }
+                
+                // 为覆盖层上的文字应用相同的动画效果
+                if (coverWorldTitle) {
+                    try {
+                        // 检查Million Smiles字体是否加载
+                        document.fonts.ready.then(function() {
+                            console.log("检查Million Smiles字体加载情况 - 覆盖层");
+                            const isFontLoaded = document.fonts.check("1em 'Million Smiles'");
+                            console.log("Million Smiles字体加载状态:", isFontLoaded);
+                            
+                            // 直接使用HTML中预设的字符，不再重新创建
+                            // 获取已有的字符元素
+                            const chars = coverWorldTitle.querySelectorAll('.char');
+                            
+                            // 添加轻微的初始动画效果（呼吸效果）
+                            startBreathingAnimation(chars, coverWorldTitle);
+                            
+                            function startBreathingAnimation(chars, title) {
+                                // 初始动画：轻微呼吸效果，降低幅度
+                                gsap.to(chars, {
+                                    duration: 2.5, // 减缓速度
+                                    scale: 1.01, // 降低缩放幅度
+                                    y: -1, // 减小垂直移动
+                                    stagger: {
+                                        each: 0.1,
+                                        repeat: -1,
+                                        yoyo: true,
+                                        from: "center"
+                                    },
+                                    ease: "sine.inOut"
+                                });
+                                
+                                // 确保初始背景渐变效果可见
+                                gsap.to(title, {
+                                    duration: 6, // 放慢动画
+                                    backgroundImage: "linear-gradient(45deg, #ff3e7f, #ffb56b)",
+                                    backgroundSize: "200% 200%",
+                                    backgroundPosition: "0% 0%",
+                                    repeat: -1,
+                                    yoyo: true,
+                                    ease: "sine.inOut"
+                                });
+                            }
+                            
+                            // 添加鼠标悬停事件 - 启动动画但不打开卷帘
+                            coverWorldTitle.addEventListener('mouseenter', function() {
+                                // 添加动画类
+                                this.classList.add('animate');
+                                
+                                // 停止初始动画
+                                gsap.killTweensOf(chars);
+                                
+                                // 创建持续的波浪效果动画
+                                gsap.to(chars, {
+                                    duration: 1,
+                                    stagger: {
+                                        each: 0.1,
+                                        repeat: -1,
+                                        yoyo: true,
+                                        from: "center"
+                                    },
+                                    ease: "sine.inOut",
+                                    rotationX: function() { return Math.random() * 30 - 15; }, // 随机旋转角度
+                                    rotationY: function() { return Math.random() * 40 - 20; }, // 随机旋转角度
+                                    y: function() { return Math.random() * 20 - 10; }, // 随机垂直移动
+                                    z: function() { return Math.random() * 30; }, // 随机深度
+                                    scale: function() { return 1.05 + Math.random() * 0.1; }, // 随机缩放
+                                    color: function() {
+                                        // 随机颜色
+                                        const hue = Math.random() * 60 + 330; // 330-390 (红到紫色范围)
+                                        return `hsl(${hue}, 80%, 65%)`; // 降低饱和度和亮度
+                                    },
+                                    textShadow: "0 0 8px rgba(255, 62, 127, 0.5), 0 0 15px rgba(255, 181, 107, 0.3)" // 减弱文字阴影
+                                });
+                                
+                                // 为整个文本添加背景动画
+                                gsap.to(this, {
+                                    duration: 2, // 放慢动画
+                                    backgroundImage: "linear-gradient(45deg, #ff3e7f, #ffb56b, #ff8e53, #ff3e7f)",
+                                    backgroundSize: "300% 300%",
+                                    ease: "none",
+                                    repeat: -1,
+                                    yoyo: true
+                                });
+                            });
+                            
+                            // 添加鼠标离开事件处理程序
+                            coverWorldTitle.addEventListener('mouseleave', function() {
+                                // 移除动画类
+                                this.classList.remove('animate');
+                                
+                                // 停止波浪动画
+                                gsap.killTweensOf(chars);
+                                
+                                // 恢复初始呼吸动画
+                                startBreathingAnimation(chars, this);
+                            });
+                            
+                            // 确保每个字符也是可点击的
+                            chars.forEach(char => {
+                                char.style.cursor = 'pointer';
+                                char.addEventListener('click', function(e) {
+                                    e.stopPropagation(); // 防止事件冒泡
+                                    openCurtain();
+                                });
+                            });
+                            
+                            // 添加触摸事件处理（针对移动设备）
+                            let isTouching = false;
+                            
+                            coverWorldTitle.addEventListener('touchstart', function(e) {
+                                e.preventDefault(); // 防止默认行为
+                                isTouching = true;
+                                
+                                // 模拟鼠标进入事件
+                                const mouseenterEvent = new Event('mouseenter');
+                                this.dispatchEvent(mouseenterEvent);
+                                
+                                // 在移动设备上，触摸后也应该打开卷帘
+                                openCurtain();
+                            });
+                        });
+                        
+                    } catch (error) {
+                        console.error('动画初始化失败:', error);
+                        // 如果动画初始化失败，恢复原始文本
+                        coverWorldTitle.innerHTML = originalText;
+                        
+                        // 即使初始化失败，也应为文本添加点击事件
+                        coverWorldTitle.addEventListener('click', function() {
+                            openCurtain();
+                        });
+                    }
+                }
+                
+                // 卷帘打开函数
+                function openCurtain() {
+                    // 禁用点击，防止重复触发
+                    pageCover.style.pointerEvents = 'none';
+                    
+                    // 淡出交互提示文字 - 在点击时才淡出
+                    const interactionHint = coverWorldTitle.querySelector('.interaction-hint');
+                    if (interactionHint) {
+                        gsap.to(interactionHint, {
+                            duration: 0.3,
+                            opacity: 0,
+                            ease: "power2.in",
+                            onComplete: function() {
+                                interactionHint.style.display = 'none';
+                            }
+                        });
+                    }
+                    
+                    // 淡出文字
+                    gsap.to(coverMessage, {
+                        opacity: 0,
+                        duration: 1,
+                        ease: "power2.in"
+                    });
+                    
+                    // 淡出标题
+                    gsap.to(coverNameContainer, {
+                        opacity: 0,
+                        duration: 1,
+                        ease: "power2.in"
+                    });
+                    
+                    // 卷帘动画 - 更长的动画时间，更明显的过渡
+                    gsap.to(coverTop, {
+                        y: "-100%",
+                        duration: 2.5,
+                        ease: "power2.inOut"
+                    });
+                    
+                    gsap.to(coverBottom, {
+                        y: "100%",
+                        duration: 2.5,
+                        ease: "power2.inOut",
+                        onComplete: function() {
+                            // 立即开始显示主界面元素，不等待覆盖层消失
+                            animateMainContent();
+                            
+                            // 动画完全结束后移除覆盖层
+                            setTimeout(function() {
+                                pageCover.style.display = 'none';
+                            }, 500);
+                        }
+                    });
+                }
+                
+                // 添加主界面元素的动画函数
+                function animateMainContent() {
+                    // 获取主界面元素
+                    const mainTitle = document.querySelector('.hero-content .main-title');
+                    const infoGrid = document.querySelector('.hero-content .info-grid');
+                    const socialLinks = document.querySelector('.hero .social-links');
+                    const scrollIndicator = document.querySelector('.hero .scroll-indicator');
+                    const skillsSection = document.querySelector('.skills-section');
+                    
+                    // 创建时间线
+                    const tl = gsap.timeline();
+                    
+                    // 首先显示Z's WORLD
+                    tl.to(mainTitle, {
+                        duration: 1.2,
+                        opacity: 1,
+                        y: 0,
+                        visibility: 'visible',
+                        ease: "power3.out"
+                    });
+                    
+                    // 然后显示信息网格
+                    tl.to(infoGrid, {
+                        duration: 1,
+                        opacity: 1,
+                        y: 0,
+                        visibility: 'visible',
+                        ease: "power2.out"
+                    }, "-=0.7"); // 与前一个动画有重叠
+                    
+                    // 接着显示社交图标
+                    tl.to(socialLinks, {
+                        duration: 0.8,
+                        opacity: 1,
+                        y: 0,
+                        visibility: 'visible',
+                        ease: "power2.out"
+                    }, "-=0.5"); // 与前一个动画有重叠
+                    
+                    // 显示滚动指示器
+                    tl.to(scrollIndicator, {
+                        duration: 0.8,
+                        opacity: 1,
+                        y: 0,
+                        visibility: 'visible',
+                        ease: "power2.out"
+                    }, "-=0.5"); // 与前一个动画有重叠
+                    
+                    // 最后显示技能部分
+                    tl.to(skillsSection, {
+                        duration: 1,
+                        opacity: 1,
+                        y: 0,
+                        visibility: 'visible',
+                        ease: "power2.out"
+                    }, "-=0.3"); // 与前一个动画有重叠
+                }
+            });
+        });
+
+        // 添加主页面Z's WORLD的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取主页面上的Z's WORLD元素
+            const mainWorldTitle = document.querySelector('.world-title');
+            if (!mainWorldTitle) return;
+            
+            // 获取所有字符元素
+            const mainChars = mainWorldTitle.querySelectorAll('.char');
+            
+            // 添加默认的波浪光晕效果（与之前鼠标悬停时的效果类似）
+            startDefaultWaveEffect(mainChars, mainWorldTitle);
+            
+            // 添加鼠标悬停和离开事件
+            mainWorldTitle.addEventListener('mouseenter', function() {
+                // 鼠标悬停时的效果已通过CSS处理
+            });
+            
+            mainWorldTitle.addEventListener('mouseleave', function() {
+                // 鼠标离开时的效果已通过CSS处理
+            });
+            
+            function startDefaultWaveEffect(chars, title) {
+                // 创建一个时间线
+                const tl = gsap.timeline();
+                
+                // 为每个字符设置波浪动画效果
+                tl.to(chars, {
+                    duration: 2,
+                    stagger: {
+                        each: 0.1,
+                        repeat: -1,
+                        yoyo: true,
+                        from: "center"
+                    },
+                    ease: "sine.inOut",
+                    rotationX: function() { return Math.random() * 15 - 7.5; }, // 随机旋转角度(较小)
+                    rotationY: function() { return Math.random() * 20 - 10; }, // 随机旋转角度(较小)
+                    y: function() { return Math.random() * 10 - 5; }, // 随机垂直移动(较小)
+                    z: function() { return Math.random() * 15; }, // 随机深度(较小)
+                    scale: function() { return 1 + Math.random() * 0.05; }, // 随机缩放(较小)
+                    color: function() {
+                        // 随机颜色
+                        const hue = Math.random() * 60 + 330; // 330-390 (红到紫色范围)
+                        return `hsl(${hue}, 80%, 65%)`; // 降低饱和度和亮度
+                    },
+                    textShadow: "0 0 5px rgba(255, 62, 127, 0.4), 0 0 10px rgba(255, 181, 107, 0.2)" // 减弱文字阴影
+                });
+                
+                // 同时为整个文本添加背景动画
+                tl.to(title, {
+                    duration: 4, // 放慢动画
+                    backgroundImage: "linear-gradient(45deg, #ff3e7f, #ffb56b, #ff8e53, #ff3e7f)",
+                    backgroundSize: "300% 300%",
+                    backgroundPosition: "0% 0%",
+                    backgroundClip: "text",
+                    ease: "none",
+                    repeat: -1,
+                    yoyo: true
+                }, "<"); // 与上一个动画同时开始
+            }
+        });
+
+        // 初始化selected-works-section的动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const worksSection = document.querySelector('.selected-works-section');
+            
+            // 使用IntersectionObserver检测元素进入视口
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target); // 一旦动画开始，不再监听
+                    }
+                });
+            }, {
+                threshold: 0.2 // 当20%的元素可见时触发
+            });
+            
+            if (worksSection) {
+                observer.observe(worksSection);
+            }
+            
+            // 为作品项添加鼠标进入和离开的效果增强
+            const workItems = document.querySelectorAll('.work-item');
+            workItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    const siblings = Array.from(this.parentNode.children).filter(el => el !== this);
+                    siblings.forEach(sibling => {
+                        sibling.style.opacity = '0.7';
+                        sibling.style.transform = 'scale(0.98)';
+                    });
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    const siblings = Array.from(this.parentNode.children);
+                    siblings.forEach(sibling => {
+                        sibling.style.opacity = '1';
+                        sibling.style.transform = 'translateY(0)';
+                    });
+                });
+            });
+        });
+    </script>
 </body>
-</html>
+</html> 
