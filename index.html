@@ -1406,31 +1406,36 @@
 
         /* Skills Section */
         .skills-section {
-            padding: 3rem var(--grid-side-margin); /* 使用变量替换固定值 */
+            padding: 3rem var(--grid-side-margin) 3rem; /* 上下间距从5rem减小到3rem */
             background-color: #1a1a1a;
             text-align: center;
+            opacity: 0;
+            transform: translateY(30px); /* 改为只有垂直移动，避免与水平方向冲突 */
+            visibility: hidden;
+            transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .skills-section.in-view {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
         }
         
         .skills-section h2 {
             font-size: 2.2rem; /* 略微减小标题 */
-            margin-bottom: 0.5rem; /* 减少标题下方间距 */
+            margin-bottom: 1.5rem; /* 从2rem减小到1.5rem */
             background: linear-gradient(90deg, #ff3e7f, #ffb56b);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             display: inline-block;
-        }
-
-        .skills-section p {
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 600px;
-            margin: 0 auto 2rem; /* 从3rem减少到2rem */
+            text-transform: uppercase; /* 添加全大写 */
         }
 
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.3rem; /* 从2rem减少到1.3rem */
+            gap: 1.2rem; /* 从1.5rem减小到1.2rem，使整体更紧凑 */
             max-width: var(--content-max-width); /* 使用变量替换固定值 */
             margin: 0 auto;
             padding: 0 var(--grid-side-margin); /* 使用变量替换固定值 */
@@ -1442,11 +1447,19 @@
             align-items: center;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px; /* 略微减小圆角 */
-            padding: 1rem; /* 从1.5rem减少到1rem */
+            padding: 1.2rem; /* 从1.5rem减小到1.2rem */
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* 减小阴影 */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px); /* 只保留垂直方向的移动 */
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .skill-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .skill-item:hover {
@@ -1473,12 +1486,19 @@
             position: relative;
         }
 
+        /* 彻底修复技能条动画 */
         .skill-level {
             height: 100%;
             background: linear-gradient(90deg, #ff3e7f, #ffb56b);
             border-radius: 5px;
             position: relative;
-            transition: width 0.3s ease-in-out;
+            width: 0%; /* 移除!important，允许JavaScript修改宽度 */
+            transition: none; /* 初始状态不使用过渡 */
+        }
+
+        /* 用于动画过渡的类 */
+        .skill-level.animating {
+            transition: width 1.5s cubic-bezier(0.17, 0.84, 0.44, 1); /* 使用更好的缓动曲线 */
         }
 
         .skill-percent {
@@ -1586,24 +1606,33 @@
         
         /* Selected Works Section */
         .selected-works-section {
-            padding: 5rem var(--section-padding);
-            max-width: 2560px; /* Match hero section max-width */
+            padding: 3rem var(--section-padding); /* 从5rem减小到3rem */
+            max-width: 3840px;
             margin: 0 auto;
             overflow: hidden;
+            opacity: 0;
+            transform: translateX(100px); /* 从右侧开始 */
+            transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); /* 增加时间到1.2s */
+        }
+        
+        .selected-works-section.in-view {
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .selected-works-section h2 {
             font-size: 2.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem; /* 从3rem减小到1.5rem */
             text-align: center;
             color: var(--text-color);
             position: relative;
+            text-transform: uppercase; /* 添加全大写 */
         }
         
         .selected-works-section h2:after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -8px; /* 从-10px改为-8px，让分隔线更靠近标题 */
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
@@ -1615,9 +1644,10 @@
         .works-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr); /* Two columns layout */
-            gap: 10px; /* Reduced gap between items */
-            max-width: 2560px; /* Match hero section max-width */
-            margin: 0 10px; /* 5px spacing from left and right */
+            gap: 10px; /* 保持项目之间的距离为10px */
+            max-width: 3840px; /* 从2560px修改为3840px */
+            margin: 0 10px; /* 确保离左右两边的距离为10px */
+            width: calc(100% - 20px); /* 添加计算宽度以确保正确对齐 */
         }
         
         .work-item {
@@ -1625,9 +1655,18 @@
             overflow: hidden;
             border-radius: 30px; /* Even more rounded corners */
             transition: all 0.3s ease;
-            height: 800px; /* 1.5 times taller */
+            aspect-ratio: 1 / 1; /* 使用纵横比代替固定高度，可以根据需要调整 */
+            height: auto; /* 去掉固定高度，让它根据宽度和纵横比自动调整 */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             cursor: pointer; /* Show pointer cursor for the entire item */
+            opacity: 0;
+            transform: translateX(50px); /* 从右侧滑入 */
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .work-item.in-view {
+            opacity: 1;
+            transform: translateX(0);
         }
         
         /* Make entire work item clickable */
@@ -1643,6 +1682,19 @@
         .work-item:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .work-item:hover .image-placeholder img {
+            transform: scale(1.1); /* 添加图片放大效果 */
+            transition: transform 0.5s ease;
+        }
+        
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 保持图片比例，确保完整显示 */
+            object-position: center; /* 居中显示图片 */
+            transition: transform 0.5s ease; /* 添加过渡效果 */
         }
         
         .work-info {
@@ -1664,11 +1716,12 @@
         }
         
         .work-info h3 {
-            font-size: 2.2rem; /* Larger font size */
+            font-size: 2.5rem; /* 从2.2rem增大到2.5rem */
             color: var(--text-color);
             transition: all 0.3s ease;
             margin: 0;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 600; /* 增加字体粗细 */
         }
         
         .work-item:hover .work-info h3 {
@@ -1687,18 +1740,19 @@
         }
         
         .work-tags span {
-            font-size: 0.8rem;
-            padding: 0.4rem 1rem;
+            font-size: 1rem; /* 从0.8rem增大到1rem */
+            padding: 0.5rem 1.2rem; /* 从0.4rem 1rem增大到0.5rem 1.2rem，使标签更大 */
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 30px;
             color: rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
+            font-weight: 500; /* 增加字体粗细 */
         }
         
         .work-item:hover .work-tags span {
-            border-color: rgba(255, 62, 127, 0.5);
-            background: rgba(255, 62, 127, 0.2);
+            border-color: rgba(255, 255, 255, 0.5); /* 改为白色边框，去除粉色效果 */
+            background: rgba(0, 0, 0, 0.6); /* 改为半透明黑色背景 */
         }
         
         /* Arrow icon in top-right corner, already angled */
@@ -1773,6 +1827,18 @@
             transition: all 0.3s ease;
         }
         
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 保持图片比例，确保完整显示 */
+            object-position: center; /* 居中显示图片 */
+            transition: transform 0.5s ease; /* 添加过渡效果 */
+        }
+        
+        .work-item:hover .image-placeholder img {
+            transform: scale(1.1); /* 添加图片放大效果 */
+        }
+        
         .image-placeholder i {
             font-size: 4rem;
             color: rgba(255, 255, 255, 0.3);
@@ -1786,6 +1852,33 @@
             transition: all 0.5s ease;
         }
         
+        .work-item:hover .image-placeholder {
+            background: rgba(0, 0, 0, 0.7); /* 改为纯黑色半透明，去除粉色渐变效果 */
+        }
+        
+        .work-item:hover .image-placeholder i {
+            transform: scale(1.2) rotate(10deg);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .work-item:hover .image-placeholder span {
+            transform: translateY(5px);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Apply SpaceGrotesk to specific text elements */
+        p, .paragraph, .text, .slide-content p, .slider-heading p, .about-section p, 
+        .skills-section p, .email-info p, .footer-text, .nav-text, .social-text {
+            font-family: 'SpaceGrotesk', sans-serif;
+        }
+        
+        /* Keep Million Smiles for the world title */
+        .name-container .world, 
+        .name-container .world span, 
+        .name-container .world .char {
+            font-family: 'Million Smiles', sans-serif !important;
+        }
+        
         /* Selected Works Section Responsive Design */
         @media (max-width: 768px) {
             .works-grid {
@@ -1794,20 +1887,40 @@
             }
             
             .work-item {
-                height: 525px; /* 1.5 times the tablet height (350px) */
+                aspect-ratio: 3 / 2; /* 平板上使用不同的纵横比 */
             }
             
             .selected-works-section {
-                padding: 4rem 1rem;
+                padding: 2.5rem 1rem; /* 从4rem减小到2.5rem */
             }
             
             .selected-works-section h2 {
                 font-size: 2rem;
-                margin-bottom: 2rem;
+                margin-bottom: 1.2rem; /* 从2rem减小到1.2rem */
             }
             
             .work-info h3 {
-                font-size: 1.3rem;
+                font-size: 1.8rem; /* 从1.3rem增大到1.8rem */
+            }
+            
+            .work-tags span {
+                font-size: 0.9rem; /* 在平板上设置稍小一点的字体 */
+                padding: 0.45rem 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .work-item {
+                aspect-ratio: 1 / 1; /* 手机上使用正方形比例 */
+            }
+            
+            .work-info h3 {
+                font-size: 1.5rem; /* 确保在手机上字体仍然足够大 */
+            }
+            
+            .work-tags span {
+                font-size: 0.85rem; /* 在手机上设置稍小一点的字体 */
+                padding: 0.4rem 1rem;
             }
         }
         
@@ -1849,25 +1962,45 @@
         .selected-works-section.in-view .work-item:nth-child(4) {
             transition-delay: 0.4s;
         }
+
+        .work-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex; /* 添加弹性布局 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+        }
+
+        /* Remove the paragraph description */
+        .work-info p {
+            display: none;
+        }
+
+        /* Remove the original view-project styles */
+        .view-project {
+            display: none;
+        }
         
         /* HomeFinalSection Styles */
-        .home-final-section {
+        .final-section {
             max-width: var(--content-max-width);
             margin: 0 auto;
-            padding: 5rem var(--section-padding);
+            padding: 3rem var(--section-padding); /* 从5rem减小到3rem */
             text-align: center;
         }
         
         .awesome-together {
-            margin-bottom: 3rem;
+            margin-bottom: 1rem; /* 从1.5rem减小到1rem */
         }
         
         .awesome-together h2 {
             font-size: 3.5rem;
             font-weight: 700;
             line-height: 1.2;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.8rem; /* 从1rem减小到0.8rem */
             color: #fff;
+            letter-spacing: 0.15em; /* 增加字间距，从0.1em增加到0.15em */
         }
         
         .awesome-together .highlight {
@@ -1882,14 +2015,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2rem;
+            gap: 0.8rem; /* 从1rem减小到0.8rem */
         }
         
         .social-buttons {
             display: flex;
             justify-content: center;
             gap: 3.5rem;
-            margin-top: 1.5rem;
+            margin-top: 0.8rem; /* 从1rem减小到0.8rem */
         }
         
         .plain-text {
@@ -1928,7 +2061,7 @@
         }
         
         .email-info {
-            margin-top: 3rem;
+            margin-top: 1rem; /* 从1.5rem减小到1rem */
         }
         
         .email-info p {
@@ -1946,7 +2079,7 @@
             border-bottom-color: #ffb56b;
         }
         
-        /* HomeFinalSection Responsive */
+        /* Final Section Responsive */
         @media (max-width: 1200px) {
             .awesome-together h2 {
                 font-size: 3rem;
@@ -1954,8 +2087,8 @@
         }
         
         @media (max-width: 768px) {
-            .home-final-section {
-                padding: 4rem 1.5rem;
+            .final-section {
+                padding: 2.5rem 1.5rem; /* 从4rem减小到2.5rem */
             }
             
             .awesome-together h2 {
@@ -1990,77 +2123,6 @@
             .email-info p {
                 font-size: 1rem;
             }
-        }
-
-        /* Remove the paragraph description */
-        .work-info p {
-            display: none;
-        }
-        
-        /* Remove the original view-project styles */
-        .view-project {
-            display: none;
-        }
-        
-        .work-image {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        /* Make sure image placeholders look good at the new size */
-        .image-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(30, 30, 30, 0.9);
-            transition: all 0.3s ease;
-        }
-        
-        .image-placeholder i {
-            font-size: 5rem; /* Larger icon for bigger containers */
-            color: rgba(255, 255, 255, 0.3);
-            margin-bottom: 2rem;
-            transition: all 0.5s ease;
-        }
-        
-        .image-placeholder span {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 1.8rem; /* Larger text for bigger containers */
-            transition: all 0.5s ease;
-        }
-        
-        .work-item:hover .image-placeholder {
-            background: linear-gradient(135deg, rgba(255, 62, 127, 0.15), rgba(255, 181, 107, 0.15));
-        }
-        
-        .work-item:hover .image-placeholder i {
-            transform: scale(1.2) rotate(10deg);
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .work-item:hover .image-placeholder span {
-            transform: translateY(5px);
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Apply SpaceGrotesk to specific text elements */
-        p, .paragraph, .text, .slide-content p, .slider-heading p, .about-section p, 
-        .skills-section p, .email-info p, .footer-text, .nav-text, .social-text {
-            font-family: 'SpaceGrotesk', sans-serif;
-        }
-        
-        /* Keep Million Smiles for the world title */
-        .name-container .world, 
-        .name-container .world span, 
-        .name-container .world .char {
-            font-family: 'Million Smiles', sans-serif !important;
         }
     </style>
 </head>
@@ -2173,7 +2235,7 @@
     
     <!-- Skills Section -->
     <section class="skills-section">
-        <h2>Skills</h2>
+        <h2>SKILLS</h2>
         <div class="skills-grid">
             <!-- Skill 1 -->
             <div class="skill-item">
@@ -2329,7 +2391,7 @@
     
     <!-- Selected Works Section -->
     <section class="selected-works-section">
-        <h2>Selected Works</h2>
+        <h2>SELECTED WORKS</h2>
         <div class="works-grid">
             <!-- Work Item 1 -->
             <div class="work-item">
@@ -2342,8 +2404,11 @@
                     <span>Development</span>
                 </div>
                 <div class="work-image">
-                    <!-- Placeholder for image -->
+                    <!-- 图片容器 -->
                     <div class="image-placeholder">
+                        <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
+                        <img data-src="您的图片路径1" alt="Project 1" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
+                        <!-- 仅在图片加载前显示的占位图标 -->
                         <i class="fas fa-image"></i>
                         <span>Image 1</span>
                     </div>
@@ -2367,8 +2432,11 @@
                     <span>Branding</span>
                 </div>
                 <div class="work-image">
-                    <!-- Placeholder for image -->
+                    <!-- 图片容器 -->
                     <div class="image-placeholder">
+                        <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
+                        <img data-src="您的图片路径2" alt="Project 2" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
+                        <!-- 仅在图片加载前显示的占位图标 -->
                         <i class="fas fa-image"></i>
                         <span>Image 2</span>
                     </div>
@@ -2392,8 +2460,11 @@
                     <span>3D</span>
                 </div>
                 <div class="work-image">
-                    <!-- Placeholder for image -->
+                    <!-- 图片容器 -->
                     <div class="image-placeholder">
+                        <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
+                        <img data-src="您的图片路径3" alt="Project 3" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
+                        <!-- 仅在图片加载前显示的占位图标 -->
                         <i class="fas fa-image"></i>
                         <span>Image 3</span>
                     </div>
@@ -2417,8 +2488,11 @@
                     <span>Experiential</span>
                 </div>
                 <div class="work-image">
-                    <!-- Placeholder for image -->
+                    <!-- 图片容器 -->
                     <div class="image-placeholder">
+                        <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
+                        <img data-src="您的图片路径4" alt="Project 4" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
+                        <!-- 仅在图片加载前显示的占位图标 -->
                         <i class="fas fa-image"></i>
                         <span>Image 4</span>
                     </div>
@@ -2797,6 +2871,17 @@
             window.addEventListener('wheel', preventScroll, { passive: false });
             window.addEventListener('touchmove', preventScroll, { passive: false });
 
+            // 获取 Skills section
+            const skillsSection = document.querySelector('.skills-section');
+            
+            // 先将 Skills section 设为可见，避免滚动后显示异常
+            if (skillsSection) {
+                // 确保技能部分在滚动前可见，但透明度为0
+                skillsSection.style.visibility = 'visible';
+                skillsSection.style.opacity = '0';
+                skillsSection.style.transform = 'translateY(0)'; // 确保没有水平位移
+            }
+
             // Scroll down with animation
             gsap.to(window, {
                 duration: 1,
@@ -2807,6 +2892,48 @@
                     isAutoScrolling = false;
                     window.removeEventListener('wheel', preventScroll);
                     window.removeEventListener('touchmove', preventScroll);
+                    
+                    // 滚动完成后，触发 Skills section 的淡入动画
+                    if (skillsSection) {
+                        setTimeout(() => {
+                            skillsSection.classList.add('in-view');
+                            
+                            // 启动所有技能项的动画
+                            const skillItems = document.querySelectorAll('.skill-item');
+                            skillItems.forEach((item, index) => {
+                                setTimeout(() => {
+                                    item.classList.add('in-view');
+                                    
+                                    // 为每个技能项激活技能条动画
+                                    const skillBar = item.querySelector('.skill-level');
+                                    if (skillBar) {
+                                        // 获取目标宽度
+                                        let targetWidth;
+                                        if (skillBar.getAttribute('style') && skillBar.getAttribute('style').includes('width:')) {
+                                            targetWidth = skillBar.getAttribute('style').split('width:')[1].split(';')[0].trim();
+                                        } else if (skillBar.dataset.width) {
+                                            targetWidth = skillBar.dataset.width;
+                                        } else if (skillBar.dataset.level) {
+                                            targetWidth = skillBar.dataset.level;
+                                        } else {
+                                            targetWidth = '70%';
+                                        }
+                                        
+                                        // 设置初始宽度为0
+                                        skillBar.style.width = '0%';
+                                        
+                                        // 添加动画类并执行动画
+                                        setTimeout(() => {
+                                            skillBar.classList.add('animating');
+                                            setTimeout(() => {
+                                                skillBar.style.width = targetWidth;
+                                            }, 50);
+                                        }, 100);
+                                    }
+                                }, index * 150); // 每个技能项依次显示
+                            });
+                        }, 200); // 等待滚动稳定后再显示
+                    }
                 }
             });
             
@@ -3652,48 +3779,168 @@
 
         // 初始化selected-works-section的动画
         document.addEventListener('DOMContentLoaded', function() {
+            // 修改 selected-works-section 动画代码
             const worksSection = document.querySelector('.selected-works-section');
             
             // 使用IntersectionObserver检测元素进入视口
-            const observer = new IntersectionObserver((entries) => {
+            const worksSectionObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
-                        observer.unobserve(entry.target); // 一旦动画开始，不再监听
+                        worksSectionObserver.unobserve(entry.target); // 一旦动画开始，不再监听
                     }
                 });
             }, {
-                threshold: 0.2 // 当20%的元素可见时触发
+                threshold: 0.1 // 当10%的元素可见时触发
             });
             
             if (worksSection) {
-                observer.observe(worksSection);
+                worksSectionObserver.observe(worksSection);
             }
             
-            // 为作品项添加鼠标进入和离开的效果增强
-            const workItems = document.querySelectorAll('.work-item');
-            workItems.forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    const siblings = Array.from(this.parentNode.children).filter(el => el !== this);
-                    siblings.forEach(sibling => {
-                        sibling.style.opacity = '0.7';
-                        sibling.style.transform = 'scale(0.98)';
+            // 图片懒加载处理，恢复此功能
+            function lazyLoadImages() {
+                const lazyImages = document.querySelectorAll('img[data-src]');
+                
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            // 图片已开始加载，不再观察它
+                            observer.unobserve(img);
+                        }
                     });
                 });
                 
-                item.addEventListener('mouseleave', function() {
-                    const siblings = Array.from(this.parentNode.children);
-                    siblings.forEach(sibling => {
-                        sibling.style.opacity = '1';
-                        sibling.style.transform = 'translateY(0)';
-                    });
+                lazyImages.forEach(img => {
+                    imageObserver.observe(img);
                 });
+            }
+            
+            // 启动图片懒加载
+            lazyLoadImages();
+            
+            // 为每个作品项创建单独的观察器，实现滚动到哪里显示到哪里的效果
+            const workItems = document.querySelectorAll('.work-item');
+            
+            // 为每个作品项创建观察器
+            const workItemObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // 添加 in-view 类触发动画
+                        entry.target.classList.add('in-view');
+                        
+                        // 一旦看到了这个作品项，就不再观察它
+                        workItemObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.3, // 当30%的作品项可见时触发动画
+                rootMargin: '0px 0px -15% 0px' // 稍微提前触发，以获得更平滑的效果
+            });
+            
+            // 开始观察所有作品项
+            workItems.forEach(item => {
+                workItemObserver.observe(item);
+            });
+            
+            // 为 skills-section 添加滑动动画
+            const skillsSection = document.querySelector('.skills-section');
+            
+            // 使用IntersectionObserver检测 skills-section 进入视口
+            const skillsSectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        skillsSectionObserver.unobserve(entry.target); // 一旦动画开始，不再监听
+                    }
+                });
+            }, {
+                threshold: 0.1 // 当10%的元素可见时触发
+            });
+            
+            if (skillsSection) {
+                skillsSectionObserver.observe(skillsSection);
+            }
+            
+            // 为每个技能项创建观察器
+            const skillItemObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // 添加 in-view 类触发技能项的滑入动画
+                        entry.target.classList.add('in-view');
+                        
+                        // 处理技能条动画
+                        animateSkillBar(entry.target);
+                        
+                        // 一旦看到了这个技能项，就不再观察它
+                        skillItemObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.5, // 当50%的技能项可见时触发动画
+                rootMargin: '0px 0px -10% 0px' // 稍微提前触发，以获得更平滑的效果
+            });
+            
+            // 单独的函数处理技能条动画
+            function animateSkillBar(skillItem) {
+                const skillBar = skillItem.querySelector('.skill-level');
+                if (!skillBar) return;
+                
+                // 获取并保存原始宽度值
+                let targetWidth;
+                
+                // 从内联样式获取
+                if (skillBar.style && skillBar.style.width) {
+                    targetWidth = skillBar.style.width;
+                }
+                // 从style属性获取
+                else if (skillBar.getAttribute('style') && skillBar.getAttribute('style').includes('width:')) {
+                    targetWidth = skillBar.getAttribute('style').split('width:')[1].split(';')[0].trim();
+                }
+                // 从数据属性获取
+                else if (skillBar.dataset.width) {
+                    targetWidth = skillBar.dataset.width;
+                }
+                else if (skillBar.dataset.level) {
+                    targetWidth = skillBar.dataset.level;
+                }
+                // 默认值
+                else {
+                    targetWidth = '70%';
+                }
+                
+                console.log('Target width for skill bar:', targetWidth); // 调试信息
+                
+                // 先重置为0宽度
+                skillBar.style.width = '0%';
+                
+                // 设置短暂延迟确保DOM更新
+                setTimeout(() => {
+                    // 添加过渡效果
+                    skillBar.classList.add('animating');
+                    
+                    // 再次延迟以确保过渡类已应用
+                    setTimeout(() => {
+                        // 设置目标宽度
+                        skillBar.style.width = targetWidth;
+                        
+                        console.log('Setting width to:', targetWidth); // 调试信息
+                    }, 50);
+                }, 10);
+            }
+            
+            // 获取并观察所有技能项
+            const skillItems = document.querySelectorAll('.skill-item');
+            skillItems.forEach(item => {
+                skillItemObserver.observe(item);
             });
         });
     </script>
     
-    <!-- HomeFinalSection -->
-    <section class="home-final-section">
+    <!-- Final Section -->
+    <section class="final-section">
         <div class="awesome-together">
             <h2>LET'S MAKE SOMETHING <span class="highlight">AWESOME</span> TOGETHER</h2>
         </div>
@@ -3709,149 +3956,5 @@
             </div>
         </div>
     </section>
-
-    <style>
-        /* HomeFinalSection Styles */
-        .home-final-section {
-            max-width: var(--content-max-width);
-            margin: 0 auto;
-            padding: 5rem var(--section-padding);
-            text-align: center;
-        }
-        
-        .awesome-together {
-            margin-bottom: 3rem;
-        }
-        
-        .awesome-together h2 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            color: #fff;
-        }
-        
-        .awesome-together .highlight {
-            background: linear-gradient(90deg, #ff3e7f, #ffb56b);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-        }
-        
-        .contact-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
-        
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 3.5rem;
-            margin-top: 1.5rem;
-        }
-        
-        .plain-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.3rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            border-radius: 0 !important;
-            position: static !important;
-            display: inline !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: visible !important;
-        }
-        
-        /* Additional override to prevent any styling from cursor or other effects */
-        .plain-text::before,
-        .plain-text::after,
-        .plain-text *,
-        .plain-text *::before,
-        .plain-text *::after {
-            display: none !important;
-            content: none !important;
-            background: none !important;
-            border: none !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-        }
-        
-        .plain-text:hover {
-            color: #fff;
-        }
-        
-        .email-info {
-            margin-top: 3rem;
-        }
-        
-        .email-info p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 500;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid rgba(255, 62, 127, 0.5);
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-        
-        .email-info p:hover {
-            color: #fff;
-            border-bottom-color: #ffb56b;
-        }
-        
-        /* HomeFinalSection Responsive */
-        @media (max-width: 1200px) {
-            .awesome-together h2 {
-                font-size: 3rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .home-final-section {
-                padding: 4rem 1.5rem;
-            }
-            
-            .awesome-together h2 {
-                font-size: 2.2rem;
-            }
-            
-            .social-buttons {
-                flex-wrap: wrap;
-                gap: 2.5rem;
-            }
-            
-            .plain-text {
-                font-size: 1.2rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .awesome-together h2 {
-                font-size: 1.8rem;
-            }
-            
-            .social-buttons {
-                gap: 1.2rem;
-                justify-content: space-around;
-                width: 100%;
-            }
-            
-            .plain-text {
-                font-size: 1rem;
-            }
-            
-            .email-info p {
-                font-size: 1rem;
-            }
-        }
-    </style>
 </body>
 </html> 
