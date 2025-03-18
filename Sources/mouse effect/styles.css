@@ -1,0 +1,425 @@
+:root {
+  --primary: #ff3e7f;
+  --secondary: #ffb56b;
+  --dark: #121212;
+  --light: #f5f5f5;
+  --purple: #9c6bff;
+  --teal: #64ffda;
+  --text: #e2e2e2;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none; /* Hide default cursor */
+}
+
+.app-container {
+  position: relative;
+}
+
+/* Enhanced cursor styles */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Main cursor dot */
+.cursor-dot {
+  width: 25px;
+  height: 25px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px 2px var(--primary);
+  mix-blend-mode: screen;
+  z-index: 10001;
+  filter: blur(5px); /* 增加模糊效果 */
+  opacity: 0.7; /* 降低不透明度使其看起来更虚化 */
+}
+
+/* Cursor rings */
+.cursor-ring {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 9999;
+  pointer-events: none;
+  display: none; /* Hide the rings */
+}
+
+.cursor-ring-1 {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--primary);
+  opacity: 0.6;
+}
+
+.cursor-ring-2 {
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--primary);
+  opacity: 0.4;
+}
+
+/* Cursor particles */
+.cursor-particle {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 9998;
+  filter: blur(1px);
+  display: none; /* 隐藏围绕光标旋转的粒子 */
+}
+
+/* Cursor trail */
+.cursor-trail {
+  position: fixed;
+  width: 15px;
+  height: 15px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 9997;
+  filter: blur(2px);
+  opacity: 0.7; /* 增加默认不透明度，使轨迹更加明显 */
+  transition: opacity 0.3s ease; /* 添加过渡效果使消失更平滑 */
+  display: none; /* 隐藏拖影效果 */
+}
+
+/* Gradient effect */
+.cursor-gradient {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(255, 62, 127, 0.4), rgba(255, 62, 127, 0));
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 9996;
+  opacity: 0.3;
+  filter: blur(8px);
+  display: none; /* Hide the gradient effect */
+}
+
+/* Section styles */
+section {
+  padding: 6rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.hero {
+  text-align: center;
+  gap: 2rem;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 15px rgba(255, 62, 127, 0.15);
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--light);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Enhanced scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: none; /* Hide default cursor */
+}
+
+.scroll-text {
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.scroll-icon-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-icon-glow {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  opacity: 0.2;
+  filter: blur(5px);
+}
+
+.scroll-icon {
+  font-size: 1.5rem;
+  color: var(--light);
+  z-index: 1;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Enhanced interactive buttons */
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin: 3rem 0;
+  max-width: 1200px;
+}
+
+.button-section {
+  margin-top: 2rem;
+}
+
+.interactive-btn {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: var(--light);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: none; /* Hide default cursor */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.interactive-btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transform: translateX(-100%);
+  transition: all 0.6s ease;
+}
+
+.interactive-btn:hover:before {
+  transform: translateX(100%);
+}
+
+.btn-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* Enhanced image button */
+.image-btn {
+  width: 160px;
+  height: 160px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  cursor: none; /* Hide default cursor */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.image-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.image-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle at 30% 30%, var(--teal)40 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+.image-btn:hover .image-glow {
+  opacity: 0.8;
+}
+
+.image-btn .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+/* Enhanced icon button */
+.icon-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: var(--light);
+  font-size: 1.8rem;
+  cursor: none; /* Hide default cursor */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.icon-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--primary);
+  opacity: 0.1;
+  filter: blur(10px);
+}
+
+/* Enhanced text effect */
+.text-effect {
+  font-size: 2.5rem;
+  font-weight: 700;
+  cursor: none; /* Hide default cursor */
+  padding: 1rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.text-effect span {
+  position: relative;
+  z-index: 1;
+}
+
+.text-glow {
+  position: absolute;
+  width: 120%;
+  height: 30px;
+  bottom: -5px;
+  left: -10%;
+  border-radius: 15px;
+  z-index: 0;
+  opacity: 0;
+  filter: blur(8px);
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .buttons-container {
+    gap: 1rem;
+  }
+  
+  .interactive-btn {
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-particle,
+  .cursor-trail,
+  .cursor-gradient {
+    display: none; /* Hide custom cursor on mobile */
+  }
+  
+  body {
+    cursor: auto; /* Restore default cursor on mobile */
+  }
+  
+  .interactive-btn,
+  .image-btn,
+  .icon-btn,
+  .text-effect,
+  .scroll-indicator {
+    cursor: pointer; /* Restore default cursor for interactive elements on mobile */
+  }
+} 
