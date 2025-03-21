@@ -35,58 +35,38 @@
             font-weight: 700; /* Bold weight for headings */
         }
         
-        body {
-            background-color: #121212;
-            color: #f5f5f5;
-            min-height: 100vh;
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #fff;
+            background-color: #0D0C0E;
             overflow-x: hidden;
-            cursor: default; /* 将默认光标从auto改为default */
-            font-family: 'SpaceGrotesk', sans-serif;
+            cursor: auto; /* 恢复默认光标 */
         }
         
-        /* Custom cursor styles */
+        /* Custom cursor styles - 移除自定义光标 */
         .cursor-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1000;
+            display: none; /* 隐藏自定义光标容器 */
         }
         
         .cursor-dot {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 62, 127, 0.25);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            filter: blur(10px);
-            will-change: transform;
+            display: none; /* 隐藏自定义光标点 */
         }
         
         .cursor-outline {
-            display: none;
+            display: none; /* 已经是none */
         }
         
         .cursor-trail {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, rgba(255, 62, 127, 0.85) 0%, rgba(255, 181, 107, 0) 70%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0.8;
-            z-index: 1;
-            pointer-events: none;
-            will-change: transform;
+            display: none; /* 隐藏光标轨迹 */
         }
         
         /* Interactive elements cursor style */
         a, button, .nav-btn, .slider-btn, .slider-dot, .scroll-indicator {
-            cursor: pointer; /* Changed from 'auto' to 'pointer' to show hand cursor */
+            cursor: pointer; /* 保持鼠标指针样式 */
             position: relative;
             z-index: 100; /* Ensure interactive elements are above the cursor layer */
             overflow: visible;
@@ -124,8 +104,10 @@
             position: relative;
             display: flex;
             align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
             padding: 4px;
-            transition: transform 0.3s ease;
         }
         
         .logo:hover {
@@ -133,8 +115,8 @@
         }
         
         .logo img {
-            width: 45px; /* 缩小为原来的一半 */
-            height:45px; /* 缩小为原来的一半 */
+            width: 45px;
+            height: 45px;
             object-fit: contain;
             filter: drop-shadow(0 0 8px rgba(255, 62, 127, 0.3));
             transition: all 0.3s ease;
@@ -231,8 +213,8 @@
         .nav-links a {
             color: var(--text-color);
             text-decoration: none;
-            font-size: 1.3rem; /* 从1.1rem增加到1.3rem，使字体更大更醒目 */
-            font-weight: 600; /* 从500增加到600，使字体更粗更醒目 */
+            font-size: 1.3rem;
+            font-weight: 600;
             position: relative;
             transition: all 0.3s ease;
             letter-spacing: 0.4px;
@@ -248,16 +230,16 @@
             background: #ff3e7f;
             left: 0;
             bottom: -6px;
-            transition: width 0.3s ease;
+            transition: width 0.3s ease !important;
         }
         
         .nav-links a:hover {
-            color: #ff3e7f;
-            transform: translateY(-1px);
+            color: #ff3e7f !important;
+            transform: translateY(-1px) !important;
         }
         
         .nav-links a:hover::after {
-            width: 100%;
+            width: 100% !important;
         }
         
         .menu-toggle {
@@ -482,42 +464,17 @@
             transition: all 0.3s ease;
         }
         
-        /* Scroll indicator */
+        /* 删除 Scroll indicator 样式 */
         .scroll-indicator {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            animation: bounce 2s infinite;
-            z-index: 1001;
-            pointer-events: all;
-            background: transparent;
-            width: 120px;
-            height: 80px;
-            padding: 10px;
+            display: none;
         }
         
-        .scroll-indicator span {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: rgba(255, 255, 255, 0.7);
-            pointer-events: none;
-            user-select: none;
-            position: relative;
-            z-index: 1002;
-        }
-        
-        .scroll-indicator i {
-            color: #ff3e7f;
-            font-size: 1.5rem;
-            pointer-events: none;
-            user-select: none;
-            position: relative;
-            z-index: 1002;
+        .scroll-indicator span, 
+        .scroll-indicator i, 
+        .scroll-indicator::before, 
+        .scroll-indicator:hover::before, 
+        .scroll-indicator:hover i {
+            display: none;
         }
         
         @keyframes bounce {
@@ -789,7 +746,7 @@
             }
             
             body {
-                cursor: default;
+                cursor: auto; /* 改为auto，确保使用默认光标 */
                 overflow-x: hidden;
                 width: 100%;
             }
@@ -800,7 +757,7 @@
             
             /* 确保所有文本在移动设备上也不显示文本选择光标 */
             .hero *, .slider-section *, .navbar * {
-                cursor: default !important;
+                cursor: auto !important; /* 改为auto */
             }
             
             /* 保留交互元素的指针光标 */
@@ -1663,7 +1620,7 @@
             transform: translateX(50px); /* 从右侧滑入 */
             transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
-
+        
         .work-item.in-view {
             opacity: 1;
             transform: translateX(0);
@@ -2156,12 +2113,6 @@
         </div>
     </div>
     
-    <!-- Custom Cursor -->
-    <div class="cursor-container">
-        <div class="cursor-dot" id="cursor-dot"></div>
-        <div class="cursor-outline" id="cursor-outline" style="display: none;"></div>
-    </div>
-    
     <!-- Navigation Bar -->
     <div class="navbar-container">
         <nav class="navbar">
@@ -2224,12 +2175,6 @@
                 </div>
                 <p class="bio">Crafting immersive digital experiences that push the boundaries of interactive design, combining technical expertise with artistic vision to create meaningful connections.</p>
             </div>
-        </div>
-        
-        <!-- Scroll indicator -->
-        <div class="scroll-indicator" id="scrollIndicator">
-            <span>Scroll Down</span>
-            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
     
@@ -2415,7 +2360,7 @@
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Project Title 1</h3>
+                    <h3>Project Title 1</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -2443,7 +2388,7 @@
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Project Title 2</h3>
+                    <h3>Project Title 2</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -2471,7 +2416,7 @@
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Project Title 3</h3>
+                    <h3>Project Title 3</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -2499,7 +2444,7 @@
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Project Title 4</h3>
+                    <h3>Project Title 4</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -2589,12 +2534,12 @@
         // 确保所有文本元素不显示文本选择光标
         document.addEventListener('DOMContentLoaded', function() {
             // 防止文本选择
-            document.body.style.cursor = 'default';
+            document.body.style.cursor = 'auto'; // 改为auto，确保使用默认光标
             
             // 设置所有文本元素的光标样式
             const textElements = document.querySelectorAll('.hero *, .slider-section *, .navbar *');
             textElements.forEach(el => {
-                el.style.cursor = 'default';
+                el.style.cursor = 'auto'; // 改为auto
             });
             
             // 恢复交互元素的指针光标
@@ -2799,155 +2744,31 @@
             const navbarContainer = document.querySelector('.navbar-container');
             
             if (window.scrollY > 50) {
-                navbar.style.padding = '1rem 3%'; /* 从10%减少到3% */
-                navbarContainer.style.background = 'transparent'; /* 100%透明，不使用黑色背景 */
-                navbarContainer.style.backdropFilter = 'none'; /* 移除模糊效果 */
-                navbarContainer.style.paddingTop = '8px'; /* 滚动后减少顶部间距 */
-            } else {
-                navbar.style.padding = '1.5rem 3%'; /* 从10%减少到3% */
+                navbar.style.padding = '1rem 3%';
                 navbarContainer.style.background = 'transparent';
                 navbarContainer.style.backdropFilter = 'none';
-                navbarContainer.style.paddingTop = '15px'; /* 初始状态的顶部间距 */
+                navbarContainer.style.paddingTop = '8px';
+            } else {
+                navbar.style.padding = '1.5rem 3%';
+                navbarContainer.style.background = 'transparent';
+                navbarContainer.style.backdropFilter = 'none';
+                navbarContainer.style.paddingTop = '15px';
             }
         });
         
-        // Scroll indicator functionality
-        const scrollIndicator = document.getElementById('scrollIndicator');
+        // Scroll indicator functionality - 简化代码
+        // const scrollIndicator = document.getElementById('scrollIndicator'); // 已删除元素，去除引用
         const homeLink = document.querySelector('.nav-links a[href="#"]');
         const logo = document.querySelector('.logo');
 
-        // Variable to track if auto-scrolling is in progress
-        let isAutoScrolling = false;
-
-        // Function to prevent scroll
-        function preventScroll(e) {
-            if (isAutoScrolling) {
-                e.preventDefault();
-            }
-        }
-
-        // Function to handle scroll to top
+        // 简化的scrollToTop函数，只包含滚动功能
         function scrollToTop() {
-            if (isAutoScrolling) return; // Prevent multiple scrolls
-
-            isAutoScrolling = true;
-            
-            // Add event listeners to prevent scroll
-            window.addEventListener('wheel', preventScroll, { passive: false });
-            window.addEventListener('touchmove', preventScroll, { passive: false });
-
             gsap.to(window, {
                 duration: 1.5,
                 scrollTo: 0,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    // Remove scroll prevention and show scroll indicator
-                    isAutoScrolling = false;
-                    window.removeEventListener('wheel', preventScroll);
-                    window.removeEventListener('touchmove', preventScroll);
-
-                    // Show scroll indicator with fade in effect
-                    gsap.fromTo(scrollIndicator, 
-                        { opacity: 0, y: 20 },
-                        { 
-                            duration: 0.8,
-                            opacity: 1,
-                            y: 0,
-                            ease: "power2.out",
-                            display: "flex"
-                        }
-                    );
-                }
+                ease: "power2.inOut"
             });
         }
-
-        // Handle scroll indicator click
-        scrollIndicator.addEventListener('click', () => {
-            if (isAutoScrolling) return; // Prevent multiple scrolls
-
-            isAutoScrolling = true;
-            
-            // Add event listeners to prevent scroll
-            window.addEventListener('wheel', preventScroll, { passive: false });
-            window.addEventListener('touchmove', preventScroll, { passive: false });
-
-            // 获取 Skills section
-            const skillsSection = document.querySelector('.skills-section');
-            
-            // 先将 Skills section 设为可见，避免滚动后显示异常
-            if (skillsSection) {
-                // 确保技能部分在滚动前可见，但透明度为0
-                skillsSection.style.visibility = 'visible';
-                skillsSection.style.opacity = '0';
-                skillsSection.style.transform = 'translateY(0)'; // 确保没有水平位移
-            }
-
-            // Scroll down with animation
-            gsap.to(window, {
-                duration: 1,
-                scrollTo: window.innerHeight,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    // Remove scroll prevention
-                    isAutoScrolling = false;
-                    window.removeEventListener('wheel', preventScroll);
-                    window.removeEventListener('touchmove', preventScroll);
-                    
-                    // 滚动完成后，触发 Skills section 的淡入动画
-                    if (skillsSection) {
-                        setTimeout(() => {
-                            skillsSection.classList.add('in-view');
-                            
-                            // 启动所有技能项的动画
-                            const skillItems = document.querySelectorAll('.skill-item');
-                            skillItems.forEach((item, index) => {
-                                setTimeout(() => {
-                                    item.classList.add('in-view');
-                                    
-                                    // 为每个技能项激活技能条动画
-                                    const skillBar = item.querySelector('.skill-level');
-                                    if (skillBar) {
-                                        // 获取目标宽度
-                                        let targetWidth;
-                                        if (skillBar.getAttribute('style') && skillBar.getAttribute('style').includes('width:')) {
-                                            targetWidth = skillBar.getAttribute('style').split('width:')[1].split(';')[0].trim();
-                                        } else if (skillBar.dataset.width) {
-                                            targetWidth = skillBar.dataset.width;
-                                        } else if (skillBar.dataset.level) {
-                                            targetWidth = skillBar.dataset.level;
-                                        } else {
-                                            targetWidth = '70%';
-                                        }
-                                        
-                                        // 设置初始宽度为0
-                                        skillBar.style.width = '0%';
-                                        
-                                        // 添加动画类并执行动画
-                                        setTimeout(() => {
-                                            skillBar.classList.add('animating');
-                                            setTimeout(() => {
-                                                skillBar.style.width = targetWidth;
-                                            }, 50);
-                                        }, 100);
-                                    }
-                                }, index * 150); // 每个技能项依次显示
-                            });
-                        }, 200); // 等待滚动稳定后再显示
-                    }
-                }
-            });
-            
-            // Hide scroll indicator with fade out effect
-            gsap.to(scrollIndicator, {
-                duration: 0.5,
-                opacity: 0,
-                y: 20,
-                ease: "power2.in",
-                onComplete: () => {
-                    scrollIndicator.style.display = "none";
-                }
-            });
-        });
 
         // Add scroll to top functionality for home link and logo
         homeLink.addEventListener('click', (e) => {
@@ -2960,37 +2781,7 @@
             scrollToTop();
         });
 
-        // Show/hide scroll indicator based on scroll position
-        window.addEventListener('scroll', () => {
-            if (!isAutoScrolling) { // Only handle manual scrolls
-                if (window.scrollY < 50) {
-                    if (scrollIndicator.style.display === "none") {
-                        gsap.fromTo(scrollIndicator,
-                            { opacity: 0, y: 20 },
-                            { 
-                                duration: 0.8,
-                                opacity: 1,
-                                y: 0,
-                                ease: "power2.out",
-                                display: "flex"
-                            }
-                        );
-                    }
-                } else {
-                    if (scrollIndicator.style.display !== "none") {
-                        gsap.to(scrollIndicator, {
-                            duration: 0.5,
-                            opacity: 0,
-                            y: 20,
-                            ease: "power2.in",
-                            onComplete: () => {
-                                scrollIndicator.style.display = "none";
-                            }
-                        });
-                    }
-                }
-            }
-        });
+        // 删除所有与scrollIndicator相关的事件监听器和动画代码
         
         // Slider functionality
         const slider = document.getElementById('slider');
@@ -3082,10 +2873,12 @@
         }
         
         // Custom cursor functionality
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorOutline = document.getElementById('cursor-outline');
-        const cursorContainer = document.querySelector('.cursor-container');
+        // const cursorDot = document.getElementById('cursor-dot');
+        // const cursorOutline = document.getElementById('cursor-outline');
+        // const cursorContainer = document.querySelector('.cursor-container');
         
+        // 禁用自定义光标代码
+        /*
         // Check if we're on a device with touch support
         if (!('ontouchstart' in window)) {
             let mouseX = 0;
@@ -3118,6 +2911,13 @@
                     });
                 }
             });
+            
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+        }
+        */
             
             // Enhanced hover effects with GSAP
             const interactiveElements = document.querySelectorAll('a, button, .nav-btn, .slider-btn, .slider-dot');
@@ -3252,7 +3052,7 @@
                     
                     while (currentElement && !isOverInteractiveNow) {
                         // 以下是水波纹吸收效果的关键代码，当鼠标悬停在这些元素上时会停止产生水波纹
-                        if (currentElement.matches('a, button, .nav-btn, .slider-btn, .slider-dot, .skill-item, .work-item')) {
+                    if (currentElement.matches('a, button, .nav-btn, .slider-btn, .slider-dot, .skill-item, .work-item')) {
                             isOverInteractiveNow = true;
                             interactiveElement = currentElement;
                             if (!isOverInteractive) {
@@ -3274,55 +3074,55 @@
                                     targetHeight += 16;
                                 }
                                 
-                                // Skip the absorption animation for work-item elements
-                                if (!interactiveElement.classList.contains('work-item')) {
-                                    // Create a "sucking in" effect towards the center of the element
-                                    gsap.to(cursorDot, {
-                                        duration: 0.4,
+                            // Skip the absorption animation for work-item elements
+                            if (!interactiveElement.classList.contains('work-item')) {
+                                // Create a "sucking in" effect towards the center of the element
+                                gsap.to(cursorDot, {
+                                    duration: 0.4,
+                                    left: elementCenterX,
+                                    top: elementCenterY,
+                                    width: 0,
+                                    height: 0,
+                                    opacity: 0,
+                                    scale: 0.2,
+                                    ease: "power3.in",
+                                    onComplete: () => {
+                                        // Hide the cursor dot completely after animation
+                                        gsap.set(cursorDot, {
+                                            opacity: 0,
+                                            scale: 0
+                                        });
+                                    }
+                                });
+                            }
+                                
+                            // Skip ripple absorption for work-item elements
+                            if (!interactiveElement.classList.contains('work-item')) {
+                                // Remove any existing ripples with a sucking effect
+                                const existingRipples = document.querySelectorAll('.cursor-trail');
+                                existingRipples.forEach(ripple => {
+                                    const rippleRect = ripple.getBoundingClientRect();
+                                    const rippleX = rippleRect.left + rippleRect.width / 2;
+                                    const rippleY = rippleRect.top + rippleRect.height / 2;
+                                    
+                                    // Animate ripple towards the element center
+                                    gsap.to(ripple, {
+                                        duration: 0.3,
                                         left: elementCenterX,
                                         top: elementCenterY,
-                                        width: 0,
-                                        height: 0,
+                                        scale: 0,
                                         opacity: 0,
-                                        scale: 0.2,
-                                        ease: "power3.in",
-                                        onComplete: () => {
-                                            // Hide the cursor dot completely after animation
-                                            gsap.set(cursorDot, {
-                                                opacity: 0,
-                                                scale: 0
-                                            });
-                                        }
+                                        ease: "power2.in",
+                                        onComplete: () => ripple.remove()
                                     });
-                                }
-                                
-                                // Skip ripple absorption for work-item elements
-                                if (!interactiveElement.classList.contains('work-item')) {
-                                    // Remove any existing ripples with a sucking effect
-                                    const existingRipples = document.querySelectorAll('.cursor-trail');
-                                    existingRipples.forEach(ripple => {
-                                        const rippleRect = ripple.getBoundingClientRect();
-                                        const rippleX = rippleRect.left + rippleRect.width / 2;
-                                        const rippleY = rippleRect.top + rippleRect.height / 2;
-                                        
-                                        // Animate ripple towards the element center
-                                        gsap.to(ripple, {
-                                            duration: 0.3,
-                                            left: elementCenterX,
-                                            top: elementCenterY,
-                                            scale: 0,
-                                            opacity: 0,
-                                            ease: "power2.in",
-                                            onComplete: () => ripple.remove()
-                                        });
-                                    });
-                                } else {
-                                    // For work-item, just remove ripples without animation
-                                    const existingRipples = document.querySelectorAll('.cursor-trail');
-                                    existingRipples.forEach(ripple => {
-                                        ripple.remove();
-                                    });
-                                }
+                            });
+                            } else {
+                                // For work-item, just remove ripples without animation
+                                const existingRipples = document.querySelectorAll('.cursor-trail');
+                                existingRipples.forEach(ripple => {
+                                    ripple.remove();
+                                });
+                            }
                             }
                         }
                         currentElement = currentElement.parentElement;
@@ -3412,9 +3212,6 @@
                     ease: "power2.out",
                     onComplete: () => trail.remove()
                 });
-            }
-        } else {
-            cursorContainer.style.display = 'none';
         }
 
         // 添加覆盖层交互
@@ -3661,7 +3458,7 @@
                     const mainTitle = document.querySelector('.hero-content .main-title');
                     const infoGrid = document.querySelector('.hero-content .info-grid');
                     const socialLinks = document.querySelector('.hero .social-links');
-                    const scrollIndicator = document.querySelector('.hero .scroll-indicator');
+                    // 移除 scrollIndicator 引用
                     const skillsSection = document.querySelector('.skills-section');
                     
                     // 创建时间线
@@ -3694,14 +3491,7 @@
                         ease: "power2.out"
                     }, "-=0.5"); // 与前一个动画有重叠
                     
-                    // 显示滚动指示器
-                    tl.to(scrollIndicator, {
-                        duration: 0.8,
-                        opacity: 1,
-                        y: 0,
-                        visibility: 'visible',
-                        ease: "power2.out"
-                    }, "-=0.5"); // 与前一个动画有重叠
+                    // 移除 scrollIndicator 的动画
                     
                     // 最后显示技能部分
                     tl.to(skillsSection, {
