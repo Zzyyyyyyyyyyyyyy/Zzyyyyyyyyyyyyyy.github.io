@@ -79,36 +79,53 @@
         }
         
         a:not(.logo)::before, .nav-btn::before {
-            display: none;
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 62, 127, 0.05);
+            border-radius: 8px;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 8px 12px;
         }
         
         a:not(.logo):hover::before, .nav-btn:hover::before {
-            opacity: 0;
+            opacity: 1;
         }
         
         /* Logo specific styles */
-        .logo {
+        .logo, .logo:link, .logo:visited, .navbar .logo, body .navbar-container .navbar .logo {
             text-decoration: none;
             position: relative;
             display: flex;
             align-items: center;
             padding: 4px;
+            transition: transform 0.3s ease;
+            cursor: pointer !important;
         }
         
-        .logo:hover {
-            transform: none;
+        .logo:hover, .navbar .logo:hover, body .navbar-container .navbar .logo:hover {
+            transform: scale(1.05);
+            cursor: pointer !important;
         }
         
-        .logo img {
+        .logo img, .navbar .logo img {
             width: 45px;
             height: 45px;
             object-fit: contain;
-            filter: none;
+            filter: drop-shadow(0 0 8px rgba(255, 62, 127, 0.3));
+            transition: all 0.3s ease;
         }
         
-        .logo:hover img {
-            filter: none;
-            transform: none;
+        .logo:hover img, .navbar .logo:hover img {
+            filter: drop-shadow(0 0 12px rgba(255, 62, 127, 0.5));
+            transform: scale(1.15);
+            cursor: pointer !important;
         }
         
         /* Remove the dot before logo */
@@ -203,19 +220,37 @@
             letter-spacing: 0.4px;
             text-transform: uppercase;
             font-family: 'SpaceGrotesk', sans-serif;
+            transition: all 0.3s ease;
         }
         
         .nav-links a::after {
-            display: none;
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2.5px;
+            background: #ff3e7f;
+            left: 0;
+            bottom: -6px;
+            transition: width 0.3s ease !important;
         }
         
         .nav-links a:hover {
-            color: var(--text-color);
-            transform: none;
+            color: #ff3e7f !important;
+            transform: translateY(-1px) !important;
         }
         
         .nav-links a:hover::after {
-            width: 0;
+            width: 100% !important;
+        }
+        
+        /* 添加当前页面链接的激活状态 */
+        .nav-links a.active {
+            color: #ff3e7f !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .nav-links a.active::after {
+            width: 100% !important;
         }
         
         .menu-toggle {
@@ -1921,6 +1956,17 @@
             margin: 0 auto;
             padding: 3rem var(--section-padding); /* 从5rem减小到3rem */
             text-align: center;
+            position: relative;
+            border-top: 1px solid transparent;
+            background-image: linear-gradient(90deg, 
+                rgba(255, 255, 255, 0), 
+                rgba(255, 62, 127, 0.5), 
+                rgba(255, 181, 107, 0.5), 
+                rgba(255, 255, 255, 0));
+            background-position: top;
+            background-size: 100% 1px;
+            background-repeat: no-repeat;
+            padding-top: 4rem; /* 增加顶部内边距 */
         }
         
         .awesome-together {
@@ -2092,15 +2138,15 @@
     <!-- Navigation Bar -->
     <div class="navbar-container">
         <nav class="navbar">
-            <a href="#" class="logo">
+            <a href="#" class="logo" style="cursor: pointer !important;">
                 <img src="Z_s_icon.png" alt="Logo">
             </a>
             
             <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">About Me</a>
-                <a href="#">Works</a>
-                <a href="#">Contact</a>
+                <a href="#" class="active">Home</a>
+                <a href="About ME.html">About Me</a>
+                <a href="works.html">Works</a>
+                <a href="Contact.html">Contact</a>
             </div>
         </nav>
     </div>
@@ -2336,7 +2382,7 @@
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                    <h3>Project Title 1</h3>
+                        <h3>Project Title 1</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -2364,7 +2410,7 @@
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                    <h3>Project Title 2</h3>
+                        <h3>Project Title 2</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -2392,7 +2438,7 @@
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                    <h3>Project Title 3</h3>
+                        <h3>Project Title 3</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -2420,7 +2466,7 @@
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                    <h3>Project Title 4</h3>
+                        <h3>Project Title 4</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -3023,7 +3069,7 @@
                     
                     while (currentElement && !isOverInteractiveNow) {
                         // 以下是水波纹吸收效果的关键代码，当鼠标悬停在这些元素上时会停止产生水波纹
-                    if (currentElement.matches('a, button, .nav-btn, .slider-btn, .slider-dot, .skill-item, .work-item')) {
+                        if (currentElement.matches('a, button, .nav-btn, .slider-btn, .slider-dot, .skill-item, .work-item')) {
                             isOverInteractiveNow = true;
                             interactiveElement = currentElement;
                             if (!isOverInteractive) {
@@ -3045,55 +3091,55 @@
                                     targetHeight += 16;
                                 }
                                 
-                            // Skip the absorption animation for work-item elements
-                            if (!interactiveElement.classList.contains('work-item')) {
-                                // Create a "sucking in" effect towards the center of the element
-                                gsap.to(cursorDot, {
-                                    duration: 0.4,
-                                    left: elementCenterX,
-                                    top: elementCenterY,
-                                    width: 0,
-                                    height: 0,
-                                    opacity: 0,
-                                    scale: 0.2,
-                                    ease: "power3.in",
-                                    onComplete: () => {
-                                        // Hide the cursor dot completely after animation
-                                        gsap.set(cursorDot, {
-                                            opacity: 0,
-                                            scale: 0
-                                        });
-                                    }
-                                });
-                            }
-                                
-                            // Skip ripple absorption for work-item elements
-                            if (!interactiveElement.classList.contains('work-item')) {
-                                // Remove any existing ripples with a sucking effect
-                                const existingRipples = document.querySelectorAll('.cursor-trail');
-                                existingRipples.forEach(ripple => {
-                                    const rippleRect = ripple.getBoundingClientRect();
-                                    const rippleX = rippleRect.left + rippleRect.width / 2;
-                                    const rippleY = rippleRect.top + rippleRect.height / 2;
-                                    
-                                    // Animate ripple towards the element center
-                                    gsap.to(ripple, {
-                                        duration: 0.3,
+                                // Skip the absorption animation for work-item elements
+                                if (!interactiveElement.classList.contains('work-item')) {
+                                    // Create a "sucking in" effect towards the center of the element
+                                    gsap.to(cursorDot, {
+                                        duration: 0.4,
                                         left: elementCenterX,
                                         top: elementCenterY,
-                                        scale: 0,
+                                        width: 0,
+                                        height: 0,
                                         opacity: 0,
-                                        ease: "power2.in",
-                                        onComplete: () => ripple.remove()
+                                        scale: 0.2,
+                                        ease: "power3.in",
+                                        onComplete: () => {
+                                            // Hide the cursor dot completely after animation
+                                            gsap.set(cursorDot, {
+                                                opacity: 0,
+                                                scale: 0
+                                            });
+                                        }
                                     });
-                            });
-                            } else {
-                                // For work-item, just remove ripples without animation
-                                const existingRipples = document.querySelectorAll('.cursor-trail');
-                                existingRipples.forEach(ripple => {
-                                    ripple.remove();
-                                });
-                            }
+                                }
+                                
+                                // Skip ripple absorption for work-item elements
+                                if (!interactiveElement.classList.contains('work-item')) {
+                                    // Remove any existing ripples with a sucking effect
+                                    const existingRipples = document.querySelectorAll('.cursor-trail');
+                                    existingRipples.forEach(ripple => {
+                                        const rippleRect = ripple.getBoundingClientRect();
+                                        const rippleX = rippleRect.left + rippleRect.width / 2;
+                                        const rippleY = rippleRect.top + rippleRect.height / 2;
+                                        
+                                        // Animate ripple towards the element center
+                                        gsap.to(ripple, {
+                                            duration: 0.3,
+                                            left: elementCenterX,
+                                            top: elementCenterY,
+                                            scale: 0,
+                                            opacity: 0,
+                                            ease: "power2.in",
+                                            onComplete: () => ripple.remove()
+                                        });
+                                    });
+                                } else {
+                                    // For work-item, just remove ripples without animation
+                                    const existingRipples = document.querySelectorAll('.cursor-trail');
+                                    existingRipples.forEach(ripple => {
+                                        ripple.remove();
+                                    });
+                                }
                             }
                         }
                         currentElement = currentElement.parentElement;
@@ -3717,5 +3763,105 @@
             </div>
         </div>
     </section>
+    
+    <script>
+        // 确保logo总是保持pointer光标
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoElement = document.querySelector('.logo');
+            if (logoElement) {
+                logoElement.style.cursor = 'pointer';
+                
+                // 添加鼠标进入和离开事件监听器来强制设置光标
+                logoElement.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                });
+                
+                logoElement.addEventListener('mousemove', function() {
+                    this.style.cursor = 'pointer';
+                });
+            }
+            
+            // 设置当前页面的导航链接为激活状态
+            function setActiveNavLink() {
+                // 获取当前页面的文件名
+                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                console.log("Current page:", currentPage); // 调试输出
+                
+                // 获取所有导航链接
+                const navLinks = document.querySelectorAll('.nav-links a');
+                
+                // 遍历链接，找到对应当前页面的链接添加active类
+                navLinks.forEach(link => {
+                    // 获取链接的href属性
+                    const href = link.getAttribute('href');
+                    console.log("Checking link:", href); // 调试输出
+                    
+                    // 特殊处理About ME.html页面
+                    if (currentPage.includes("About") && currentPage.includes("ME") && 
+                        href.includes("About") && href.includes("ME")) {
+                        link.classList.add('active');
+                    }
+                    // 特殊处理Contact.html页面
+                    else if (currentPage.includes("Contact") && href.includes("Contact")) {
+                        link.classList.add('active');
+                    }
+                    // 特殊处理works.html页面
+                    else if (currentPage.includes("works") && href.includes("works")) {
+                        link.classList.add('active');
+                    }
+                    // 处理主页
+                    else if ((currentPage === 'index.html' || currentPage === '' || currentPage === '/') && 
+                            (href === '#' || href === 'index.html')) {
+                        link.classList.add('active');
+                    }
+                    // 处理其他页面
+                    else if (href === currentPage) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+                
+                // 确保主页链接在index页面时激活
+                if (currentPage === 'index.html' || currentPage === '' || currentPage === '/') {
+                    const homeLink = document.querySelector('.nav-links a[href="#"]');
+                    if (homeLink) homeLink.classList.add('active');
+                }
+            }
+            
+            // 页面加载时执行
+            document.addEventListener('DOMContentLoaded', function() {
+                setActiveNavLink();
+                
+                // 添加Home链接的滚动到顶部功能
+                const homeLink = document.querySelector('.nav-links a[href="#"]');
+                if (homeLink) {
+                    homeLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // 使用GSAP平滑滚动到顶部
+                        gsap.to(window, {
+                            duration: 1.5,
+                            scrollTo: 0,
+                            ease: "power2.inOut"
+                        });
+                    });
+                }
+                
+                // 添加Logo的滚动到顶部功能
+                const logoElement = document.querySelector('.logo');
+                if (logoElement) {
+                    logoElement.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // 使用GSAP平滑滚动到顶部
+                        gsap.to(window, {
+                            duration: 1.5,
+                            scrollTo: 0,
+                            ease: "power2.inOut"
+                        });
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html> 

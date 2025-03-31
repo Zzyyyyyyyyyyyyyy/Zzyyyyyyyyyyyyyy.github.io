@@ -11,8 +11,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.42",
+    "animejs": "^3.2.2",
     "express": "^4.21.2",
+    "gsap": "^3.12.7",
+    "hover-effect": "^1.2.1",
+    "locomotive-scroll": "^4.1.4",
     "magic-ui": "^0.1.0",
-    "react-scripts": "^5.0.1"
+    "ogl": "^0.0.73",
+    "react-scripts": "^5.0.1",
+    "splitting": "^1.1.0",
+    "three": "^0.175.0"
   }
 }
