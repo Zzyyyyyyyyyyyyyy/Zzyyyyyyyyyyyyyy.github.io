@@ -301,7 +301,7 @@
         /* Works Content Section */
         .works-content {
             padding-top: 120px; /* 确保内容不被导航栏遮挡 */
-            min-height: 70vh; /* Reduced min-height slightly */
+            min-height: auto; /* Remove forced minimum height */
             padding-bottom: 30px; /* Reduced bottom padding */
             max-width: 3840px; /* Updated max-width */
             margin: 0 auto;
@@ -359,7 +359,7 @@
         .final-section {
             max-width: var(--content-max-width);
             margin: 0 auto;
-            padding: 3rem var(--section-padding);
+            padding: 2rem var(--section-padding);
             text-align: center;
             position: relative;
             border-top: 1px solid transparent;
@@ -371,7 +371,7 @@
             background-position: top;
             background-size: 100% 1px;
             background-repeat: no-repeat;
-            padding-top: 4rem; /* 增加顶部内边距 */
+            padding-top: 2.5rem; /* 减少顶部内边距 */
         }
         
         .awesome-together {
@@ -631,32 +631,65 @@
         /* 修改slider-wrapper样式，使用fr单位和自动放置 */
         .slider-wrapper {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 保持3列 */
-            grid-template-rows: repeat(4, auto); /* 显式定义4行，自动高度 */
-            gap: 25px;
-            padding: 1.5rem 0;
+            grid-template-columns: 1fr 1fr; /* 改为两列布局与Interactive Systems一致 */
+            grid-template-rows: auto auto; /* 使用两行，移除多余的间距行 */
+            gap: 200px; /* 所有方向间距增加到200px */
+            padding: 0.5rem 0;
             position: relative;
             min-height: auto;
             padding-left: 15px; /* 为整个网格添加左内边距 */
             padding-right: 15px; /* 为整个网格添加右内边距 */
             overflow: visible; /* 确保内容不被裁剪 */
+            justify-items: center; /* 水平居中项目 */
+        }
+
+        /* 调整项目位置 - 应用到所有类别 */
+        .work-item:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+            aspect-ratio: 3/2 !important; /* 与interactive-1一致 */
+            width: 100%;
+            height: auto !important; /* 让高度自动根据宽度和比例计算 */
+        }
+
+        .work-item:nth-child(2) {
+            display: none; /* 隐藏第二个项目，与Interactive Systems一致 */
+        }
+
+        .work-item:nth-child(3) {
+            grid-column: 2;
+            grid-row: 1;
+            aspect-ratio: 1/1 !important; /* 与interactive-3一致 */
+            width: 100%;
+            height: auto !important;
+            display: block !important; /* 确保项目显示 */
+            visibility: visible !important; /* 确保项目可见 */
+            opacity: 1 !important; /* 确保项目不透明 */
         }
 
         /* 调整项目四的位置，确保完全在网格内 */
-        .work-item:nth-child(5n+4) {
-            grid-column: 1;
-            grid-row: 3 / span 2;
-            --random-scale: var(--scale-4);
-            aspect-ratio: 1/2; /* 保持竖长方形 */
-            margin-left: 15px; /* 添加左边距，确保不会溢出左边界 */
+        .work-item:nth-child(4) {
+            grid-column: 1 / span 2; /* 跨越两列居中 */
+            grid-row: 2;
+            aspect-ratio: 2/1 !important; /* 与interactive-4一致 */
+            width: 80%; /* 宽度为容器的80%，使其居中 */
+            height: auto !important;
         }
 
         /* 调整项目五的位置，避免与项目四重叠 */
-        .work-item:nth-child(5n) {
-            grid-column: 2 / span 2;
-            grid-row: 3 / span 2; /* 与项目四同行，避免重叠 */
-            --random-scale: var(--scale-5);
-            aspect-ratio: 2/1; /* 保持横长方形 */
+        .work-item:nth-child(5) {
+            display: none; /* 隐藏第五个项目，与Interactive Systems一致 */
+        }
+
+        /* 为各类别设置特殊样式 */
+        #media .slider-wrapper,
+        #physical .slider-wrapper,
+        #visual .slider-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 改为两列布局 */
+            grid-template-rows: auto auto; /* 使用两行，移除多余的间距行 */
+            gap: 200px; /* 所有方向间距统一为200px */
+            justify-items: center; /* 水平居中项目 */
         }
 
         /* 修改作品项目样式，确保比例一致 */
@@ -676,26 +709,45 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        /* 使用网格区域定位和aspect-ratio确保比例一致 */
-        .work-item:nth-child(5n+1) {
+        /* 使其他类别的项目定位与Interactive Systems一致 */
+        #media .work-item[data-id="media-1"],
+        #physical .work-item[data-id="physical-1"],
+        #visual .work-item[data-id="visual-1"] {
             grid-column: 1;
-            grid-row: span 1;
-            --random-scale: var(--scale-1);
-            aspect-ratio: 1/1; /* 正方形 */
+            grid-row: 1;
+            aspect-ratio: 3/2 !important; /* 改为宽高比3:2，增加高度 */
+            width: 100%;
+            height: auto !important; /* 让高度自动根据宽度和比例计算 */
         }
 
-        .work-item:nth-child(5n+2) {
+        #media .work-item[data-id="media-3"],
+        #physical .work-item[data-id="physical-3"],
+        #visual .work-item[data-id="visual-3"] {
             grid-column: 2;
-            grid-row: span 2;
-            --random-scale: var(--scale-2);
-            aspect-ratio: 1/2; /* 竖长方形 */
+            grid-row: 1;
+            aspect-ratio: 1/1 !important; /* 改为正方形，高度减半 */
+            width: 100%;
+            height: auto !important; /* 让高度自动根据宽度和比例计算 */
         }
 
-        .work-item:nth-child(5n+3) {
-            grid-column: 3;
-            grid-row: span 1;
-            --random-scale: var(--scale-3);
-            aspect-ratio: 1/1; /* 正方形 */
+        #media .work-item[data-id="media-4"],
+        #physical .work-item[data-id="physical-4"],
+        #visual .work-item[data-id="visual-4"] {
+            grid-column: 1 / span 2; /* 跨越两列居中 */
+            grid-row: 2;
+            aspect-ratio: 2/1 !important; /* 宽是高的两倍 */
+            width: 80%; /* 宽度为容器的80%，使其居中 */
+            height: auto !important; /* 让高度自动根据宽度和比例计算 */
+        }
+
+        /* 隐藏部分项目，使其与Interactive Systems一致 */
+        #media .work-item[data-id="media-2"],
+        #media .work-item[data-id="media-5"],
+        #physical .work-item[data-id="physical-2"],
+        #physical .work-item[data-id="physical-5"],
+        #visual .work-item[data-id="visual-2"],
+        #visual .work-item[data-id="visual-5"] {
+            display: none;
         }
 
         /* 调整工作图片容器比例 */
@@ -1098,8 +1150,8 @@
         #interactive .slider-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr; /* 改为两列布局 */
-            grid-template-rows: auto 100px auto; /* 使用三行：项目行、100px间距行、项目行 */
-            gap: 25px;
+            grid-template-rows: auto auto; /* 使用两行，移除多余的间距行 */
+            gap: 200px; /* 所有方向间距统一为200px */
             justify-items: center; /* 水平居中项目 */
         }
 
@@ -1116,18 +1168,40 @@
         #interactive .work-item[data-id="interactive-3"] {
             grid-column: 2;
             grid-row: 1;
-            aspect-ratio: 1/1 !important; /* 改为正方形，高度减半 */
-            width: 100%;
+            aspect-ratio: 1/1 !important; /* 保持正方形比例 */
+            width: 100%; 
             height: auto !important; /* 让高度自动根据宽度和比例计算 */
+            display: block !important; /* 确保项目显示 */
+            visibility: visible !important; /* 确保项目可见 */
+            opacity: 1 !important; /* 确保项目不透明 */
         }
 
         /* 调整第四个项目 - 使用data-id属性精确定位 */
         #interactive .work-item[data-id="interactive-4"] {
             grid-column: 1 / span 2; /* 跨越两列居中 */
-            grid-row: 3;
+            grid-row: 2;
             aspect-ratio: 2/1 !important; /* 宽是高的两倍 */
             width: 80%; /* 宽度为容器的80%，使其居中 */
             height: auto !important; /* 让高度自动根据宽度和比例计算 */
+        }
+
+        /* 确保interactive-4中的图像/图标正确居中 */
+        #interactive .work-item[data-id="interactive-4"] .work-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        #interactive .work-item[data-id="interactive-4"] .work-image i {
+            font-size: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
         }
 
         /* 移动端响应式调整 - 保持aspect-ratio而非固定高度 */
@@ -1598,9 +1672,9 @@
                 <a href="#" class="plain-text">LinkedIn</a>
                 <a href="#" class="plain-text">YouTube</a>
                 <a href="#" class="plain-text">TikTok</a>
-                        </div>
+            </div>
             <div class="email-info">
-                <p>zhengyuanzhao6@gmail.com</p>
+                <p>z.zhengyuanZhao@gmail.com</p>
             </div>
         </div>
     </section>

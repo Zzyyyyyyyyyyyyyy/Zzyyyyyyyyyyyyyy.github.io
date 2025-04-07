@@ -1257,7 +1257,7 @@
         
         .world-title {
             font-family: 'Million Smiles', sans-serif;
-            font-size: 10rem; /* 从8rem放大到14.4rem (8 × 1.8) */
+            font-size: clamp(5rem, 15vw, 10rem); /* 使用clamp确保字体大小响应式且有最小/最大限制 */
             line-height: 1;
             background: linear-gradient(45deg, #ff3e7f, #ffb56b);
             -webkit-background-clip: text;
@@ -1341,14 +1341,14 @@
         /* 媒体查询，用于响应式设计 */
         @media (max-width: 768px) {
             .world-title {
-                font-size: 9rem; /* 从5rem放大到9rem (5 × 1.8) */
+                font-size: clamp(4rem, 12vw, 9rem); /* 使用clamp函数替代固定字体大小 */
                 padding: 1rem;
             }
         }
         
         @media (max-width: 480px) {
             .world-title {
-                font-size: 6.3rem; /* 从3.5rem放大到6.3rem (3.5 × 1.8) */
+                font-size: clamp(3rem, 10vw, 6.3rem); /* 使用clamp函数替代固定字体大小 */
                 padding: 0.5rem;
             }
         }
@@ -1356,7 +1356,7 @@
         /* 添加一个媒体查询以确保在超小屏幕上也能正常显示 */
         @media (max-width: 360px) {
             .world-title {
-                font-size: 5rem; /* 在非常小的屏幕上使用更小的字体 */
+                font-size: clamp(2.5rem, 9vw, 5rem); /* 使用clamp函数替代固定字体大小 */
                 padding: 0.3rem;
             }
         }
@@ -3759,7 +3759,7 @@
                 <a href="#" class="plain-text">TikTok</a>
             </div>
             <div class="email-info">
-                <p>zhengyuanzhao6@gmail.com</p>
+                <p>z.zhengyuanZhao@gmail.com</p>
             </div>
         </div>
     </section>
