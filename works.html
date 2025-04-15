@@ -698,12 +698,14 @@
             border-radius: 30px; /* 更圆润的边角 */
             overflow: hidden;
             position: relative;
-            transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.08);
             height: 100%;
             display: flex;
             flex-direction: column;
-            transform: none; /* 初始无变换 */
+            transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), 
+                        box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), 
+                        border-color 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+            transform: translateY(0);
             touch-action: auto;
             cursor: pointer; /* 添加指针样式 */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -782,15 +784,16 @@
             width: 100%;
             height: auto;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transform: scale(1);
             display: block;
+            will-change: transform;
         }
 
         /* 调整图标样式 */
         .work-image i {
             font-size: 3.5rem;
             color: rgba(255, 255, 255, 0.2); /* 增加对比度 */
-            transition: color 0.3s ease, transform 0.5s ease;
             height: auto;
             width: 100%;
             display: flex;
@@ -800,8 +803,11 @@
             padding: 2rem;
         }
 
+        /* 确保悬停效果平滑执行 */
+        .work-item:hover .work-image img,
         .work-item:hover .work-image i {
-            color: rgba(255, 255, 255, 0.4); /* 悬停时颜色更亮 */
+            transform: scale(1.05);
+            transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         /* 调整作品信息样式 */
@@ -1057,12 +1063,12 @@
         }
 
         .work-item:hover {
-            transform: translateY(-8px) !important;
+            transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             border-color: rgba(255, 62, 127, 0.3);
             z-index: 5;
         }
-
+        
         /* 调整宽高比各异的项目中的信息显示 */
         .work-item[style*="aspect-ratio: 1/2"] .work-info,
         .work-item[style*="aspect-ratio: 2/1"] .work-info {
@@ -1075,35 +1081,13 @@
             align-items: start; /* 顶部对齐 */
         }
 
-        /* 移除每个项目的随机缩放变量 */
+        /* 为不同项目设置统一缩放比例 */
         .work-item:nth-child(5n+1),
         .work-item:nth-child(5n+2),
         .work-item:nth-child(5n+3),
         .work-item:nth-child(5n+4),
         .work-item:nth-child(5n) {
             --random-scale: 1; /* 统一设置所有缩放比例为1 */
-        }
-
-        /* 确保悬停时也不会改变 */
-        .work-item:hover {
-            transform: none !important;
-            box-shadow: none;
-            border-color: rgba(255, 255, 255, 0.08);
-            z-index: auto;
-        }
-
-        /* 确保所有过渡效果都被禁用 */
-        .work-item,
-        .work-image,
-        .work-image img,
-        .work-image i {
-            transition: none !important;
-        }
-
-        /* 添加图片悬停效果 */
-        .work-item:hover .work-image img,
-        .work-item:hover .work-image i {
-            transform: scale(1.1);
         }
 
         /* 恢复响应式布局 */
@@ -1295,20 +1279,21 @@
                             <!-- 作品项目1 -->
                             <div class="work-item" data-id="interactive-1">
                                 <div class="work-image">
-                                    <i class="fas fa-laptop-code"></i>
+                                    <img src="project/project1/1.JPG" alt="Project 1">
                                 </div>
                                 <div class="work-info">
                                     <div>
-                                        <h3 class="work-title">Project Title 1</h3>
+                                        <h3 class="work-title">Interactive Visual Project</h3>
                                     </div>
                                     <div>
-                                        <span class="work-tag">Web</span>
                                         <span class="work-tag">Interactive</span>
+                                        <span class="work-tag">Visual</span>
                                     </div>
                                 </div>
                                 <div class="view-arrow">
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
+                                <a href="project/project1/index.html" class="project-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0;"></a>
                             </div>
                             
                             <!-- 作品项目3 -->
@@ -1327,8 +1312,8 @@
                                 </div>
                                 <div class="view-arrow">
                                     <i class="fas fa-arrow-right"></i>
-                                </div>
                             </div>
+                        </div>
                             
                             <!-- 作品项目4 -->
                             <div class="work-item" data-id="interactive-4">
@@ -1672,7 +1657,7 @@
                 <a href="#" class="plain-text">LinkedIn</a>
                 <a href="#" class="plain-text">YouTube</a>
                 <a href="#" class="plain-text">TikTok</a>
-            </div>
+                        </div>
             <div class="email-info">
                 <p>z.zhengyuanZhao@gmail.com</p>
             </div>

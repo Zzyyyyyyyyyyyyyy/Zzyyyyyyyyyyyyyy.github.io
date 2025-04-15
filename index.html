@@ -1653,8 +1653,7 @@
         }
         
         .work-item:hover .image-placeholder img {
-            transform: scale(1.1); /* 添加图片放大效果 */
-            transition: transform 0.5s ease;
+            transform: scale(1.05); /* 修改放大比例从1.1到1.05 */
         }
         
         .image-placeholder img {
@@ -1662,7 +1661,7 @@
             height: 100%;
             object-fit: contain; /* 保持图片比例，确保完整显示 */
             object-position: center; /* 居中显示图片 */
-            transition: transform 0.5s ease; /* 添加过渡效果 */
+            transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* 修改过渡效果 */
         }
         
         .work-info {
@@ -1800,11 +1799,11 @@
             height: 100%;
             object-fit: contain; /* 保持图片比例，确保完整显示 */
             object-position: center; /* 居中显示图片 */
-            transition: transform 0.5s ease; /* 添加过渡效果 */
+            transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* 修改过渡效果 */
         }
         
         .work-item:hover .image-placeholder img {
-            transform: scale(1.1); /* 添加图片放大效果 */
+            transform: scale(1.05); /* 修改放大比例从1.1到1.05 */
         }
         
         .image-placeholder i {
@@ -2362,27 +2361,27 @@
         <div class="works-grid">
             <!-- Work Item 1 -->
             <div class="work-item">
-                <a href="#" class="work-item-link" aria-label="View Project 1"></a>
+                <a href="project/project1/index.html" class="work-item-link" aria-label="View Interactive Visual Project"></a>
                 <div class="view-arrow">
                     <i class="fas fa-arrow-right"></i>
                 </div>
                 <div class="work-tags">
-                    <span>Design</span>
-                    <span>Development</span>
+                    <span>Interactive</span>
+                    <span>Visual</span>
                 </div>
                 <div class="work-image">
                     <!-- 图片容器 -->
                     <div class="image-placeholder">
                         <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
-                        <img data-src="您的图片路径1" alt="Project 1" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
+                        <img data-src="project/project1/1.JPG" alt="Interactive Visual Project" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
                         <!-- 仅在图片加载前显示的占位图标 -->
                         <i class="fas fa-image"></i>
-                        <span>Image 1</span>
+                        <span>Interactive Visual Project</span>
                     </div>
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Project Title 1</h3>
+                        <h3>Interactive Visual Project</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
