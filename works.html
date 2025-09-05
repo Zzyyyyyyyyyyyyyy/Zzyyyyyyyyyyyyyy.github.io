@@ -1268,21 +1268,22 @@
     </div>
     
     <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
+    <header class="navbar-container">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="index.html" class="logo" aria-label="Homepage">
                 <img src="Z_s_icon.png" alt="Logo">
             </a>
             
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="About ME.html">About Me</a>
-                <a href="works.html" class="active">Works</a>
-                <a href="Contact.html">Contact</a>
+            <div class="nav-links" role="navigation">
+                <a href="index.html" aria-label="Home">Home</a>
+                <a href="About ME.html" aria-label="About Me">About Me</a>
+                <a href="works.html" class="active" aria-label="Works">Works</a>
+                <a href="Contact.html" aria-label="Contact">Contact</a>
             </div>
         </nav>
-    </div>
-    
+    </header>
+
+    <main>
     <!-- Works Content Section -->
     <section class="works-content">
         <div class="works-title">
@@ -1291,12 +1292,12 @@
         </div>
             
         <!-- Category Tab Navigation -->
-        <div class="category-tabs">
-            <button class="tab-btn active" data-category="interactive">Interactive Systems</button>
-            <button class="tab-btn" data-category="media">Media & Motion Design</button>
-            <button class="tab-btn" data-category="physical">Physical Computing & Prototyping</button>
-            <button class="tab-btn" data-category="visual">Visual & Fine Art</button>
-        </div>
+        <section class="category-tabs">
+            <button class="tab-btn active" data-category="interactive" aria-label="Show Interactive Systems">Interactive Systems</button>
+            <button class="tab-btn" data-category="media" aria-label="Show Media & Motion Design">Media & Motion Design</button>
+            <button class="tab-btn" data-category="physical" aria-label="Show Physical Computing & Prototyping">Physical Computing & Prototyping</button>
+            <button class="tab-btn" data-category="visual" aria-label="Show Visual & Fine Art">Visual & Fine Art</button>
+        </section>
 
         <!-- 作品类别和作品展示 -->
         <div class="works-portfolio">
@@ -1696,7 +1697,9 @@
             </div>
         </div>
     </section>
-    
+
+    </main>
+
     <script>
         // Add scroll effect to navbar
         window.addEventListener('scroll', () => {
