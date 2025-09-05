@@ -575,56 +575,7 @@
             }
         });
         
-        // 设置当前页面的导航链接为激活状态
-        function setActiveNavLink() {
-            // 获取当前页面的文件名
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            
-            // 获取所有导航链接
-            const navLinks = document.querySelectorAll('.nav-links a');
-            
-            // 遍历链接，找到对应当前页面的链接添加active类
-            navLinks.forEach(link => {
-                // 获取链接的href属性
-                const href = link.getAttribute('href');
-                
-                // 如果是index.html页面并且链接是#或index.html，或者其他页面的链接和当前页面匹配
-                if ((currentPage === 'index.html' && (href === '#' || href === 'index.html')) ||
-                    (href === currentPage)) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
-        
-        // 页面加载时执行
-        document.addEventListener('DOMContentLoaded', function() {
-            setActiveNavLink();
-        });
-        
-        // Function to scroll to top
-        function scrollToTop() {
-            gsap.to(window, {
-                duration: 1.5,
-                scrollTo: 0,
-                ease: "power2.inOut"
-            });
-        }
-
-        // Add scroll to top functionality for home link and logo
-        const homeLink = document.querySelector('.nav-links a[href="index.html"]');
-        const logo = document.querySelector('.logo');
-        
-        homeLink.addEventListener('click', (e) => {
-            // No need to prevent default since we want to navigate to index.html
-        });
-        
-        logo.addEventListener('click', (e) => {
-            // No need to prevent default since we want to navigate to index.html
-        });
-        
-        // Custom cursor functionality - 这段代码是被注释的，但为了保持结构一致性，也添加进来
+                // Custom cursor functionality - 这段代码是被注释的，但为了保持结构一致性，也添加进来
         // const cursorDot = document.getElementById('cursor-dot');
         // const cursorOutline = document.getElementById('cursor-outline');
         // const cursorContainer = document.querySelector('.cursor-container');
@@ -648,5 +599,6 @@
         }
         */
     </script>
+    <script src="js/navigation.js"></script>
 </body>
-</html> 
+</html>
