@@ -624,29 +624,10 @@
             // No need to prevent default since we want to navigate to index.html
         });
         
-        // Custom cursor functionality - 这段代码是被注释的，但为了保持结构一致性，也添加进来
-        // const cursorDot = document.getElementById('cursor-dot');
-        // const cursorOutline = document.getElementById('cursor-outline');
-        // const cursorContainer = document.querySelector('.cursor-container');
-        
-        // 禁用自定义光标代码
-        /*
-        // Check if we're on a device with touch support
-        if (!('ontouchstart' in window)) {
-            let mouseX = 0;
-            let mouseY = 0;
-            let cursorX = 0;
-            let cursorY = 0;
-            
-            // GSAP smooth cursor movement with subtle breathing effect
-            gsap.to(cursorDot, {
-                scale: 1.2,
-                duration: 2,
-                repeat: -1,
-                yoyo: true,
-            });
-        }
-        */
+    </script>
+    <script type="module">
+        import { initHoverEffects } from './js/hover-effects.js';
+        initHoverEffects();
     </script>
 </body>
-</html> 
+</html>
