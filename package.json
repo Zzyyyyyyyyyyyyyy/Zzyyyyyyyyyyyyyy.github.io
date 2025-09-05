@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node backend/src/index.js",
     "client": "cd frontend && npm start",
-    "server": "cd backend && npm start"
+    "server": "cd backend && npm start",
+    "test": "node --test backend/test/index.test.js"
   },
   "author": "",
   "license": "ISC",
