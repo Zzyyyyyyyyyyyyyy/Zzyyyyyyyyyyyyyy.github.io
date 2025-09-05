@@ -39,4 +39,41 @@ button {
     margin: 4px 2px; /* Margin */
     cursor: pointer; /* Pointer cursor */
     border-radius: 4px; /* Rounded corners */
-} 
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0;
+        margin: 0;
+    }
+
+    .work-card,
+    .work-item {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    body {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+
+    body {
+        font-size: 14px;
+    }
+}
