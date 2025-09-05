@@ -17,4 +17,4 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
-- *暂无*
+- 新增 `js/navbar.js`，通过 `createNavbar()` 统一注入导航栏至静态页面（index.html、works.html、Contact.html、About ME.html）。
