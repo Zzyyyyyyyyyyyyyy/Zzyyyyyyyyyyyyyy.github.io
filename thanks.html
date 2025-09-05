@@ -278,6 +278,7 @@
         <a href="Contact.html" class="back-btn">Back to Contact</a>
     </section>
     
+    <script src="js/navigation.js"></script>
     <script>
         // Add scroll effect to navbar
         window.addEventListener('scroll', () => {
@@ -293,30 +294,6 @@
             }
         });
         
-        // Set active nav link
-        function setActiveNavLink() {
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const navLinks = document.querySelectorAll('.nav-links a');
-            
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                link.classList.remove('active');
-                
-                if (href === currentPage || (currentPage === 'index.html' && href === '#')) {
-                    link.classList.add('active');
-                } else if (currentPage.includes("About") && href.includes("About")) {
-                    link.classList.add('active');
-                } else if (currentPage.includes("works") && href.includes("works")) {
-                    link.classList.add('active');
-                } else if ((currentPage.includes("Contact") || currentPage.includes("thanks")) && href.includes("Contact")) {
-                    link.classList.add('active');
-                }
-            });
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            setActiveNavLink();
-        });
     </script>
 </body>
 </html> 
