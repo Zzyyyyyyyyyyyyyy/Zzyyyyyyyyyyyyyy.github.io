@@ -5,6 +5,7 @@
 - `frontend/`: React 前端应用，入口 `frontend/src/index.js`。
 - `project/`: 项目文档与分类说明。
 - 根目录包含若干静态 HTML（如 `index.html`, `works.html`）和资源文件（`styles.css`, `js/`, `Sources/`）。
+- `docs/`: 模块化文档（frontend、backend、deployment 等）。
 
 ## 修改守则
 1. **先读此文件**：任何提交前先阅读 AGENTS.md，确保遵循项目结构和约定。
@@ -17,4 +18,4 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
-- *暂无*
+- 新增 `docs/` 目录，整理前端、后端与部署文档。
