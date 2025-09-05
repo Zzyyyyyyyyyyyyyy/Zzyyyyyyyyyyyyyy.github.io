@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        // Enhanced anti-FOUC and intro control
+        (function() {
+            // Disable transitions during initial load to prevent flicker
+            document.documentElement.classList.add('no-transitions');
+            
+            // Immediately hide intro if already shown
+            if (sessionStorage.getItem('introShown') === '1') {
+                document.documentElement.classList.add('skip-intro');
+            }
+            
+            // Apply dark theme immediately
+            document.documentElement.style.backgroundColor = '#0D0C0E';
+            if (document.body) {
+                document.body.style.backgroundColor = '#0D0C0E';
+            }
+            
+            // Re-enable transitions after DOM is ready
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    document.documentElement.classList.remove('no-transitions');
+                }, 100);
+            });
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Z's Portfolio</title>
@@ -43,7 +68,7 @@
             line-height: 1.5;
             color: #fff;
             background-color: #0D0C0E;
-            overflow-x: hidden;
+            overflow-x: hidden !important; /* 强制隐藏水平滚动条，防止位移 */
             cursor: auto; /* 恢复默认光标 */
         }
         
@@ -699,16 +724,32 @@
             }
             
             .name-container .world {
-                font-size: 2.2rem;
-                transform: none;
-                padding: 0;
+                /* 响应式字体大小 - 减小尺寸 */
+                font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+                /* 位置调整 - 向左移动和垂直居中 */
+                transform: translateX(-8px);
+                /* 响应式内边距 - 减小 */
+                padding: clamp(0.1rem, 0.3vw, 0.4rem);
                 margin: 0;
                 cursor: default !important;
+                /* 响应式约束 - 更小的限制 */
+                max-width: min(70vw, 400px);
+                min-width: 150px;
+                text-align: center;
+                /* 确保垂直居中 */
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                /* 防止文本换行 */
+                white-space: nowrap;
+                overflow: hidden;
             }
             
             .name-container .world:hover {
-                transform: scale(1.2);
+                /* 响应式悬停缩放 - 减小缩放幅度 */
+                transform: translateX(-8px) scale(clamp(1.05, 1.1, 1.15));
                 cursor: default !important;
+                transition: transform 0.3s ease;
             }
             
             .hero {
@@ -1056,18 +1097,24 @@
         .cover-name-container .world {
             grid-area: world;
             font-family: 'Million Smiles', sans-serif;
-            font-size: min(8rem, 15vw); /* 使用min函数和vw单位，使字体大小响应式 */
+            /* Enhanced responsive sizing */
+            font-size: clamp(3rem, min(12vw, 10vh), 10rem);
             line-height: 1;
             background: linear-gradient(45deg, #ff3e7f, #ffb56b);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             position: relative;
-            padding: 2rem;
-            margin: -2rem;
+            /* Responsive padding and spacing */
+            padding: clamp(0.5rem, 2vw, 2rem);
+            margin: clamp(-0.5rem, -1vw, -2rem);
             white-space: nowrap;
             transition: all 0.5s ease;
             cursor: pointer !important;
+            transform-origin: center center;
+            /* Responsive constraints */
+            max-width: min(90vw, 800px);
+            min-width: 280px;
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
@@ -1257,15 +1304,17 @@
         
         .world-title {
             font-family: 'Million Smiles', sans-serif;
-            font-size: clamp(5rem, 15vw, 10rem); /* 使用clamp确保字体大小响应式且有最小/最大限制 */
+            /* 统一响应式字体大小 - 覆盖所有屏幕尺寸 */
+            font-size: clamp(1rem, 8vw, 7rem);
             line-height: 1;
             background: linear-gradient(45deg, #ff3e7f, #ffb56b);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             position: relative;
-            padding: 2rem;
-            margin: -1rem auto 2rem;
+            /* 响应式内边距 */
+            padding: clamp(0.5rem, 2vw, 2rem);
+            margin: clamp(-0.5rem, -1vw, -1rem) auto clamp(1rem, 3vw, 2rem);
             white-space: nowrap;
             cursor: pointer;
             user-select: none;
@@ -1280,15 +1329,19 @@
             filter: drop-shadow(0 0 5px rgba(255, 62, 127, 0.5));
             transition: all 0.5s ease;
             perspective: 1000px;
-            transform: scale(1); /* 确保默认缩放为1，以便互动效果正常工作 */
-            /* 添加必要的CSS以确保元素能够在更大尺寸下正确显示 */
-            max-width: 100%;
+            transform: scale(1);
+            /* 响应式容器约束 */
+            max-width: min(95vw, 1200px);
+            min-width: 280px;
             overflow: visible;
+            /* 确保居中对齐 */
+            text-align: center;
+            display: block;
         }
         
-        /* 添加悬停放大效果 */
+        /* 添加悬停放大效果 - 响应式 */
         .world-title:hover {
-            transform: scale(1.1); /* 悬停时放大到1.1倍 */
+            transform: scale(clamp(1.02, 1.08, 1.12)); /* 响应式悬停缩放 - 较小幅度防止溢出 */
             transition: transform 0.5s ease; /* 平滑过渡 */
         }
         
@@ -1338,28 +1391,7 @@
             }
         }
         
-        /* 媒体查询，用于响应式设计 */
-        @media (max-width: 768px) {
-            .world-title {
-                font-size: clamp(4rem, 12vw, 9rem); /* 使用clamp函数替代固定字体大小 */
-                padding: 1rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .world-title {
-                font-size: clamp(3rem, 10vw, 6.3rem); /* 使用clamp函数替代固定字体大小 */
-                padding: 0.5rem;
-            }
-        }
-
-        /* 添加一个媒体查询以确保在超小屏幕上也能正常显示 */
-        @media (max-width: 360px) {
-            .world-title {
-                font-size: clamp(2.5rem, 9vw, 5rem); /* 使用clamp函数替代固定字体大小 */
-                padding: 0.3rem;
-            }
-        }
+        /* 移除媒体查询 - 现在使用统一的clamp响应式规则 */
 
         /* 添加主界面元素的初始隐藏状态 */
         .hero-content .main-title,
@@ -2102,6 +2134,20 @@
                 font-size: 1rem;
             }
         }
+        
+        /* Anti-flicker and intro control */
+        html.skip-intro .page-cover {
+            display: none !important;
+        }
+        
+        /* Disable transitions during initial load */
+        html.no-transitions *,
+        html.no-transitions *:before,
+        html.no-transitions *:after {
+            transition: none !important;
+            animation-duration: 0s !important;
+            animation-delay: 0s !important;
+        }
     </style>
 </head>
 <body>
@@ -2164,7 +2210,7 @@
         <div class="hero-content">
             <!-- Z's WORLD元素 -->
             <div class="main-title">
-                <div class="world-title">
+                <div class="world-title" role="banner" aria-label="Z's World - Main Branding">
                     <span class="char" style="--char-index: 0; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">Z</span>
                     <span class="char" style="--char-index: 1; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">'</span>
                     <span class="char" style="--char-index: 2; font-family: 'Million Smiles', sans-serif; opacity: 1; transform: translateY(0);">s</span>
@@ -2634,11 +2680,16 @@
                     startBreathingAnimation(chars, worldTitle);
                     
                     function startBreathingAnimation(chars, title) {
-                        // 初始动画：轻微呼吸效果，降低幅度
+                        // Get responsive scale factors
+                        const baseScale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+                        const responsiveY = Math.max(-0.5 * baseScale, -2);
+                        const responsiveScale = 1 + (0.01 * Math.max(baseScale, 0.5));
+                        
+                        // 初始动画：轻微呼吸效果，响应式调整
                         gsap.to(chars, {
                             duration: 2.5, // 减缓速度
-                            scale: 1.01, // 降低缩放幅度
-                            y: -1, // 减小垂直移动
+                            scale: responsiveScale, // 响应式缩放幅度
+                            y: responsiveY, // 响应式垂直移动
                             stagger: {
                                 each: 0.1,
                                 repeat: -1,
@@ -3230,6 +3281,15 @@
                 });
         }
 
+        // Home intro control functions
+        function shouldShowIntro() {
+            return sessionStorage.getItem('introShown') !== '1';
+        }
+
+        function markIntroShown() {
+            sessionStorage.setItem('introShown', '1');
+        }
+
         // 添加覆盖层交互
         document.addEventListener('DOMContentLoaded', function() {
             const pageCover = document.getElementById('pageCover');
@@ -3245,6 +3305,15 @@
             
             // 确保页面完全加载
             window.addEventListener('load', function() {
+                // Check if Home intro should be shown (sessionStorage gate)
+                if (!shouldShowIntro()) {
+                    // Skip intro - hide cover and show main content directly
+                    pageCover.style.display = 'none';
+                    animateMainContent();
+                    return;
+                }
+                
+                // Show intro for first-time visitors
                 // 为透明覆盖层添加点击事件
                 if (clickableOverlay) {
                     clickableOverlay.addEventListener('click', function() {
@@ -3296,11 +3365,16 @@
                             startBreathingAnimation(chars, coverWorldTitle);
                             
                             function startBreathingAnimation(chars, title) {
-                                // 初始动画：轻微呼吸效果，降低幅度
+                                // Get responsive scale factors for cover animation
+                                const baseScale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+                                const responsiveY = Math.max(-0.5 * baseScale, -2);
+                                const responsiveScale = 1 + (0.01 * Math.max(baseScale, 0.5));
+                                
+                                // 初始动画：轻微呼吸效果，响应式调整
                                 gsap.to(chars, {
                                     duration: 2.5, // 减缓速度
-                                    scale: 1.01, // 降低缩放幅度
-                                    y: -1, // 减小垂直移动
+                                    scale: responsiveScale, // 响应式缩放幅度
+                                    y: responsiveY, // 响应式垂直移动
                                     stagger: {
                                         each: 0.1,
                                         repeat: -1,
@@ -3415,6 +3489,9 @@
                 
                 // 卷帘打开函数
                 function openCurtain() {
+                    // Mark intro as shown for this tab session
+                    markIntroShown();
+                    
                     // 禁用点击，防止重复触发
                     pageCover.style.pointerEvents = 'none';
                     
@@ -3460,9 +3537,11 @@
                             // 立即开始显示主界面元素，不等待覆盖层消失
                             animateMainContent();
                             
-                            // 动画完全结束后移除覆盖层
+                            // 动画完全结束后完全移除覆盖层DOM元素
                             setTimeout(function() {
-                                pageCover.style.display = 'none';
+                                if (pageCover && pageCover.parentNode) {
+                                    pageCover.parentNode.removeChild(pageCover);
+                                }
                             }, 500);
                         }
                     });
@@ -3521,6 +3600,85 @@
             });
         });
 
+        // 全局动画效果函数 - 移到全局作用域以供resize处理器使用
+        function startBreathingAnimation(chars, title) {
+            // Get responsive scale factors
+            const baseScale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const responsiveY = Math.max(-0.5 * baseScale, -2);
+            const responsiveScale = 1 + (0.01 * Math.max(baseScale, 0.5));
+            
+            // 初始动画：轻微呼吸效果，响应式调整
+            gsap.to(chars, {
+                duration: 2.5, // 减缓速度
+                scale: responsiveScale, // 响应式缩放幅度
+                y: responsiveY, // 响应式垂直移动
+                stagger: {
+                    each: 0.1,
+                    repeat: -1,
+                    yoyo: true,
+                    from: "center"
+                },
+                ease: "sine.inOut"
+            });
+            
+            // 确保初始背景渐变效果可见
+            gsap.to(title, {
+                duration: 6, // 放慢动画
+                backgroundImage: "linear-gradient(45deg, #ff3e7f, #ffb56b)",
+                backgroundSize: "300% 300%",
+                backgroundPosition: "0% 0%",
+                backgroundClip: "text",
+                ease: "none",
+                repeat: -1,
+                yoyo: true
+            }, "<"); // 与上一个动画同时开始
+        }
+
+        function startDefaultWaveEffect(chars, title) {
+            // Get responsive scale factors
+            const baseScale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const responsiveY = Math.max(-5 * baseScale, -10);
+            const responsiveRotation = Math.max(7.5 * baseScale, 15);
+            const responsiveScale = 1 + (0.05 * Math.max(baseScale, 0.5));
+            // 创建一个时间线
+            const tl = gsap.timeline();
+            
+            // 为每个字符设置波浪动画效果 - 响应式
+            tl.to(chars, {
+                duration: 2,
+                stagger: {
+                    each: 0.1,
+                    repeat: -1,
+                    yoyo: true,
+                    from: "center"
+                },
+                ease: "sine.inOut",
+                rotationX: function() { return Math.random() * responsiveRotation - responsiveRotation/2; }, // 响应式旋转角度
+                rotationY: function() { return Math.random() * (responsiveRotation * 1.33) - (responsiveRotation * 0.67); }, // 响应式旋转角度
+                y: function() { return Math.random() * Math.abs(responsiveY) - Math.abs(responsiveY)/2; }, // 响应式垂直移动
+                z: function() { return Math.random() * responsiveRotation; }, // 响应式深度
+                scale: function() { return responsiveScale; }, // 响应式缩放
+                color: function() {
+                    // 随机颜色
+                    const hue = Math.random() * 60 + 330; // 330-390 (红到紫色范围)
+                    return `hsl(${hue}, 80%, 65%)`; // 降低饱和度和亮度
+                },
+                textShadow: "0 0 5px rgba(255, 62, 127, 0.4), 0 0 10px rgba(255, 181, 107, 0.2)" // 减弱文字阴影
+            });
+            
+            // 同时为整个文本添加背景动画
+            tl.to(title, {
+                duration: 4, // 放慢动画
+                backgroundImage: "linear-gradient(45deg, #ff3e7f, #ffb56b, #ff8e53, #ff3e7f)",
+                backgroundSize: "300% 300%",
+                backgroundPosition: "0% 0%",
+                backgroundClip: "text",
+                ease: "none",
+                repeat: -1,
+                yoyo: true
+            }, "<"); // 与上一个动画同时开始
+        }
+
         // 添加主页面Z's WORLD的动画效果
         document.addEventListener('DOMContentLoaded', function() {
             // 获取主页面上的Z's WORLD元素
@@ -3541,46 +3699,6 @@
             mainWorldTitle.addEventListener('mouseleave', function() {
                 // 鼠标离开时的效果已通过CSS处理
             });
-            
-            function startDefaultWaveEffect(chars, title) {
-                // 创建一个时间线
-                const tl = gsap.timeline();
-                
-                // 为每个字符设置波浪动画效果
-                tl.to(chars, {
-                    duration: 2,
-                    stagger: {
-                        each: 0.1,
-                        repeat: -1,
-                        yoyo: true,
-                        from: "center"
-                    },
-                    ease: "sine.inOut",
-                    rotationX: function() { return Math.random() * 15 - 7.5; }, // 随机旋转角度(较小)
-                    rotationY: function() { return Math.random() * 20 - 10; }, // 随机旋转角度(较小)
-                    y: function() { return Math.random() * 10 - 5; }, // 随机垂直移动(较小)
-                    z: function() { return Math.random() * 15; }, // 随机深度(较小)
-                    scale: function() { return 1 + Math.random() * 0.05; }, // 随机缩放(较小)
-                    color: function() {
-                        // 随机颜色
-                        const hue = Math.random() * 60 + 330; // 330-390 (红到紫色范围)
-                        return `hsl(${hue}, 80%, 65%)`; // 降低饱和度和亮度
-                    },
-                    textShadow: "0 0 5px rgba(255, 62, 127, 0.4), 0 0 10px rgba(255, 181, 107, 0.2)" // 减弱文字阴影
-                });
-                
-                // 同时为整个文本添加背景动画
-                tl.to(title, {
-                    duration: 4, // 放慢动画
-                    backgroundImage: "linear-gradient(45deg, #ff3e7f, #ffb56b, #ff8e53, #ff3e7f)",
-                    backgroundSize: "300% 300%",
-                    backgroundPosition: "0% 0%",
-                    backgroundClip: "text",
-                    ease: "none",
-                    repeat: -1,
-                    yoyo: true
-                }, "<"); // 与上一个动画同时开始
-            }
         });
 
         // 初始化selected-works-section的动画
@@ -3861,6 +3979,42 @@
                 }
             });
         });
+
+        // Responsive animation handler - Debounced resize for Z's World
+        let resizeTimeout;
+        const handleWorldResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                requestAnimationFrame(() => {
+                    // Recalculate animations for main world title
+                    const mainWorldTitle = document.querySelector('.world-title');
+                    if (mainWorldTitle) {
+                        const mainChars = mainWorldTitle.querySelectorAll('.char');
+                        gsap.killTweensOf(mainChars);
+                        startDefaultWaveEffect(mainChars, mainWorldTitle);
+                    }
+                    
+                    // Recalculate animations for name-container world title
+                    const nameWorldTitle = document.querySelector('.name-container .world');
+                    if (nameWorldTitle) {
+                        const nameChars = nameWorldTitle.querySelectorAll('.char');
+                        gsap.killTweensOf(nameChars);
+                        startBreathingAnimation(nameChars, nameWorldTitle);
+                    }
+                    
+                    // Recalculate animations for cover world title if visible
+                    const coverWorldTitle = document.querySelector('.cover-name-container .world');
+                    if (coverWorldTitle && coverWorldTitle.offsetParent !== null) {
+                        const coverChars = coverWorldTitle.querySelectorAll('.char');
+                        gsap.killTweensOf(coverChars);
+                        startBreathingAnimation(coverChars, coverWorldTitle);
+                    }
+                });
+            }, 100);
+        };
+
+        // Add resize listener for responsive animations
+        window.addEventListener('resize', handleWorldResize);
     </script>
 </body>
 </html> 

@@ -1,6 +1,26 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        // Anti-FOUC script - apply theme immediately
+        (function() {
+            // Disable transitions during initial load
+            document.documentElement.classList.add('no-transitions');
+            
+            // Apply dark theme immediately
+            document.documentElement.style.backgroundColor = '#0D0C0E';
+            if (document.body) {
+                document.body.style.backgroundColor = '#0D0C0E';
+            }
+            
+            // Re-enable transitions after DOM is ready
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    document.documentElement.classList.remove('no-transitions');
+                }, 100);
+            });
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Works</title>
@@ -49,7 +69,7 @@
             line-height: 1.5;
             color: #fff;
             background-color: #0D0C0E;
-            overflow-x: hidden; /* 确保始终隐藏水平滚动条 */
+            overflow-x: hidden !important; /* 强制隐藏水平滚动条，防止位移 */
             width: 100%; /* 限制宽度为容器宽度 */
             cursor: auto;
         }
@@ -1228,6 +1248,15 @@
                 /* 所有样式保持不变，继承自上述媒体查询 */
             }
         }
+        
+        /* Disable transitions during initial load to prevent flicker */
+        html.no-transitions *,
+        html.no-transitions *:before,
+        html.no-transitions *:after {
+            transition: none !important;
+            animation-duration: 0s !important;
+            animation-delay: 0s !important;
+        }
     </style>
 </head>
 <body>
@@ -1279,21 +1308,21 @@
                             <!-- 作品项目1 -->
                             <div class="work-item" data-id="interactive-1">
                                 <div class="work-image">
-                                    <img src="project/project1/1.JPG" alt="Project 1">
+                                    <img src="project/Physical Computing&Prototyping/project1/1.JPG" alt="Physical Computing Project">
                                 </div>
                                 <div class="work-info">
                                     <div>
-                                        <h3 class="work-title">Interactive Visual Project</h3>
+                                        <h3 class="work-title">Physical Computing Project</h3>
                                     </div>
                                     <div>
-                                        <span class="work-tag">Interactive</span>
-                                        <span class="work-tag">Visual</span>
+                                        <span class="work-tag">Arduino</span>
+                                        <span class="work-tag">Electronics</span>
                                     </div>
                                 </div>
                                 <div class="view-arrow">
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
-                                <a href="project/project1/index.html" class="project-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0;"></a>
+                                <a href="project/Physical Computing&Prototyping/project1/project-page.html" class="project-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0;"></a>
                             </div>
                             
                             <!-- 作品项目3 -->
@@ -1344,20 +1373,24 @@
                             <!-- 作品项目1 -->
                             <div class="work-item" data-id="media-1">
                                 <div class="work-image">
-                                    <i class="fas fa-film"></i>
+                                    <video muted loop autoplay style="width: 100%; height: 100%; object-fit: cover;">
+                                        <source src="project/Media&Motion Design/Rube Goldberg Machine/Final_Rube Goldberg Machine_2.mp4" type="video/mp4">
+                                        <i class="fas fa-film"></i>
+                                    </video>
                                 </div>
                                 <div class="work-info">
                                     <div>
-                                        <h3 class="work-title">Media Project 1</h3>
+                                        <h3 class="work-title">Rube Goldberg Machine</h3>
                                     </div>
                                     <div>
-                                        <span class="work-tag">Motion</span>
-                                        <span class="work-tag">After Effects</span>
+                                        <span class="work-tag">Motion Design</span>
+                                        <span class="work-tag">Physical Design</span>
                                     </div>
                                 </div>
                                 <div class="view-arrow">
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
+                                <a href="project/Media&Motion Design/Rube Goldberg Machine/index.html" class="project-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0;"></a>
                             </div>
                             
                             <!-- 作品项目2 -->
@@ -1707,10 +1740,6 @@
 
         // 修改页面加载时的执行代码
         document.addEventListener('DOMContentLoaded', function() {
-            // 保持滚动条控制
-            document.documentElement.style.overflowX = 'hidden';
-            document.body.style.overflowX = 'hidden';
-
             setActiveNavLink();
 
             // 页面元素的动画效果

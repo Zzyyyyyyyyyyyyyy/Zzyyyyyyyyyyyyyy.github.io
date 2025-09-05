@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        // Anti-FOUC script - apply theme immediately
+        (function() {
+            // Disable transitions during initial load
+            document.documentElement.classList.add('no-transitions');
+            
+            // Apply dark theme immediately
+            document.documentElement.style.backgroundColor = '#0D0C0E';
+            if (document.body) {
+                document.body.style.backgroundColor = '#0D0C0E';
+            }
+            
+            // Re-enable transitions after DOM is ready
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    document.documentElement.classList.remove('no-transitions');
+                }, 100);
+            });
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me - Zhengyuan Zhao</title>
@@ -43,7 +63,7 @@
             line-height: 1.5;
             color: #fff;
             background-color: #0D0C0E;
-            overflow-x: hidden; /* 确保始终隐藏水平滚动条 */
+            overflow-x: hidden !important; /* 强制隐藏水平滚动条，防止位移 */
             width: 100%; /* 限制宽度为容器宽度 */
             cursor: auto;
         }
@@ -825,6 +845,15 @@
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
+        }
+        
+        /* Disable transitions during initial load to prevent flicker */
+        html.no-transitions *,
+        html.no-transitions *:before,
+        html.no-transitions *:after {
+            transition: none !important;
+            animation-duration: 0s !important;
+            animation-delay: 0s !important;
         }
     </style>
 </head>

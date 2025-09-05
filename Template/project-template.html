@@ -533,6 +533,8 @@
             margin: 0 !important;
             padding: 0 !important;
             overflow: visible !important;
+            cursor: default !important; /* 禁用点击光标 */
+            pointer-events: none !important; /* 禁用所有鼠标事件 */
         }
         
         .plain-text:hover {
@@ -833,10 +835,10 @@
         </div>
         <div class="contact-container">
             <div class="social-buttons">
-                <a href="#" class="plain-text">Instagram</a>
-                <a href="#" class="plain-text">LinkedIn</a>
-                <a href="#" class="plain-text">YouTube</a>
-                <a href="#" class="plain-text">TikTok</a>
+                <span class="plain-text">Instagram</span>
+                <span class="plain-text">LinkedIn</span>
+                <span class="plain-text">YouTube</span>
+                <span class="plain-text">TikTok</span>
             </div>
             <div class="email-info">
                 <p>z.zhengyuanZhao@gmail.com</p>
