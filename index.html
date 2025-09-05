@@ -2180,21 +2180,7 @@
         </div>
     </div>
     
-    <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="#" class="logo" style="cursor: pointer !important;">
-                <img src="Z_s_icon.png" alt="Logo">
-            </a>
-            
-            <div class="nav-links">
-                <a href="#" class="active">Home</a>
-                <a href="About ME.html">About Me</a>
-                <a href="works.html">Works</a>
-                <a href="Contact.html">Contact</a>
-            </div>
-        </nav>
-    </div>
+    <!-- Navigation Bar will be injected by navbar.js -->
     
     <!-- Hero Section -->
     <section class="hero">
@@ -2579,7 +2565,8 @@
     </section>
     
     <!-- JavaScript for mobile menu, slider and cursor effects -->
-    <script>
+      <script src="js/navbar.js"></script>
+      <script>
         // For future mobile menu functionality
         const menuToggle = document.querySelector('.menu-toggle');
         
@@ -3947,7 +3934,8 @@
             }
             
             // 页面加载时执行
-            document.addEventListener('DOMContentLoaded', function() {
+          document.addEventListener('DOMContentLoaded', function() {
+                createNavbar();
                 setActiveNavLink();
                 
                 // 添加Home链接的滚动到顶部功能
