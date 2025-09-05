@@ -17,4 +17,4 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
-- *暂无*
+- 统一鼠标跟随、水波纹与光晕逻辑至 `js/hover-effects.js`，各页面通过 `initHoverEffects()` 初始化特效。
