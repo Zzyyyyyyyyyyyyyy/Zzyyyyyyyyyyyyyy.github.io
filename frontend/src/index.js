@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import 'magic-ui/dist/magic-ui.css';
 import { Button } from 'magic-ui';
 
+// See docs/frontend/README.md for development details
+
 function App() {
   return (
     <div style={{ 
