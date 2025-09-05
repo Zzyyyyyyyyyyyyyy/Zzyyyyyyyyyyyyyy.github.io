@@ -17,4 +17,5 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
-- *暂无*
+- 为 `index.html` 与 `works.html` 中的图片添加懒加载，并保留首屏关键图片即时加载。
+- 在 `backend/src/index.js` 使用 `express.static` 设置 `Cache-Control` 头。
