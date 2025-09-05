@@ -17,4 +17,4 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
-- *暂无*
+- 添加 `.eslintrc` 与 `.prettierrc`，并在 `package.json` 中新增 `lint` 与 `test` 脚本。
