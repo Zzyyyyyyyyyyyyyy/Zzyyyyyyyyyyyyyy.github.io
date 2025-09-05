@@ -2181,20 +2181,7 @@
     </div>
     
     <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="#" class="logo" style="cursor: pointer !important;">
-                <img src="Z_s_icon.png" alt="Logo">
-            </a>
-            
-            <div class="nav-links">
-                <a href="#" class="active">Home</a>
-                <a href="About ME.html">About Me</a>
-                <a href="works.html">Works</a>
-                <a href="Contact.html">Contact</a>
-            </div>
-        </nav>
-    </div>
+    <div class="navbar-container"></div>
     
     <!-- Hero Section -->
     <section class="hero">
@@ -3881,103 +3868,11 @@
         </div>
     </section>
     
+    
+    <script src="js/navbar.js"></script>
     <script>
-        // 确保logo总是保持pointer光标
-        document.addEventListener('DOMContentLoaded', function() {
-            const logoElement = document.querySelector('.logo');
-            if (logoElement) {
-                logoElement.style.cursor = 'pointer';
-                
-                // 添加鼠标进入和离开事件监听器来强制设置光标
-                logoElement.addEventListener('mouseenter', function() {
-                    this.style.cursor = 'pointer';
-                });
-                
-                logoElement.addEventListener('mousemove', function() {
-                    this.style.cursor = 'pointer';
-                });
-            }
-            
-            // 设置当前页面的导航链接为激活状态
-            function setActiveNavLink() {
-                // 获取当前页面的文件名
-                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-                console.log("Current page:", currentPage); // 调试输出
-                
-                // 获取所有导航链接
-                const navLinks = document.querySelectorAll('.nav-links a');
-                
-                // 遍历链接，找到对应当前页面的链接添加active类
-                navLinks.forEach(link => {
-                    // 获取链接的href属性
-                    const href = link.getAttribute('href');
-                    console.log("Checking link:", href); // 调试输出
-                    
-                    // 特殊处理About ME.html页面
-                    if (currentPage.includes("About") && currentPage.includes("ME") && 
-                        href.includes("About") && href.includes("ME")) {
-                        link.classList.add('active');
-                    }
-                    // 特殊处理Contact.html页面
-                    else if (currentPage.includes("Contact") && href.includes("Contact")) {
-                        link.classList.add('active');
-                    }
-                    // 特殊处理works.html页面
-                    else if (currentPage.includes("works") && href.includes("works")) {
-                        link.classList.add('active');
-                    }
-                    // 处理主页
-                    else if ((currentPage === 'index.html' || currentPage === '' || currentPage === '/') && 
-                            (href === '#' || href === 'index.html')) {
-                        link.classList.add('active');
-                    }
-                    // 处理其他页面
-                    else if (href === currentPage) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-                
-                // 确保主页链接在index页面时激活
-                if (currentPage === 'index.html' || currentPage === '' || currentPage === '/') {
-                    const homeLink = document.querySelector('.nav-links a[href="#"]');
-                    if (homeLink) homeLink.classList.add('active');
-                }
-            }
-            
-            // 页面加载时执行
-            document.addEventListener('DOMContentLoaded', function() {
-                setActiveNavLink();
-                
-                // 添加Home链接的滚动到顶部功能
-                const homeLink = document.querySelector('.nav-links a[href="#"]');
-                if (homeLink) {
-                    homeLink.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        // 使用GSAP平滑滚动到顶部
-                        gsap.to(window, {
-                            duration: 1.5,
-                            scrollTo: 0,
-                            ease: "power2.inOut"
-                        });
-                    });
-                }
-                
-                // 添加Logo的滚动到顶部功能
-                const logoElement = document.querySelector('.logo');
-                if (logoElement) {
-                    logoElement.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        // 使用GSAP平滑滚动到顶部
-                        gsap.to(window, {
-                            duration: 1.5,
-                            scrollTo: 0,
-                            ease: "power2.inOut"
-                        });
-                    });
-                }
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            createNavbar();
         });
 
         // Responsive animation handler - Debounced resize for Z's World
@@ -3986,23 +3881,20 @@
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 requestAnimationFrame(() => {
-                    // Recalculate animations for main world title
                     const mainWorldTitle = document.querySelector('.world-title');
                     if (mainWorldTitle) {
                         const mainChars = mainWorldTitle.querySelectorAll('.char');
                         gsap.killTweensOf(mainChars);
                         startDefaultWaveEffect(mainChars, mainWorldTitle);
                     }
-                    
-                    // Recalculate animations for name-container world title
+
                     const nameWorldTitle = document.querySelector('.name-container .world');
                     if (nameWorldTitle) {
                         const nameChars = nameWorldTitle.querySelectorAll('.char');
                         gsap.killTweensOf(nameChars);
                         startBreathingAnimation(nameChars, nameWorldTitle);
                     }
-                    
-                    // Recalculate animations for cover world title if visible
+
                     const coverWorldTitle = document.querySelector('.cover-name-container .world');
                     if (coverWorldTitle && coverWorldTitle.offsetParent !== null) {
                         const coverChars = coverWorldTitle.querySelectorAll('.char');
@@ -4013,8 +3905,8 @@
             }, 100);
         };
 
-        // Add resize listener for responsive animations
         window.addEventListener('resize', handleWorldResize);
     </script>
+
 </body>
 </html> 
