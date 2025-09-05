@@ -879,6 +879,7 @@
         </div>
     </section>
     
+    <script src="js/navigation.js"></script>
     <script>
         // Add scroll effect to navbar
         window.addEventListener('scroll', () => {
@@ -898,46 +899,6 @@
             }
         });
         
-        // 设置当前页面的导航链接为激活状态
-        function setActiveNavLink() {
-            // 获取当前页面的文件名
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            console.log("Current page:", currentPage); // 调试输出
-            
-            // 获取所有导航链接
-            const navLinks = document.querySelectorAll('.nav-links a');
-            
-            // 遍历链接，找到对应当前页面的链接添加active类
-            navLinks.forEach(link => {
-                // 获取链接的href属性
-                const href = link.getAttribute('href');
-                console.log("Checking link:", href); // 调试输出
-                
-                // 特殊处理About ME.html页面
-                if (currentPage.includes("About") && currentPage.includes("ME") && 
-                    href.includes("About") && href.includes("ME")) {
-                    link.classList.add('active');
-                }
-                // 特殊处理Contact.html页面
-                else if (currentPage.includes("Contact") && href.includes("Contact")) {
-                    link.classList.add('active');
-                }
-                // 处理其他页面
-                else if ((currentPage === 'index.html' && (href === '#' || href === 'index.html')) ||
-                    (href === currentPage)) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-            
-            // 手动添加active类到Contact链接
-            const contactLink = document.querySelector('.nav-links a[href="Contact.html"]');
-            if (contactLink && currentPage.includes("Contact")) {
-                contactLink.classList.add('active');
-            }
-        }
-        
         // 页面加载时执行
         document.addEventListener('DOMContentLoaded', function() {
             // 确保没有元素超出视窗宽度
@@ -949,9 +910,7 @@
                     el.style.overflowX = 'hidden';
                 }
             });
-            
-            setActiveNavLink();
-            
+
             // 添加页面元素渐入动画效果
             setTimeout(() => {
                 document.querySelector('.page-title').classList.add('show');
@@ -977,7 +936,7 @@
             // 每秒更新一次时间
             setInterval(updateNYTime, 1000);
         });
-        
+
         // 函数：更新纽约当地时间
         function updateNYTime() {
             const nyTimeElement = document.getElementById('nyTime');
@@ -990,43 +949,14 @@
                     minute: '2-digit',
                     second: '2-digit'
                 };
-                
+
                 const nyTime = new Date().toLocaleString("en-US", options);
-                
+
                 // 简化显示，只展示时间
                 nyTimeElement.innerHTML = `<div class="time">${nyTime}</div>`;
             }
         }
-        
-        // Function to scroll to top
-        function scrollToTop() {
-            gsap.to(window, {
-                duration: 1.5,
-                scrollTo: 0,
-                ease: "power2.inOut"
-            });
-        }
 
-        // Add scroll to top functionality for contact link and logo
-        const contactLink = document.querySelector('.nav-links a[href="Contact.html"]');
-        const logo = document.querySelector('.logo');
-        
-        // Contact link should scroll to top of this page
-        if (contactLink) {
-            contactLink.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent default navigation
-                scrollToTop(); // Scroll smoothly to top
-            });
-        }
-        
-        // Logo should scroll to top of this page
-        if (logo) {
-            logo.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent default navigation
-                scrollToTop(); // Scroll smoothly to top
-            });
-        }
-        
         // Custom cursor functionality - 这段代码是被注释的，但为了保持结构一致性，也添加进来
         // const cursorDot = document.getElementById('cursor-dot');
         // const cursorOutline = document.getElementById('cursor-outline');
