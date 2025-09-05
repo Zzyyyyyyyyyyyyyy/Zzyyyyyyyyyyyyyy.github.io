@@ -17,4 +17,4 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
-- *暂无*
+- 2024-06-02: 新增 /api/works 接口并在 works.html 通过 fetch 渲染作品列表
