@@ -17,4 +17,4 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
-- *暂无*
+- 添加 Vite 构建工具，新增 `npm run dev` 与 `npm run build` 脚本用于打包根目录静态资源。
