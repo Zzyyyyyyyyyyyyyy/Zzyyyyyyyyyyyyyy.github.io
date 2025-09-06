@@ -32,6 +32,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="dist/assets/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <style>
@@ -2181,31 +2182,31 @@
     </div>
     
     <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="#" class="logo" style="cursor: pointer !important;">
-                <img src="Z_s_icon.png" alt="Logo">
+    <header class="navbar-container">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <a href="#" class="logo" style="cursor: pointer !important;" aria-label="Home">
+                <img src="Z_s_icon.png" alt="Z's portfolio logo">
             </a>
-            
+
             <div class="nav-links">
-                <a href="#" class="active">Home</a>
-                <a href="About ME.html">About Me</a>
-                <a href="works.html">Works</a>
-                <a href="Contact.html">Contact</a>
+                <a href="#" class="active" aria-label="Home">Home</a>
+                <a href="About ME.html" aria-label="About Me">About Me</a>
+                <a href="works.html" aria-label="Works">Works</a>
+                <a href="Contact.html" aria-label="Contact">Contact</a>
             </div>
         </nav>
-    </div>
+    </header>
     
     <!-- Hero Section -->
     <section class="hero">
-        <div class="social-links">
-            <a href="#" class="social-btn" id="instagram">
+        <nav class="social-links" aria-label="Social media">
+            <a href="#" class="social-btn" id="instagram" aria-label="Instagram">
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="#" class="social-btn" id="linkedin">
+            <a href="#" class="social-btn" id="linkedin" aria-label="LinkedIn">
                 <i class="fab fa-linkedin-in"></i>
             </a>
-        </div>
+        </nav>
         
         <div class="hero-content">
             <!-- Z's WORLD元素 -->
@@ -2560,10 +2561,10 @@
                 </div>
                 
                 <div class="slider-controls">
-                    <button class="slider-btn" id="prevBtn">
+                    <button class="slider-btn" id="prevBtn" aria-label="Previous slide">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <button class="slider-btn" id="nextBtn">
+                    <button class="slider-btn" id="nextBtn" aria-label="Next slide">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
@@ -4016,5 +4017,6 @@
         // Add resize listener for responsive animations
         window.addEventListener('resize', handleWorldResize);
     </script>
+  <script type="module" src="dist/assets/main.js"></script>
 </body>
 </html> 
