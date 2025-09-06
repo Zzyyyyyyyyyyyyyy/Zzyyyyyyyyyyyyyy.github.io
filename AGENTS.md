@@ -17,4 +17,4 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
-- *暂无*
+- 2024-06-??: Consolidated hover effects into js/hover-effects.js and added initHoverEffects calls across pages; index.html now also loads dist/assets/main.js
