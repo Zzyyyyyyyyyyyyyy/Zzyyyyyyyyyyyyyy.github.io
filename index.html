@@ -32,8 +32,10 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="dist/assets/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script type="module" src="dist/assets/main.js"></script>
     <style>
         :root {
             font-size: 16px;
@@ -189,6 +191,8 @@
             justify-content: center;
             padding-top: 25px; /* 增加顶部间距 */
             overflow: visible; /* 确保内容溢出时可见 */
+            background: transparent;
+            backdrop-filter: none;
         }
         
         .navbar {
@@ -2810,17 +2814,17 @@
             worldTitle.style.opacity = '1';
         });
         
-        // Add scroll effect to navbar
-        window.addEventListener('scroll', () => {
+        // Keep navbar transparent
+        const resetNavbar = () => {
             const navbar = document.querySelector('.navbar');
             const navbarContainer = document.querySelector('.navbar-container');
-            
-            // 移除所有滚动效果
             navbar.style.padding = '1.5rem 3%';
-                navbarContainer.style.background = 'transparent';
-                navbarContainer.style.backdropFilter = 'none';
+            navbarContainer.style.background = 'transparent';
+            navbarContainer.style.backdropFilter = 'none';
             navbarContainer.style.paddingTop = '15px';
-        });
+        };
+        window.addEventListener('scroll', resetNavbar);
+        document.addEventListener('DOMContentLoaded', resetNavbar);
         
         // Scroll indicator functionality - 简化代码
         // const scrollIndicator = document.getElementById('scrollIndicator'); // 已删除元素，去除引用
