@@ -1,10 +1,140 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-}
+        :root {
+            font-size: 16px;
+            --primary-color: #ff3e7f;
+            --secondary-color: #ffb56b;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --section-padding: 0 2.5rem;
+            --content-max-width: 1600px;
+            --grid-side-margin: 2rem;
+        }
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SpaceGrotesk', sans-serif;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #fff;
+            background-color: #0D0C0E;
+            overflow-x: hidden;
+            width: 100%;
+            cursor: auto;
+            height: 100vh;
+        }
+        
+        /* Navigation styles */
+        .navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding-top: 25px;
+            overflow: visible;
+        }
+        
+        .navbar {
+            width: 100%;
+            max-width: 3440px;
+            padding: 0.5rem 3%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            overflow: visible;
+        }
+        
+        .logo {
+            text-decoration: none;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 4px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo img {
+            width: 45px;
+            height:45px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(255, 62, 127, 0.3));
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover img {
+            filter: drop-shadow(0 0 12px rgba(255, 62, 127, 0.5));
+            transform: scale(1.15);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            margin-left: auto;
+            overflow: visible;
+            white-space: nowrap;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            font-family: 'SpaceGrotesk', sans-serif;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2.5px;
+            background: #ff3e7f;
+            left: 0;
+            bottom: -6px;
+            transition: width 0.3s ease !important;
+        }
+        
+        .nav-links a:hover {
+            color: #ff3e7f !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100% !important;
+        }
+        
+        .nav-links a.active {
+            color: #ff3e7f !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .nav-links a.active::after {
+            width: 100% !important;
+        }
+        
+        @font-face {
+            font-family: 'Million Smiles';
+            src: url('Sources/Million Smiles.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
 
+ codex/add-media-queries-for-mobile-styles
 header {
     background: #333;
     color: #fff;
@@ -39,4 +169,165 @@ button {
     margin: 4px 2px; /* Margin */
     cursor: pointer; /* Pointer cursor */
     border-radius: 4px; /* Rounded corners */
-} 
+}
+
+/* Responsive layout for mobile screens */
+@media (max-width: 768px) {
+    /* Stack navigation links vertically */
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar a {
+        display: block;
+        padding: 10px 0;
+    }
+
+    /* Make work items/cards take full width */
+    .work-item,
+    .work-card {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    /* Adjust text layout for better readability */
+    body {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    main {
+        padding: 10px;
+        text-align: left;
+    }
+}
+
+/* Further tweaks for very small devices */
+@media (max-width: 480px) {
+    header,
+    footer {
+        padding: 5px 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+=======
+        @font-face {
+            font-family: 'SpaceGrotesk';
+            src: url('Sources/SpaceGrotesk-VariableFont_wght.ttf') format('truetype-variations');
+            font-weight: 100 900;
+        /* Thank You Content */
+        .page--thanks .thank-you {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .page--thanks .thank-you__icon {
+            font-size: 5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .page--thanks .thank-you__title {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .page--thanks .thank-you__text {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        
+        .page--thanks .thank-you__back-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 62, 127, 0.25);
+        }
+        
+        .page--thanks .thank-you__back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 62, 127, 0.4);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page--thanks .thank-you__title {
+                font-size: 2.5rem;
+            }
+            
+            .page--thanks .thank-you__text {
+                font-size: 1.1rem;
+            }
+            
+            .page--thanks .thank-you__icon {
+                font-size: 4rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page--thanks .thank-you__title {
+                font-size: 2rem;
+            }
+            
+            .page--thanks .thank-you__text {
+                font-size: 1rem;
+            }
+            
+            .page--thanks .thank-you__icon {
+                font-size: 3rem;
+            }
+            
+            .page--thanks .thank-you__back-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Add font */
+        @font-face {
+            font-family: 'SpaceGrotesk';
+            src: url('Sources/SpaceGrotesk-VariableFont_wght.ttf') format('truetype-variations');
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
