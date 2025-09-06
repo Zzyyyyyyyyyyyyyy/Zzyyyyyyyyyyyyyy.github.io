@@ -41,30 +41,30 @@
     </div>
     
     <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <img src="Z_s_icon.png" alt="Logo">
+    <header class="navbar-container">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <a href="index.html" class="logo" aria-label="Home">
+                <img src="Z_s_icon.png" alt="Z's portfolio logo">
             </a>
-            
+
             <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="About ME.html">About Me</a>
-                <a href="works.html">Works</a>
-                <a href="Contact.html" class="active">Contact</a>
+                <a href="index.html" aria-label="Home">Home</a>
+                <a href="About ME.html" aria-label="About Me">About Me</a>
+                <a href="works.html" aria-label="Works">Works</a>
+                <a href="Contact.html" class="active" aria-label="Contact">Contact</a>
             </div>
         </nav>
-    </div>
+    </header>
     
     <!-- Page Content Section -->
-    <section class="page-content">
-        <div class="page-title">
+    <main class="page-content">
+        <header class="page-title">
             <h1>GET IN TOUCH</h1>
             <p>I'd love to hear from you. Fill out the form below and I'll get back to you as soon as possible.</p>
-        </div>
-        
-        <div class="contact-form-container">
-            <form id="contactForm" action="https://formsubmit.co/z.zhengyuanZhao@gmail.com" method="POST">
+        </header>
+
+        <section class="contact-form-container">
+            <form id="contactForm" action="https://formsubmit.co/z.zhengyuanZhao@gmail.com" method="POST" aria-label="Contact form">
                 <!-- Honeypot to prevent spam -->
                 <input type="text" name="_honey" style="display:none">
                 <!-- Disable captcha -->
@@ -87,9 +87,9 @@
                     <textarea id="message" name="message" rows="6" required></textarea>
                 </div>
                 
-                <button type="submit" class="submit-btn">Send Message</button>
+                <button type="submit" class="submit-btn" aria-label="Send message">Send Message</button>
             </form>
-        </div>
+        </section>
         
         <!-- 添加纽约当地时间显示 - 已移到表单下方 -->
         <div class="local-time-container">
@@ -98,7 +98,7 @@
                 <div id="nyTime" class="time-display"></div>
             </div>
         </div>
-    </section>
+    </main>
     
     <!-- Final Section -->
     <section class="final-section">
