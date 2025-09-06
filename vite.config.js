@@ -3,7 +3,13 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     rollupOptions: {
-      input: 'main.js',
+      input: {
+        main: 'js/hover-effects.js',
+        style: 'styles.css'
+      }
+    }
+  }
+});
       output: {
         entryFileNames: 'assets/[name].js',
         assetFileNames: 'assets/[name][extname]'
