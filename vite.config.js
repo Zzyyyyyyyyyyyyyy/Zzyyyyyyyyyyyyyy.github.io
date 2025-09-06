@@ -1,12 +1,15 @@
-const { defineConfig } = require('vite');
+import { defineConfig } from 'vite';
 
-module.exports = defineConfig({
+export default defineConfig({
   build: {
     rollupOptions: {
       input: {
         main: 'js/hover-effects.js',
         style: 'styles.css'
-      },
+      }
+    }
+  }
+});
       output: {
         entryFileNames: 'assets/[name].js',
         assetFileNames: 'assets/[name][extname]'

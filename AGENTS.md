@@ -17,7 +17,9 @@
 - `npm run client`: 启动前端开发服务器。
 
 ## 变更记录
- codex/add-accessibility-attributes-and-semantic-tags-m65iak
+
+- 添加 Vite 构建工具，新增 `npm run dev` 与 `npm run build` 脚本用于打包根目录静态资源。
+=======
 - 2025-09-05: 为 `index.html`、`works.html`、`Contact.html` 添加图像 alt、ARIA 标签，并使用语义化标签优化结构。
 =======
 - 2025-09-05: 添加 Vite 构建配置并更新静态资源路径
