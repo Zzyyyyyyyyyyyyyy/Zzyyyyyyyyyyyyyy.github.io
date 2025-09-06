@@ -204,6 +204,8 @@
             align-items: center;
             transition: all 0.3s ease;
             overflow: visible; /* 确保内容溢出时可见 */
+            background: transparent;
+            backdrop-filter: none;
         }
         
         .logo {
@@ -2819,6 +2821,8 @@
             const navbar = document.querySelector('.navbar');
             const navbarContainer = document.querySelector('.navbar-container');
             navbar.style.padding = '1.5rem 3%';
+            navbar.style.background = 'transparent';
+            navbar.style.backdropFilter = 'none';
             navbarContainer.style.background = 'transparent';
             navbarContainer.style.backdropFilter = 'none';
             navbarContainer.style.paddingTop = '15px';
