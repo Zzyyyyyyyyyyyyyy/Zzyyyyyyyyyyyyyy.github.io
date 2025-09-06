@@ -1739,8 +1739,115 @@
         }
 
         // 修改页面加载时的执行代码
+        function renderWorks(works) {
+            const container = document.querySelector('.works-categories');
+            if (!container) return;
+            container.innerHTML = '';
+            const grouped = {};
+            works.forEach(work => {
+                if (!grouped[work.category]) {
+                    grouped[work.category] = [];
+                }
+                grouped[work.category].push(work);
+            });
+            Object.entries(grouped).forEach(([category, items], index) => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category' + (index === 0 ? ' active' : '');
+                categoryDiv.id = category;
+                const sliderDiv = document.createElement('div');
+                sliderDiv.className = 'works-slider';
+                const wrapper = document.createElement('div');
+                wrapper.className = 'slider-wrapper';
+                items.forEach(work => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'work-item';
+                    itemDiv.dataset.id = work.id;
+                    const imageDiv = document.createElement('div');
+                    imageDiv.className = 'work-image';
+                    if (work.image) {
+                        const img = document.createElement('img');
+                        img.src = work.image;
+                        img.alt = work.title;
+                        imageDiv.appendChild(img);
+                    } else if (work.video) {
+                        const video = document.createElement('video');
+                        video.src = work.video;
+                        video.muted = true;
+                        video.loop = true;
+                        video.autoplay = true;
+                        video.style.width = '100%';
+                        video.style.height = '100%';
+                        video.style.objectFit = 'cover';
+                        imageDiv.appendChild(video);
+                    } else if (work.icon) {
+                        const i = document.createElement('i');
+                        i.className = work.icon;
+                        imageDiv.appendChild(i);
+                    }
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'work-info';
+                    const titleDiv = document.createElement('div');
+                    const h3 = document.createElement('h3');
+                    h3.className = 'work-title';
+                    h3.textContent = work.title;
+                    titleDiv.appendChild(h3);
+                    const tagsDiv = document.createElement('div');
+                    if (Array.isArray(work.tags)) {
+                        work.tags.forEach(tag => {
+                            const span = document.createElement('span');
+                            span.className = 'work-tag';
+                            span.textContent = tag;
+                            tagsDiv.appendChild(span);
+                        });
+                    }
+                    infoDiv.appendChild(titleDiv);
+                    infoDiv.appendChild(tagsDiv);
+                    const arrowDiv = document.createElement('div');
+                    arrowDiv.className = 'view-arrow';
+                    arrowDiv.innerHTML = '<i class="fas fa-arrow-right"></i>';
+                    const link = document.createElement('a');
+                    link.className = 'project-link';
+                    link.href = work.link || '#';
+                    link.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0;';
+                    itemDiv.append(imageDiv, infoDiv, arrowDiv, link);
+                    wrapper.appendChild(itemDiv);
+                });
+                sliderDiv.appendChild(wrapper);
+                categoryDiv.appendChild(sliderDiv);
+                container.appendChild(categoryDiv);
+            });
+            setupCategoryTabs();
+        }
+
+        function setupCategoryTabs() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const categories = document.querySelectorAll('.category');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetCategory = tab.dataset.category;
+                    const currentActiveCategory = document.querySelector('.category.active');
+                    if (currentActiveCategory && currentActiveCategory.id === targetCategory) {
+                        return;
+                    }
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    categories.forEach(category => {
+                        if (category.id === targetCategory) {
+                            category.classList.add('active');
+                        } else {
+                            category.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             setActiveNavLink();
+            fetch('/api/works')
+                .then(response => response.json())
+                .then(data => renderWorks(data))
+                .catch(err => console.error('Failed to load works:', err));
 
             // 页面元素的动画效果
             setTimeout(() => {
@@ -1760,35 +1867,6 @@
                 }, 200);
 
             }, 100);
-
-            // 分类标签切换功能保留
-            const tabs = document.querySelectorAll('.tab-btn');
-            const categories = document.querySelectorAll('.category');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const targetCategory = tab.dataset.category;
-                     const currentActiveCategory = document.querySelector('.category.active');
-
-                    // 如果点击的是当前活动标签，不进行操作
-                     if (currentActiveCategory && currentActiveCategory.id === targetCategory) {
-                         return;
-                     }
-
-                    // 更新标签激活状态
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-
-                    // 更新类别可见性
-                    categories.forEach(category => {
-                        if (category.id === targetCategory) {
-                            category.classList.add('active');
-                        } else {
-                            category.classList.remove('active');
-                        }
-                    });
-                });
-            });
 
             // 回到顶部功能保留
         function scrollToTop() {

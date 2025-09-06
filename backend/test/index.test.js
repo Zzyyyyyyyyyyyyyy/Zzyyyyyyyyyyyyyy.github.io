@@ -17,3 +17,12 @@ test('GET / returns backend status message', async () => {
   assert.strictEqual(text, 'Backend is running');
 });
 
+test('GET /api/works returns works array', async () => {
+  const server = app.listen(0);
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/api/works`);
+  const data = await res.json();
+  server.close();
+  assert.ok(Array.isArray(data));
+});
+
