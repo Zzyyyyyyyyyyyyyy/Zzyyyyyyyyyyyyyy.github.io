@@ -2181,33 +2181,34 @@
     </div>
     
     <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="#" class="logo" style="cursor: pointer !important;">
+    <header class="navbar-container">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="#" class="logo" style="cursor: pointer !important;" aria-label="Homepage">
                 <img src="Z_s_icon.png" alt="Logo">
             </a>
             
-            <div class="nav-links">
-                <a href="#" class="active">Home</a>
-                <a href="About ME.html">About Me</a>
-                <a href="works.html">Works</a>
-                <a href="Contact.html">Contact</a>
+            <div class="nav-links" role="navigation">
+                <a href="#" class="active" aria-label="Home">Home</a>
+                <a href="About ME.html" aria-label="About Me">About Me</a>
+                <a href="works.html" aria-label="Works">Works</a>
+                <a href="Contact.html" aria-label="Contact">Contact</a>
             </div>
         </nav>
-    </div>
-    
+    </header>
+
+    <main>
     <!-- Hero Section -->
     <section class="hero">
         <div class="social-links">
-            <a href="#" class="social-btn" id="instagram">
+            <a href="#" class="social-btn" id="instagram" aria-label="Instagram">
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="#" class="social-btn" id="linkedin">
+            <a href="#" class="social-btn" id="linkedin" aria-label="LinkedIn">
                 <i class="fab fa-linkedin-in"></i>
             </a>
         </div>
         
-        <div class="hero-content">
+        <section class="hero-content">
             <!-- Z's WORLD元素 -->
             <div class="main-title">
                 <div class="world-title" role="banner" aria-label="Z's World - Main Branding">
@@ -2242,7 +2243,7 @@
                 </div>
                 <p class="bio">Crafting immersive digital experiences that push the boundaries of interactive design, combining technical expertise with artistic vision to create meaningful connections.</p>
             </div>
-        </div>
+        </section>
     </section>
     
     <!-- Skills Section -->
@@ -2560,10 +2561,10 @@
                 </div>
                 
                 <div class="slider-controls">
-                    <button class="slider-btn" id="prevBtn">
+                    <button class="slider-btn" id="prevBtn" aria-label="Previous slide">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <button class="slider-btn" id="nextBtn">
+                    <button class="slider-btn" id="nextBtn" aria-label="Next slide">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
@@ -3880,7 +3881,9 @@
             </div>
         </div>
     </section>
-    
+
+    </main>
+
     <script>
         // 确保logo总是保持pointer光标
         document.addEventListener('DOMContentLoaded', function() {
