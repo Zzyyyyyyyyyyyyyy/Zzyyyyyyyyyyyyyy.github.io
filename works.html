@@ -1268,20 +1268,7 @@
     </div>
     
     <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <img src="Z_s_icon.png" alt="Logo">
-            </a>
-            
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="About ME.html">About Me</a>
-                <a href="works.html" class="active">Works</a>
-                <a href="Contact.html">Contact</a>
-            </div>
-        </nav>
-    </div>
+    <div class="navbar-container"></div>
     
     <!-- Works Content Section -->
     <section class="works-content">
@@ -1697,6 +1684,7 @@
         </div>
     </section>
     
+    <script src="js/navbar.js"></script>
     <script>
         // Add scroll effect to navbar
         window.addEventListener('scroll', () => {
@@ -1715,32 +1703,9 @@
             }
         });
         
-        // 设置当前页面的导航链接为激活状态
-        function setActiveNavLink() {
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const navLinks = document.querySelectorAll('.nav-links a');
-
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                link.classList.remove('active'); // Remove active from all first
-
-                // Simplified logic for active state
-                if (href === currentPage || (currentPage === 'index.html' && href === '#')) {
-                   link.classList.add('active');
-                } else if (currentPage.includes("About") && href.includes("About")) {
-                    link.classList.add('active');
-                } else if (currentPage.includes("works") && href.includes("works")) {
-                    link.classList.add('active');
-                } else if (currentPage.includes("Contact") && href.includes("Contact")) {
-                     link.classList.add('active');
-                }
-
-            });
-        }
-
         // 修改页面加载时的执行代码
-        document.addEventListener('DOMContentLoaded', function() {
-            setActiveNavLink();
+document.addEventListener('DOMContentLoaded', function() {
+            createNavbar();
 
             // 页面元素的动画效果
             setTimeout(() => {
@@ -1790,26 +1755,6 @@
                 });
             });
 
-            // 回到顶部功能保留
-        function scrollToTop() {
-            gsap.to(window, {
-                duration: 1.5,
-                scrollTo: 0,
-                ease: "power2.inOut"
-            });
-        }
-
-            // 为作品链接添加回到顶部功能
-        const worksLink = document.querySelector('.nav-links a[href="works.html"]');
-        if (worksLink) {
-            worksLink.addEventListener('click', (e) => {
-                 if (window.location.pathname.includes('works.html')) {
-                    e.preventDefault();
-                    scrollToTop();
-                }
-            });
-        }
-        });
 
     </script>
 </body>
