@@ -1,4 +1,4 @@
-// Navigation hover effects - 可以被导入使用
+// Navigation hover effects - include via script tag to enable
 document.addEventListener('DOMContentLoaded', function() {
     // Enhanced hover effects with GSAP
     const interactiveElements = document.querySelectorAll('a, button, .nav-btn, .slider-btn, .slider-dot');
