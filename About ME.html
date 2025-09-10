@@ -865,21 +865,7 @@
         <div id="cursor-trail" class="cursor-trail"></div>
     </div>
     
-    <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <img src="Z_s_icon.png" alt="Logo">
-            </a>
-            
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="About ME.html" class="active">About Me</a>
-                <a href="works.html">Works</a>
-                <a href="Contact.html">Contact</a>
-            </div>
-        </nav>
-    </div>
+    <!-- Navigation Bar will be injected by navbar.js -->
     
     <!-- Main Content Section -->
     <section class="page-content">
@@ -1079,7 +1065,8 @@
         </div>
     </section>
     
-    <script>
+  <script src="js/navbar.js"></script>
+  <script>
         // Add scroll effect to navbar
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
@@ -1112,6 +1099,7 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
+            createNavbar();
             setActiveNavLink();
             
             // Add animations for the about sections

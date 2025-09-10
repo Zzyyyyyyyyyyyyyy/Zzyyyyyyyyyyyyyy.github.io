@@ -801,21 +801,7 @@
         <div id="cursor-trail" class="cursor-trail"></div>
     </div>
     
-    <!-- Navigation Bar -->
-    <div class="navbar-container">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <img src="Z_s_icon.png" alt="Logo">
-            </a>
-            
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="About ME.html">About Me</a>
-                <a href="works.html">Works</a>
-                <a href="Contact.html" class="active">Contact</a>
-            </div>
-        </nav>
-    </div>
+    <!-- Navigation Bar will be injected by navbar.js -->
     
     <!-- Page Content Section -->
     <section class="page-content">
@@ -879,7 +865,8 @@
         </div>
     </section>
     
-    <script>
+      <script src="js/navbar.js"></script>
+      <script>
         // Add scroll effect to navbar
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
@@ -940,6 +927,7 @@
         
         // 页面加载时执行
         document.addEventListener('DOMContentLoaded', function() {
+            createNavbar();
             // 确保没有元素超出视窗宽度
             const allElements = document.querySelectorAll('*');
             allElements.forEach(el => {
@@ -949,7 +937,7 @@
                     el.style.overflowX = 'hidden';
                 }
             });
-            
+
             setActiveNavLink();
             
             // 添加页面元素渐入动画效果
