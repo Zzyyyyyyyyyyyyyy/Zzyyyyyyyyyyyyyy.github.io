@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "base": "https://storage.googleapis.com/your-gcs-bucket",
+  "videos": {
+    "home-bg": {
+      "sources": [
+        { "src": "/bg/home.mp4", "type": "video/mp4" }
+      ],
+      "poster": "/bg/home.jpg",
+      "fit": "cover",
+      "preload": "auto"
+    },
+    "work-hero-01": {
+      "sources": [
+        { "src": "/works/hero-01.mp4", "type": "video/mp4" }
+      ],
+      "fit": "cover",
+      "preload": "metadata"
+    }
+  }
+}
+

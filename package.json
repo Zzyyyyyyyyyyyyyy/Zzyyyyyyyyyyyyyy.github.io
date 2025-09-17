@@ -5,8 +5,13 @@
   "main": "backend/src/index.js",
   "scripts": {
     "start": "node backend/src/index.js",
-    "client": "cd frontend && npm start",
-    "server": "cd backend && npm start"
+    "server": "node backend/src/index.js",
+    "serve:static": "node scripts/serve-static.js . 8080",
+    "serve:frontend": "node scripts/serve-static.js frontend/public 5000",
+    "client": "npm run serve:frontend",
+    "dev": "npm run server & npm run serve:static",
+    "build": "echo 'No build step for static site'",
+    "test": "echo 'No tests configured' && exit 0"
   },
   "author": "",
   "license": "ISC",

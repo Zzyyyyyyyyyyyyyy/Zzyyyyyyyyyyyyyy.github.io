@@ -2,6 +2,12 @@
 
 This project is a design website built with React for the frontend and Node.js for the backend. It aims to provide a platform for showcasing design works and projects. 
 
+## Video Embedding (GCS) Quick Start
+- Add a placeholder in HTML: `<div class="video-slot" data-video-key="work-hero-01"></div>` or background: `<div class="video-bg" data-video-key="home-bg"></div>`.
+- Define sources in `js/video-config.json` (see `AGENTS.md` for schema and GCS setup).
+- The runtime `js/video-manager.js` injects `<video muted autoplay loop playsinline>` automatically.
+- For setup details, CORS, and maintenance workflow, see `AGENTS.md`.
+
 cd backend
 
 npm install express 
