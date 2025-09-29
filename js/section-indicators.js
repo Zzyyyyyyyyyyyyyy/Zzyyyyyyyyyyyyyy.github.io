@@ -37,6 +37,7 @@ class SectionIndicators {
         const autoSections = [
             'header',
             'main > section',
+            'section',
             '.section',
             '[id^="section"]',
             '.hero-section',
@@ -44,7 +45,11 @@ class SectionIndicators {
             '.portfolio-section',
             '.about-section',
             '.contact-section',
-            '.footer-section'
+            '.footer-section',
+            '.skills-section',
+            '.selected-works-section',
+            '.slider-section',
+            '.final-section'
         ];
 
         let foundSections = [];

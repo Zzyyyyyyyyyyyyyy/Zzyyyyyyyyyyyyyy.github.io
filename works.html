@@ -26,10 +26,12 @@
     <title>My Works</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
+    <link rel="stylesheet" href="styles/section-indicators.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script defer src="js/section-indicators.js"></script>
     <style>
         :root {
             font-size: 16px;
@@ -1285,13 +1287,13 @@
     
     <!-- Works Content Section -->
     <section class="works-content">
-        <div class="works-title">
+        <div class="works-title" data-section="title" data-section-name="Title">
             <h1>MY WORLD OF MAKING</h1>
             <!-- Subtitle paragraph removed -->
         </div>
-            
+
         <!-- Category Tab Navigation -->
-        <div class="category-tabs">
+        <div class="category-tabs" data-section="navigation" data-section-name="Categories">
             <button class="tab-btn active" data-category="interactive">Interactive Systems</button>
             <button class="tab-btn" data-category="media">Media & Motion Design</button>
             <button class="tab-btn" data-category="physical">Physical Computing & Prototyping</button>
@@ -1299,7 +1301,7 @@
         </div>
 
         <!-- 作品类别和作品展示 -->
-        <div class="works-portfolio">
+        <div class="works-portfolio" data-section="portfolio" data-section-name="Portfolio">
             <div class="works-categories">
                 <!-- 交互系统类别 -->
                 <div class="category active" id="interactive">

@@ -274,7 +274,7 @@
     const isBg = container.classList.contains('video-bg');
 
     // Setup container styles
-    this.setupContainerStyles(container, isBg);
+    setupContainerStyles(container, isBg);
 
     // Create video wrapper
     const wrapper = document.createElement('div');
