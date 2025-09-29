@@ -37,7 +37,8 @@
       "Bash(do )",
       "Bash(if [ -f \"$file\" ])",
       "Bash(then echo \"✓ $file\")",
-      "Bash(else echo \"✗ MISSING: $file\")"
+      "Bash(else echo \"✗ MISSING: $file\")",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
