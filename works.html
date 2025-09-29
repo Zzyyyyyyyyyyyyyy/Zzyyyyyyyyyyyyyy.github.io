@@ -74,6 +74,15 @@
             overflow-x: hidden !important; /* 强制隐藏水平滚动条，防止位移 */
             width: 100%; /* 限制宽度为容器宽度 */
             cursor: auto;
+            /* Hide scrollbar for all browsers */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* Hide scrollbar for webkit browsers (Chrome, Safari, Opera) */
+        body::-webkit-scrollbar,
+        html::-webkit-scrollbar {
+            display: none;
         }
         
         /* Interactive elements cursor style */
@@ -1287,13 +1296,13 @@
     
     <!-- Works Content Section -->
     <section class="works-content">
-        <div class="works-title" data-section="title" data-section-name="Title">
+        <div class="works-title" data-section="works" data-section-name="MY WORLD OF MAKING">
             <h1>MY WORLD OF MAKING</h1>
             <!-- Subtitle paragraph removed -->
         </div>
 
         <!-- Category Tab Navigation -->
-        <div class="category-tabs" data-section="navigation" data-section-name="Categories">
+        <div class="category-tabs">
             <button class="tab-btn active" data-category="interactive">Interactive Systems</button>
             <button class="tab-btn" data-category="media">Media & Motion Design</button>
             <button class="tab-btn" data-category="physical">Physical Computing & Prototyping</button>
@@ -1301,7 +1310,7 @@
         </div>
 
         <!-- 作品类别和作品展示 -->
-        <div class="works-portfolio" data-section="portfolio" data-section-name="Portfolio">
+        <div class="works-portfolio">
             <div class="works-categories">
                 <!-- 交互系统类别 -->
                 <div class="category active" id="interactive">

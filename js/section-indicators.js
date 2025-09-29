@@ -85,8 +85,8 @@ class SectionIndicators {
     }
 
     createIndicators() {
-        if (this.sections.length <= 1) {
-            console.log('Not enough sections to create indicators');
+        if (this.sections.length <= 0) {
+            console.log('No sections found to create indicators');
             return;
         }
 
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Only initialize if there are sections to navigate
     const potentialSections = document.querySelectorAll('section, .section, [data-section], header, main > div');
 
-    if (potentialSections.length > 1) {
+    if (potentialSections.length > 0) {
         window.sectionIndicators = new SectionIndicators();
     }
 });
