@@ -31,6 +31,55 @@
 - PRs: clear description, linked issues, before/after screenshots for visual changes, and steps to verify locally.
 - Keep diffs minimal; avoid reformatting unrelated files; include affected paths (e.g., `frontend/src/...`, `backend/src/...`).
 
+## Changelog Maintenance (`CHANGELOG.md`)
+All **significant changes** must be documented in `CHANGELOG.md`. This includes:
+
+**When to update the changelog:**
+- Adding new features, templates, or major functionality
+- Changing project structure or folder organization
+- Modifying templates or shared components
+- Updating documentation that affects workflow
+- Breaking changes that require user action
+- Important bug fixes that affect multiple pages
+
+**Changelog format:**
+- Use **[Unreleased]** section for ongoing work
+- Organize entries by category: **Added**, **Changed**, **Fixed**, **Removed**, **Deprecated**, **Security**
+- Include brief description + technical context if needed
+- Use bullet points with clear, concise explanations
+- Reference affected files/paths when relevant
+
+**Categories explained:**
+- **Added**: New features, files, templates, documentation
+- **Changed**: Modifications to existing functionality or structure
+- **Fixed**: Bug fixes and corrections
+- **Removed**: Deleted files, deprecated features
+- **Deprecated**: Features marked for future removal
+- **Security**: Security-related improvements or fixes
+
+**Example entry:**
+```markdown
+### Added
+- **Project Template System**: Enhanced `Template/project-template.html` with improved structure
+  - Added Anti-FOUC script for instant dark theme application
+  - Added comprehensive placeholder comments with `[BRACKETS]`
+  - Added support for both image and video hero media
+```
+
+**When releasing/versioning:**
+1. Change **[Unreleased]** to version number with date: `## [1.0.0] - 2025-01-15`
+2. Add new **[Unreleased]** section above for future changes
+3. Use semantic versioning: `Major.Minor.Patch`
+   - **Major**: Breaking changes, major restructuring
+   - **Minor**: New features, non-breaking additions
+   - **Patch**: Bug fixes, minor tweaks
+
+**Always update AGENTS.md when:**
+- Adding new workflow requirements
+- Changing commit conventions
+- Modifying project structure rules
+- Adding new documentation requirements
+
 ## Security & Configuration Tips
 - Do not commit secrets or `.env` files; use environment variables (e.g., `PORT`).
 - Store large media under `Sources/` and track videos with Git LFS.

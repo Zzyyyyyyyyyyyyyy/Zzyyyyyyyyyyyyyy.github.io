@@ -4,16 +4,11 @@
     <!-- Anti-FOUC script - apply theme immediately -->
     <script>
         (function() {
-            // Disable transitions during initial load
             document.documentElement.classList.add('no-transitions');
-
-            // Apply dark theme immediately
             document.documentElement.style.backgroundColor = '#0D0C0E';
             if (document.body) {
                 document.body.style.backgroundColor = '#0D0C0E';
             }
-
-            // Re-enable transitions after DOM is ready
             document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(function() {
                     document.documentElement.classList.remove('no-transitions');
@@ -23,41 +18,28 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[PROJECT_NAME] - Zhengyuan Zhao</title>
+    <title>Video Production Project - Zhengyuan Zhao</title>
     <link rel="icon" href="../../../Z_s_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Project Page Styles -->
     <link rel="stylesheet" href="../../../styles/project-page.css">
     <link rel="stylesheet" href="../../../styles/section-indicators.css">
-
-    <!-- GSAP for smooth scrolling -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script defer src="../../../js/section-indicators.js"></script>
-
-    <!-- Inline styles for page-specific overrides -->
-    <!-- Use this section ONLY if you need to override styles from project-page.css -->
-    <style>
-        /* Add custom page-specific styles here if needed */
-    </style>
 </head>
 <body>
-    <!-- Cursor elements (hidden but needed for structure) -->
     <div class="cursor-container">
         <div id="cursor-dot" class="cursor-dot"></div>
         <div id="cursor-outline" class="cursor-outline"></div>
         <div id="cursor-trail" class="cursor-trail"></div>
     </div>
-    
-    <!-- Navigation Bar -->
+
     <div class="navbar-container">
         <nav class="navbar">
             <a href="../../../index.html" class="logo">
                 <img src="../../../Z_s_icon.png" alt="Logo">
             </a>
-
             <div class="nav-links">
                 <a href="../../../index.html">Home</a>
                 <a href="../../../About ME.html">About Me</a>
@@ -66,107 +48,48 @@
             </div>
         </nav>
     </div>
-    
-    <!-- Project Content Section -->
+
     <section class="project-content">
         <a href="../../../works.html" class="back-to-works"><i class="fas fa-arrow-left"></i> Back to works</a>
 
-        <!-- ============================================ -->
-        <!-- EDIT SECTION: Project Header -->
-        <!-- ============================================ -->
         <div class="project-header" data-section="header" data-section-name="Project Info">
-            <div class="project-category">[CATEGORY_NAME]</div>
-            <h1 class="project-title">[PROJECT_TITLE]</h1>
+            <div class="project-category">Media & Motion Design</div>
+            <h1 class="project-title">Video Production Project</h1>
 
             <div class="project-info">
                 <div class="project-info-item">
                     <h3>PROJECT TYPE</h3>
-                    <p>[PROJECT_TYPE]</p>
+                    <p>Video Production</p>
                 </div>
-
                 <div class="project-info-item">
                     <h3>DATE</h3>
-                    <p>[DATE]</p>
+                    <p>2024</p>
                 </div>
-
                 <div class="project-info-item">
                     <h3>ROLE</h3>
-                    <p>[YOUR_ROLE]</p>
+                    <p>Video Editor</p>
                 </div>
-
                 <div class="project-info-item">
                     <h3>TOOLS</h3>
                     <div class="project-tags">
-                        <span class="project-tag">[TOOL_1]</span>
-                        <span class="project-tag">[TOOL_2]</span>
-                        <span class="project-tag">[TOOL_3]</span>
-                        <!-- Add more tags as needed -->
+                        <span class="project-tag">Video</span>
+                        <span class="project-tag">Premiere</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ============================================ -->
-        <!-- EDIT SECTION: Hero Media -->
-        <!-- Choose ONE option: Image OR Video -->
-        <!-- ============================================ -->
-        <div class="project-hero" data-section="hero" data-section-name="Preview">
-            <!-- OPTION 1: Image -->
-            <img src="assets/images/[HERO_IMAGE].jpg" alt="[PROJECT_TITLE]">
-
-            <!-- OPTION 2: Video (uncomment to use, comment out image above) -->
-            <!--
-            <video controls preload="metadata">
-                <source src="assets/videos/[HERO_VIDEO].mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            -->
+        <!-- Hero media placeholder - add your project image or video here -->
+        <div class="project-hero" data-section="hero" data-section-name="Preview" style="background: linear-gradient(135deg, rgba(255,62,127,0.1), rgba(255,181,107,0.1)); display: flex; align-items: center; justify-content: center;">
+            <p style="color: rgba(255,255,255,0.5); font-size: 1.5rem;">Project media coming soon</p>
         </div>
-        
-        <!-- ============================================ -->
-        <!-- EDIT SECTION: Project Description -->
-        <!-- Add as many sections as needed -->
-        <!-- ============================================ -->
+
         <div class="project-description" data-section="description" data-section-name="Overview">
             <h2>Overview</h2>
-            <p>[Write your project overview here. Explain what the project is about and its main goals.]</p>
-
-            <p>[Add more paragraphs as needed to describe your project in detail.]</p>
-
-            <!-- Optional: Add more sections -->
-            <!--
-            <h2>Process</h2>
-            <p>[Describe your design/development process]</p>
-
-            <h2>Results</h2>
-            <p>[Share the outcomes and impact of your project]</p>
-            -->
+            <p>This project showcases Video Production. More details coming soon.</p>
+            <p>A professional video production featuring advanced editing techniques and storytelling.</p>
         </div>
 
-        <!-- ============================================ -->
-        <!-- OPTIONAL SECTION: Project Gallery -->
-        <!-- Remove this section if not needed -->
-        <!-- ============================================ -->
-        <div class="project-gallery" data-section="gallery" data-section-name="Gallery">
-            <h2>Gallery</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item full-width">
-                    <img src="assets/images/[IMAGE_1].jpg" alt="Project detail 1">
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/images/[IMAGE_2].jpg" alt="Project detail 2">
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/images/[IMAGE_3].jpg" alt="Project detail 3">
-                </div>
-                <!-- Add more gallery items as needed -->
-            </div>
-        </div>
-
-        <!-- ============================================ -->
-        <!-- EDIT SECTION: Next Project Link -->
-        <!-- Update with actual next project path -->
-        <!-- ============================================ -->
         <div class="project-next">
             <a href="../../[NEXT_CATEGORY]/[NEXT_PROJECT]/" class="next-project">
                 <div>
@@ -179,8 +102,7 @@
             </a>
         </div>
     </section>
-    
-    <!-- Final Section -->
+
     <section class="final-section">
         <div class="awesome-together">
             <h2>LET'S MAKE SOMETHING <span class="highlight">AWESOME</span> TOGETHER</h2>
@@ -197,13 +119,11 @@
             </div>
         </div>
     </section>
-    
+
     <script>
-        // Add scroll effect to navbar
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             const navbarContainer = document.querySelector('.navbar-container');
-            
             if (window.scrollY > 50) {
                 navbar.style.padding = '1rem 3%';
                 navbarContainer.style.background = 'transparent';
@@ -216,20 +136,16 @@
                 navbarContainer.style.paddingTop = '15px';
             }
         });
-        
-        // Set active nav link
+
         function setActiveNavLink() {
             const currentPage = window.location.pathname.split('/').pop() || 'index.html';
             const navLinks = document.querySelectorAll('.nav-links a');
-            
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
                 link.classList.remove('active');
-                
                 if (href === currentPage) {
                     link.classList.add('active');
                 } else if (currentPage.includes("project") && href.includes("works")) {
-                    // Keep "Works" active when viewing a project page
                     link.classList.add('active');
                 } else if (currentPage.includes("About") && href.includes("About")) {
                     link.classList.add('active');
@@ -240,31 +156,24 @@
                 }
             });
         }
-        
-        // Add animation to elements
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Set active nav link
             setActiveNavLink();
-            
-            // Add page element animations
             setTimeout(() => {
-                document.querySelector('.project-content .project-header').classList.add('show');
-                
+                const header = document.querySelector('.project-content .project-header');
+                if (header) header.classList.add('show');
                 setTimeout(() => {
-                    document.querySelector('.project-content .project-hero').classList.add('show');
-                    
+                    const hero = document.querySelector('.project-content .project-hero');
+                    if (hero) hero.classList.add('show');
                     setTimeout(() => {
-                        document.querySelector('.project-content .project-description').classList.add('show');
-                        
+                        const description = document.querySelector('.project-content .project-description');
+                        if (description) description.classList.add('show');
                         setTimeout(() => {
-                            document.querySelector('.project-content .project-gallery').classList.add('show');
-                            
+                            const next = document.querySelector('.project-content .project-next');
+                            if (next) next.classList.add('show');
                             setTimeout(() => {
-                                document.querySelector('.project-content .project-next').classList.add('show');
-                                
-                                setTimeout(() => {
-                                    document.querySelector('.final-section').classList.add('show');
-                                }, 200);
+                                const final = document.querySelector('.final-section');
+                                if (final) final.classList.add('show');
                             }, 200);
                         }, 200);
                     }, 200);
@@ -273,4 +182,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
