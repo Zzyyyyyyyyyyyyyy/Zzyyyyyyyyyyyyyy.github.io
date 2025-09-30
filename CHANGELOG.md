@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Project Instructions**: Created `CLAUDE.md` with development commands, architecture overview, and code conventions
+  - Static site development commands (serve:static, serve:frontend, dev)
+  - Video management system documentation (video-config.json, video-manager.js)
+  - Code conventions and dependency guidelines
+  - Security best practices
+
+- **Claude Code Integration**: Added custom slash commands for workflow automation
+  - `/add-changelog` command for changelog entry management
+  - `/code-review` command for automated code quality checks
+  - Command templates stored in `.claude/commands/`
+
+### Fixed
+- **Navigation Issues**: Fixed works.html navigation and section indicators (commit 314b6548)
+  - Corrected section indicator script references
+  - Fixed navigation links across main pages (About ME.html, Contact.html, index.html)
+  - Updated works.html with proper layout and navigation structure
+
+### Added (Previous)
 - **Project Template System**: Enhanced `Template/project-template.html` with improved structure
   - Added Anti-FOUC (Flash of Unstyled Content) script for instant dark theme application
   - Added comprehensive placeholder comments with `[BRACKETS]` for easy content replacement
