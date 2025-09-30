@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "base": "https://storage.googleapis.com/your-gcs-bucket",
+  "base": "",
   "videos": {
     "home-bg": {
       "sources": [
-        { "src": "/bg/home.mp4", "type": "video/mp4" }
+        { "src": "Sources/videos/home-bg.mp4", "type": "video/mp4" }
       ],
-      "poster": "/bg/home.jpg",
       "fit": "cover",
-      "preload": "auto"
+      "preload": "auto",
+      "lazy": false
     },
     "work-hero-01": {
       "sources": [

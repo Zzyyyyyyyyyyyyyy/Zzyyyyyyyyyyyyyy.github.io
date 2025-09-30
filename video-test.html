@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ff3e7f;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: #222;
+            margin: 20px 0;
+            border: 2px solid #ff3e7f;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ff3e7f;
+            background: #2a2a2a;
+        }
+
+        button {
+            background: #ff3e7f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #ff5690;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎥 视频背景测试页面</h1>
+
+        <div class="info">
+            <h2>测试说明：</h2>
+            <p>这个页面直接测试视频文件是否可以播放。如果这里能看到视频，说明视频文件本身没问题。</p>
+        </div>
+
+        <div class="video-wrapper">
+            <video id="testVideo"
+                   autoplay
+                   loop
+                   muted
+                   playsinline
+                   controls>
+                <source src="Sources/videos/home-bg.mp4" type="video/mp4">
+                您的浏览器不支持视频播放
+            </video>
+        </div>
+
+        <div class="info">
+            <h3>视频状态：</h3>
+            <div class="status" id="status">正在加载...</div>
+
+            <h3>控制按钮：</h3>
+            <button onclick="playVideo()">▶️ 播放</button>
+            <button onclick="pauseVideo()">⏸️ 暂停</button>
+            <button onclick="reloadVideo()">🔄 重新加载</button>
+        </div>
+
+        <div class="info" id="videoInfo">
+            <h3>视频信息：</h3>
+            <p id="info">等待视频加载...</p>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('testVideo');
+        const statusDiv = document.getElementById('status');
+        const infoP = document.getElementById('info');
+
+        function updateStatus(msg, color = '#ff3e7f') {
+            statusDiv.textContent = msg;
+            statusDiv.style.borderLeftColor = color;
+        }
+
+        function updateInfo() {
+            const info = `
+                视频源: ${video.currentSrc}<br>
+                视频尺寸: ${video.videoWidth} x ${video.videoHeight}<br>
+                时长: ${video.duration.toFixed(2)} 秒<br>
+                当前时间: ${video.currentTime.toFixed(2)} 秒<br>
+                就绪状态: ${video.readyState}/4<br>
+                网络状态: ${video.networkState}/3<br>
+                播放中: ${!video.paused}<br>
+                静音: ${video.muted}<br>
+                循环: ${video.loop}
+            `;
+            infoP.innerHTML = info;
+        }
+
+        video.addEventListener('loadstart', () => {
+            updateStatus('⏳ 开始加载视频...', '#ffb56b');
+        });
+
+        video.addEventListener('loadedmetadata', () => {
+            updateStatus('📊 视频元数据已加载', '#4CAF50');
+            updateInfo();
+        });
+
+        video.addEventListener('loadeddata', () => {
+            updateStatus('✅ 视频数据已加载，可以播放了！', '#4CAF50');
+            updateInfo();
+        });
+
+        video.addEventListener('canplay', () => {
+            updateStatus('▶️ 视频可以开始播放', '#4CAF50');
+        });
+
+        video.addEventListener('playing', () => {
+            updateStatus('🎬 视频正在播放中...', '#4CAF50');
+        });
+
+        video.addEventListener('pause', () => {
+            updateStatus('⏸️ 视频已暂停', '#ffb56b');
+        });
+
+        video.addEventListener('error', (e) => {
+            const errorMsg = video.error ?
+                `错误代码 ${video.error.code}: ${video.error.message}` :
+                '未知错误';
+            updateStatus('❌ 视频加载失败: ' + errorMsg, '#f44336');
+        });
+
+        video.addEventListener('timeupdate', () => {
+            updateInfo();
+        });
+
+        function playVideo() {
+            video.play().catch(e => {
+                updateStatus('❌ 播放失败: ' + e.message, '#f44336');
+            });
+        }
+
+        function pauseVideo() {
+            video.pause();
+        }
+
+        function reloadVideo() {
+            video.load();
+            updateStatus('🔄 正在重新加载...', '#ffb56b');
+        }
+
+        // 初始更新
+        setTimeout(updateInfo, 1000);
+        setInterval(updateInfo, 2000);
+    </script>
+</body>
+</html>

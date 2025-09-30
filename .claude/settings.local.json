@@ -42,7 +42,14 @@
       "Bash(where claude)",
       "Bash(echo $env:APPDATA)",
       "Read(//c/Users/Administrator/AppData/Roaming/Claude/**)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(if [ ! -d \"Sources/videos\" ])",
+      "Bash(then mkdir -p Sources/videos)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_close",
+      "mcp__playwright__browser_console_messages"
     ],
     "deny": [],
     "ask": []
