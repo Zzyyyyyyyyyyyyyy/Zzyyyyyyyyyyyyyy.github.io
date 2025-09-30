@@ -41,7 +41,8 @@
       "Bash(curl:*)",
       "Bash(where claude)",
       "Bash(echo $env:APPDATA)",
-      "Read(//c/Users/Administrator/AppData/Roaming/Claude/**)"
+      "Read(//c/Users/Administrator/AppData/Roaming/Claude/**)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
