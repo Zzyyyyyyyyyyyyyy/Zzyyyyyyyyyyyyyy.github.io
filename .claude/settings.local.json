@@ -38,7 +38,10 @@
       "Bash(if [ -f \"$file\" ])",
       "Bash(then echo \"✓ $file\")",
       "Bash(else echo \"✗ MISSING: $file\")",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(where claude)",
+      "Bash(echo $env:APPDATA)",
+      "Read(//c/Users/Administrator/AppData/Roaming/Claude/**)"
     ],
     "deny": [],
     "ask": []
