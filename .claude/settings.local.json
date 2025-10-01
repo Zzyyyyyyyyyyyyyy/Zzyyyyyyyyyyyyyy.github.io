@@ -59,7 +59,8 @@
       "mcp__magicui__getAnimations",
       "mcp__magicui__getTextAnimations",
       "mcp__magicui__getButtons",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "mcp__magicui__getBackgrounds"
     ],
     "deny": [],
     "ask": []

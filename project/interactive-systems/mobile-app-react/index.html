@@ -7,11 +7,6 @@
             // Disable transitions during initial load
             document.documentElement.classList.add('no-transitions');
 
-            // 立即检查导航栏是否已访问，避免淡入动画
-            if (sessionStorage.getItem('navbarVisited')) {
-                document.documentElement.classList.add('navbar-visited');
-            }
-
             // Apply dark theme immediately
             document.documentElement.style.backgroundColor = '#0D0C0E';
             if (document.body) {
@@ -36,13 +31,11 @@
     <!-- Project Page Styles -->
     <link rel="stylesheet" href="../../../styles/project-page.css">
     <link rel="stylesheet" href="../../../styles/section-indicators.css">
-    <link rel="stylesheet" href="../../../styles/navbar-enhanced.css">
 
     <!-- GSAP for smooth scrolling -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script defer src="../../../js/section-indicators.js"></script>
-    <script defer src="../../../js/navbar-enhanced.js"></script>
 </head>
 <body>
     <!-- Cursor elements (hidden but needed for structure) -->
@@ -51,9 +44,6 @@
         <div id="cursor-outline" class="cursor-outline"></div>
         <div id="cursor-trail" class="cursor-trail"></div>
     </div>
-
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress-bar"></div>
 
     <!-- Navigation Bar -->
     <div class="navbar-container">
