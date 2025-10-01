@@ -52,7 +52,14 @@
       "mcp__playwright__browser_console_messages",
       "Bash(del video-test.html)",
       "Bash(npm run serve:static:*)",
-      "mcp__playwright__browser_click"
+      "mcp__playwright__browser_click",
+      "mcp__magicui__getComponents",
+      "mcp__magicui__getUIComponents",
+      "mcp__magicui__getSpecialEffects",
+      "mcp__magicui__getAnimations",
+      "mcp__magicui__getTextAnimations",
+      "mcp__magicui__getButtons",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []

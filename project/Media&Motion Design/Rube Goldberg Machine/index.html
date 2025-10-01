@@ -7,6 +7,11 @@
         (function() {
             // Disable transitions during initial load
             document.documentElement.classList.add('no-transitions');
+            // 立即检查导航栏是否已访问，避免淡入动画
+            if (sessionStorage.getItem('navbarVisited')) {
+                document.documentElement.classList.add('navbar-visited');
+            }
+
             
             // Apply dark theme immediately
             document.documentElement.style.backgroundColor = '#0D0C0E';
@@ -712,6 +717,9 @@
         <div id="cursor-trail" class="cursor-trail"></div>
     </div>
     
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress-bar"></div>
+
     <!-- Navigation Bar -->
     <div class="navbar-container">
         <nav class="navbar">

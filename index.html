@@ -6,18 +6,23 @@
         (function() {
             // Disable transitions during initial load to prevent flicker
             document.documentElement.classList.add('no-transitions');
-            
+
             // Immediately hide intro if already shown
             if (sessionStorage.getItem('introShown') === '1') {
                 document.documentElement.classList.add('skip-intro');
             }
-            
+
+            // 立即检查导航栏是否已访问，避免淡入动画
+            if (sessionStorage.getItem('navbarVisited')) {
+                document.documentElement.classList.add('navbar-visited');
+            }
+
             // Apply dark theme immediately
             document.documentElement.style.backgroundColor = '#0D0C0E';
             if (document.body) {
                 document.body.style.backgroundColor = '#0D0C0E';
             }
-            
+
             // Re-enable transitions after DOM is ready
             document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(function() {
@@ -33,11 +38,13 @@
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
     <link rel="stylesheet" href="styles/video.css">
     <link rel="stylesheet" href="styles/section-indicators.css">
+    <link rel="stylesheet" href="styles/navbar-enhanced.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script defer src="js/video-manager.js"></script>
     <script defer src="js/section-indicators.js"></script>
+    <script defer src="js/navbar-enhanced.js"></script>
     <style>
         :root {
             font-size: 16px;
@@ -146,12 +153,39 @@
             transition: transform 0.3s ease;
             cursor: pointer !important;
         }
-        
+
+        /* Logo gradient background animation */
+        .logo::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #ff3e7f, #ffb56b, #ff3e7f, #ffb56b);
+            background-size: 300% 300%;
+            border-radius: 50%;
+            opacity: 0;
+            z-index: -1;
+            animation: logoGradient 3s ease infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover::before {
+            opacity: 0.6;
+        }
+
+        @keyframes logoGradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
         .logo:hover, .navbar .logo:hover, body .navbar-container .navbar .logo:hover {
             transform: scale(1.05);
             cursor: pointer !important;
         }
-        
+
         .logo img, .navbar .logo img {
             width: 45px;
             height: 45px;
@@ -159,16 +193,11 @@
             filter: drop-shadow(0 0 8px rgba(255, 62, 127, 0.3));
             transition: all 0.3s ease;
         }
-        
+
         .logo:hover img, .navbar .logo:hover img {
             filter: drop-shadow(0 0 12px rgba(255, 62, 127, 0.5));
             transform: scale(1.15);
             cursor: pointer !important;
-        }
-        
-        /* Remove the dot before logo */
-        .logo::before {
-            display: none;
         }
         
         /* Remove the colored span style */
@@ -191,6 +220,19 @@
             display: none;
         }
         
+        /* Scroll Progress Bar */
+        .scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff3e7f, #ffb56b);
+            width: 0%;
+            z-index: 10001;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 10px rgba(255, 62, 127, 0.5);
+        }
+
         /* Navigation styles */
         .navbar-container {
             position: fixed;
@@ -202,6 +244,22 @@
             justify-content: center;
             padding-top: 25px; /* 增加顶部间距 */
             overflow: visible; /* 确保内容溢出时可见 */
+            opacity: 0;
+            filter: blur(10px);
+            animation: navbarBlurFadeIn 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes navbarBlurFadeIn {
+            from {
+                opacity: 0;
+                filter: blur(10px);
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
         }
         
         .navbar {
@@ -259,8 +317,28 @@
             text-transform: uppercase;
             font-family: 'SpaceGrotesk', sans-serif;
             transition: all 0.3s ease;
+            overflow: hidden;
         }
-        
+
+        /* Shimmer effect for nav links */
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 181, 107, 0.3) 50%,
+                transparent 100%);
+            transition: left 0.5s ease;
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -271,12 +349,12 @@
             bottom: -6px;
             transition: width 0.3s ease !important;
         }
-        
+
         .nav-links a:hover {
             color: #ff3e7f !important;
             transform: translateY(-1px) !important;
         }
-        
+
         .nav-links a:hover::after {
             width: 100% !important;
         }
@@ -2252,6 +2330,9 @@
         </div>
     </div>
     
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress-bar"></div>
+
     <!-- Navigation Bar -->
     <div class="navbar-container">
         <nav class="navbar">
@@ -2890,7 +2971,16 @@
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             const navbarContainer = document.querySelector('.navbar-container');
-            
+            const progressBar = document.querySelector('.scroll-progress-bar');
+
+            // Update scroll progress bar
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / scrollHeight) * 100;
+            if (progressBar) {
+                progressBar.style.width = scrollPercentage + '%';
+            }
+
             // 移除所有滚动效果
             navbar.style.padding = '1.5rem 3%';
                 navbarContainer.style.background = 'transparent';
