@@ -1061,6 +1061,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            pointer-events: auto;
+        }
+
+        .page-cover.hidden {
+            display: none !important;
+            pointer-events: none !important;
         }
         
         .cover-half {
@@ -1725,12 +1731,14 @@
         
         /* Make entire work item clickable */
         .work-item-link {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 100 !important;
+            cursor: pointer !important;
+            display: block !important;
         }
         
         .work-item:hover {
@@ -1759,6 +1767,7 @@
             z-index: 2;
             background: none;
             transition: all 0.3s ease;
+            pointer-events: none;
         }
         
         /* Header container for title only */
@@ -1790,6 +1799,7 @@
             flex-wrap: wrap;
             gap: 8px;
             z-index: 4;
+            pointer-events: none;
         }
         
         .work-tags span {
@@ -1818,6 +1828,7 @@
             opacity: 0;
             transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); /* Slower animation */
             z-index: 3;
+            pointer-events: none;
             height: 50px;
             width: 50px;
             border-radius: 50%;
@@ -1878,6 +1889,7 @@
             align-items: center;
             background: rgba(30, 30, 30, 0.9);
             transition: all 0.3s ease;
+            pointer-events: none;
         }
         
         .image-placeholder img {
@@ -2023,6 +2035,7 @@
             display: flex; /* 添加弹性布局 */
             align-items: center; /* 垂直居中 */
             justify-content: center; /* 水平居中 */
+            pointer-events: none;
         }
 
         /* Remove the paragraph description */
@@ -2192,6 +2205,9 @@
         /* Anti-flicker and intro control */
         html.skip-intro .page-cover {
             display: none !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+            z-index: -9999 !important;
         }
         
         /* Disable transitions during initial load */
@@ -2468,113 +2484,110 @@
     <section class="selected-works-section" data-section="works" data-section-name="Selected Works">
         <h2>SELECTED WORKS</h2>
         <div class="works-grid">
-            <!-- Work Item 1 -->
+            <!-- Work Item 1 - Interactive Systems第一个项目 -->
             <div class="work-item">
-                <a href="project/project1/index.html" class="work-item-link" aria-label="View Interactive Visual Project"></a>
+                <a href="project/physical-computing-prototyping/physical-computing-wearable/index.html" class="work-item-link" aria-label="View Physical Computing Project"></a>
                 <div class="view-arrow">
                     <i class="fas fa-arrow-right"></i>
                 </div>
                 <div class="work-tags">
-                    <span>Interactive</span>
-                    <span>Visual</span>
+                    <span>Arduino</span>
+                    <span>Electronics</span>
                 </div>
                 <div class="work-image">
                     <!-- 图片容器 -->
                     <div class="image-placeholder">
-                        <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
-                        <img data-src="project/project1/1.JPG" alt="Interactive Visual Project" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
+                        <!-- 实际的图片将在这里显示 -->
+                        <img src="project/physical-computing-prototyping/physical-computing-wearable/assets/images/1.JPG" alt="Physical Computing Project" style="width: 100%; height: 100%; object-fit: cover;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
                         <!-- 仅在图片加载前显示的占位图标 -->
-                        <i class="fas fa-image"></i>
-                        <span>Interactive Visual Project</span>
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Physical Computing Project</span>
                     </div>
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Interactive Visual Project</h3>
+                        <h3>Physical Computing Project</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
             </div>
-            
-            <!-- Work Item 2 -->
+
+            <!-- Work Item 2 - Media & Motion Design第一个项目 -->
             <div class="work-item">
-                <a href="#" class="work-item-link" aria-label="View Project 2"></a>
+                <a href="project/media-motion-design/rube-goldberg-machine/index.html" class="work-item-link" aria-label="View Rube Goldberg Machine"></a>
                 <div class="view-arrow">
                     <i class="fas fa-arrow-right"></i>
                 </div>
                 <div class="work-tags">
-                    <span>UI/UX</span>
-                    <span>Branding</span>
+                    <span>Motion Design</span>
+                    <span>Physical Design</span>
                 </div>
                 <div class="work-image">
                     <!-- 图片容器 -->
                     <div class="image-placeholder">
-                        <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
-                        <img data-src="您的图片路径2" alt="Project 2" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
-                        <!-- 仅在图片加载前显示的占位图标 -->
-                        <i class="fas fa-image"></i>
-                        <span>Image 2</span>
+                        <!-- 实际的视频将在这里显示 -->
+                        <video muted loop autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                            <source src="project/media-motion-design/rube-goldberg-machine/assets/videos/Final_Rube Goldberg Machine_2.mp4" type="video/mp4">
+                            <!-- 仅在视频加载失败时显示的占位图标 -->
+                            <i class="fas fa-film"></i>
+                        </video>
                     </div>
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Project Title 2</h3>
+                        <h3>Rube Goldberg Machine</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
             </div>
-            
-            <!-- Work Item 3 -->
+
+            <!-- Work Item 3 - Physical Computing & Prototyping第一个项目 -->
             <div class="work-item">
-                <a href="#" class="work-item-link" aria-label="View Project 3"></a>
+                <a href="project/physical-computing-prototyping/arduino-sensor-project/index.html" class="work-item-link" aria-label="View Arduino Sensor Project"></a>
                 <div class="view-arrow">
                     <i class="fas fa-arrow-right"></i>
                 </div>
                 <div class="work-tags">
-                    <span>Animation</span>
-                    <span>3D</span>
+                    <span>Arduino</span>
+                    <span>Sensors</span>
                 </div>
                 <div class="work-image">
                     <!-- 图片容器 -->
                     <div class="image-placeholder">
-                        <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
-                        <img data-src="您的图片路径3" alt="Project 3" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
-                        <!-- 仅在图片加载前显示的占位图标 -->
-                        <i class="fas fa-image"></i>
-                        <span>Image 3</span>
+                        <!-- 仅显示占位图标 -->
+                        <i class="fas fa-microchip"></i>
+                        <span>Arduino Sensor Project</span>
                     </div>
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Project Title 3</h3>
+                        <h3>Arduino Sensor Project</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
             </div>
-            
-            <!-- Work Item 4 -->
+
+            <!-- Work Item 4 - Visual & Fine Art第一个项目 -->
             <div class="work-item">
-                <a href="#" class="work-item-link" aria-label="View Project 4"></a>
+                <a href="project/visual-fine-art/digital-illustration/index.html" class="work-item-link" aria-label="View Digital Illustration"></a>
                 <div class="view-arrow">
                     <i class="fas fa-arrow-right"></i>
                 </div>
                 <div class="work-tags">
-                    <span>Interactive</span>
-                    <span>Experiential</span>
+                    <span>Digital</span>
+                    <span>Illustration</span>
                 </div>
                 <div class="work-image">
                     <!-- 图片容器 -->
                     <div class="image-placeholder">
-                        <!-- 实际的图片将在这里显示，添加data-src属性用于懒加载 -->
-                        <img data-src="您的图片路径4" alt="Project 4" style="display: none;" onload="this.style.display='block'; this.parentNode.querySelector('i').style.display='none'; this.parentNode.querySelector('span').style.display='none';">
-                        <!-- 仅在图片加载前显示的占位图标 -->
-                        <i class="fas fa-image"></i>
-                        <span>Image 4</span>
+                        <!-- 仅显示占位图标 -->
+                        <i class="fas fa-palette"></i>
+                        <span>Digital Illustration</span>
                     </div>
                 </div>
                 <div class="work-info">
                     <div class="work-header">
-                        <h3>Project Title 4</h3>
+                        <h3>Digital Illustration</h3>
                     </div>
                     <!-- Description removed -->
                 </div>
@@ -3375,7 +3388,9 @@
                 // Check if Home intro should be shown (sessionStorage gate)
                 if (!shouldShowIntro()) {
                     // Skip intro - hide cover and show main content directly
+                    pageCover.classList.add('hidden');
                     pageCover.style.display = 'none';
+                    pageCover.style.pointerEvents = 'none';
                     animateMainContent();
                     return;
                 }
@@ -3558,9 +3573,10 @@
                 function openCurtain() {
                     // Mark intro as shown for this tab session
                     markIntroShown();
-                    
-                    // 禁用点击，防止重复触发
+
+                    // 立即禁用点击和覆盖层，防止重复触发和拦截其他元素
                     pageCover.style.pointerEvents = 'none';
+                    pageCover.style.zIndex = '-1';
                     
                     // 淡出交互提示文字 - 在点击时才淡出
                     const interactionHint = coverWorldTitle.querySelector('.interaction-hint');
@@ -3606,8 +3622,11 @@
                             
                             // 动画完全结束后完全移除覆盖层DOM元素
                             setTimeout(function() {
-                                if (pageCover && pageCover.parentNode) {
-                                    pageCover.parentNode.removeChild(pageCover);
+                                if (pageCover) {
+                                    pageCover.classList.add('hidden');
+                                    if (pageCover.parentNode) {
+                                        pageCover.parentNode.removeChild(pageCover);
+                                    }
                                 }
                             }, 500);
                         }
