@@ -3574,9 +3574,8 @@
                     // Mark intro as shown for this tab session
                     markIntroShown();
 
-                    // 立即禁用点击和覆盖层，防止重复触发和拦截其他元素
+                    // 立即禁用点击，防止重复触发
                     pageCover.style.pointerEvents = 'none';
-                    pageCover.style.zIndex = '-1';
                     
                     // 淡出交互提示文字 - 在点击时才淡出
                     const interactionHint = coverWorldTitle.querySelector('.interaction-hint');
@@ -3617,9 +3616,12 @@
                         duration: 2.5,
                         ease: "power2.inOut",
                         onComplete: function() {
-                            // 立即开始显示主界面元素，不等待覆盖层消失
+                            // 动画完成后，立即降低z-index，让用户可以点击下方内容
+                            pageCover.style.zIndex = '-1';
+
+                            // 立即开始显示主界面元素
                             animateMainContent();
-                            
+
                             // 动画完全结束后完全移除覆盖层DOM元素
                             setTimeout(function() {
                                 if (pageCover) {
